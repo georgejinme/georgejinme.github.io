@@ -1,22 +1,22 @@
 # Site settings
-title: Your Blog
+title: GeorgeJin
 SEOTitle: 你的博客 | Your Blog
 header-img: img/home-bg.jpg
-email: huxpro@gmail.com
-description: ""
+email: gougoumemeda@sjtu.edu.cn
+description: "My personal webpage"
 keyword: ""
-url: "http://huangxuan.me"              # your host, for absolute URL
-baseurl: "/huxblog-boilerplate"         # for example, '/blog' if your blog hosted on 'host/blog'
+url: "http://gougoumemeda.github.io"              # your host, for absolute URL
+baseurl: "/blog"         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
 # SNS settings
 RSS: false
-weibo_username:     huxpro
-zhihu_username:     huxpro
-github_username:    huxpro
+weibo_username:     踢沟那深沉的沟
+zhihu_username:     钩钩
+github_username:    gougoumemeda
 #twitter_username:  huxpro
-facebook_username:  huxpro
+facebook_username:  金嘉骏
 
 
 
