@@ -1,19 +1,19 @@
 # Site settings
 title: GeorgeJin
-SEOTitle: 你的博客 | Your Blog
+SEOTitle: 金嘉骏的博客 | GeorgeJin Blog
 header-img: img/home-bg.jpg
 email: gougoumemeda@sjtu.edu.cn
 description: "My personal webpage"
 keyword: ""
 url: "https://gougoumemeda.github.io"              # your host, for absolute URL
-baseurl: "/blog"         # for example, '/blog' if your blog hosted on 'host/blog'
+baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
 # SNS settings
 RSS: false
-weibo_username:     踢沟那深沉的沟
-zhihu_username:     钩钩
+weibo_username:     u/3033630677
+zhihu_username:     gou-gou-65
 github_username:    gougoumemeda
 #twitter_username:  huxpro
 facebook_username:  金嘉骏
@@ -50,7 +50,7 @@ kramdown:
 #disqus_username: _your_disqus_short_name_
 
 # Duoshuo settings
-duoshuo_username: huxblog
+duoshuo_username: georgejin
 # Share component is depend on Comment so we can NOT use share only.
 duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
@@ -59,16 +59,16 @@ duoshuo_share: true                     # set to false if you want to use Commen
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
+ba_track_id: 23710bb6f40c572032327a0420b5fd57
 # Google Analytics
-ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+ga_track_id: 'UA-81336472-1'            # Format: UA-xxxxxx-xx
+ga_domain: auto
 
 
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "写写代码，做做设计，看看产品。世界那么大，多玩玩看看。"
+sidebar-about-description: "与其感慨路难行，不如马上出发。"
 sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
