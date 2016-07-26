@@ -5,7 +5,7 @@ header-img: img/home-bg.jpg
 email: gougoumemeda@sjtu.edu.cn
 description: "My personal webpage"
 keyword: ""
-url: "http://gougoumemeda.github.io"              # your host, for absolute URL
+url: "https://gougoumemeda.github.io"              # your host, for absolute URL
 baseurl: "/blog"         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
