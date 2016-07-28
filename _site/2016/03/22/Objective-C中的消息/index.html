@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="My personal webpage">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Objective-C中的消息 - 金嘉骏的博客 | GeorgeJin Blog</title>
+
+    <link rel="canonical" href="https://gougoumemeda.github.io/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">GeorgeJin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-2015.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-2015.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                        <a class="tag" href="/tags/#Objective-C" title="Objective-C">Objective-C</a>
+                        
+                    </div>
+                    <h1>Objective-C中的消息</h1>
+                    
+                    
+                    <h2 class="subheading">《Effective Objective-C 2.0》Message部分笔记</h2>
+                    
+                    <span class="meta">Posted by George on March 22, 2016</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<p>我们先来介绍一下OC中属性的用法。属性就是我们在实际工程中运用的最多的形式，以@property开头。用属性有什么好处呢？简单来说，属性有利于我们对内存的管理，系统会自动生成一套setter和getter来处理对属性的读取和写入操作，同时满足用户指定的strong，week等修饰符。当然，只要在属性头加上@dynamic，系统就不会自动去生成setter和getter。同时，系统会为每一个属性增加一个实例的变量，在属性名前加上下划线作为实例变量的名字。实际上，系统的setter和getter都是对其实例变量进行操作。我们可以理解成属性把实例变量封装了起来。需要说明的是，我们在一个对象/类中，最好直接访问实例变量。如果用的是属性，那么会经过setter和getter方法，这是通过OC的方法派发来完成的，所以效率会比较低，而实例变量会绕过内存管理的语义，在速度上有优势。</p>
+
+<p>接下来说明一下对象等同性。在OC中，==比较的是指针，isEqual(或其类似方法)比较的是其内容。这个应该很好理解，我们应当使用isEqual。当然，我们可以对自己写的类写一个isEqual方法。</p>
+
+<p>如果我们想临时给一个类增加一个变量，有什么好用的方法呢？OC给我们提供了一种叫做关联对象的方法。有如下函数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>void objc_setAssociatedObject(id object, void* key, id value, objc_AssociationPolicy policy)
+id objc_getAssociatedObject(id object, void* key)
+</code></pre>
+</div>
+
+<p>我们可以把关联对象想想成一个字典，需要存放时就增加一个键值对，取出增加的东西时也可以根据键进行选择。但是，此方法慎用，因为滥用的话我们会对一个对象失去可控性。</p>
+
+<p>我们都知道，OC是一种动态语言，对于一些方法的调用，都是在运行时才去使用。这种方法叫做传递消息，而传递消息最关键的方法就是objc_msgSend。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>id returnVal = objc_msgSend(someObject, @selector(msg:), parameter)
+</code></pre>
+</div>
+
+<p>其中，someObject为消息的接受者(调用函数方)， msg为选择子(函数名)。对于每一个类，我们有一个快速的映射表，如果我们第一次发送一个消息成功后，我们会把匹配的方法名和方法实现放在这个表中作为缓存。那么如果我们找不到一个方法呢？这时候我们就会调用OC的消息转发，具体来说，有三步：</p>
+
+<ul>
+  <li>寻找是否有新增加的选择子。这个方法要求我们提前写好代码，等着运行的时候动态插在类里面。常见于@dynamic属性。寻找选择子时，会调用的方法为:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>+ (Bool)resolveInstanceMethod: (SEL)selector
+</code></pre>
+</div>
+
+<p>selector即为我们所没有找到的选择子。class_addMethod方法会为类增加一个方法实现，而这个实现的新方法名就是我们没有找到的选择子。</p>
+
+<ul>
+  <li>
+    <p>寻找备援接受者，这限于在对象内的其他对象</p>
+  </li>
+  <li>
+    <p>完整的消息转发，也就是改变调用目标。</p>
+  </li>
+</ul>
+
+<p>后两个在开发中其实非常的少见。</p>
+
+<p>接下来要介绍一个黑科技，叫做方法调配Method Swizzling。由于OC的方法调用是在运行时才确定的，因此我们可以在运行时替换方法的实现。
+替换方法实现的方法为</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>void method_exchangeImplementations(Method m1, Method m2)
+</code></pre>
+</div>
+
+<p>而根据方法名，得到其实现的方法为：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Method class_getInstanceMethod(Class aClass, SEL aSelector)
+</code></pre>
+</div>
+
+<p>我们只需要根据方法名，取出其实现然后交换就好啦！</p>
+
+<p>最后，介绍一下OC中的类。对于一个id类型的实例，其本质为一个struct：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>typedef struct objc_object {
+	Class isa;
+} *id;
+</code></pre>
+</div>
+
+<p>isa指向其所属的类。而对于一个类，其也为一个struct，保存了一些类的数据。在这个struct中，也有一个Class类型的isa，指向这个类的元类。这个元类保存了这个类的一些元数据。而这个struct的super_class指针指向了这个类的父类。那么我们需要查询一个id实例的类型时，可以用如下方法：</p>
+
+<ol>
+  <li>
+    <p>isMemberOfClass，查询实例是否为某个类</p>
+  </li>
+  <li>
+    <p>isKindOfClass，查询实例是否为一个类或其子类</p>
+  </li>
+</ol>
+
+<p>当然，在比较类型时，我们可以用==运算符，因为每一个类在OC中都是单例的，只有一个类对象，也就没有地址不同这样的说法了。例如：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if ([object class] == [SomeClass class]) {
+	...
+}
+</code></pre>
+</div>
+
+<p>关于OC的语言特性，其实还有很多，但是其消息和动态的特性是最为关键的。</p>
+
+
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2016/03/22/Objective-C中的消息"
+                    data-title="Objective-C中的消息"
+                    data-url="https://gougoumemeda.github.io/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/"
+                    data-images="https://gougoumemeda.github.io/img/post-bg-2015.jpg"
+                    data-content="我们先来介绍一下OC中属性的用法。属性就是我们在实际工程中运用的最多的形式，以@property开头。用属性有什么好处呢？简单来说，属性有利于我们对内存的... | 金嘉骏的博客 | GeorgeJin Blog " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/" data-toggle="tooltip" data-placement="top" title="Objective-C语言相关">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/04/02/Objective-C%E4%B8%AD%E6%8E%A5%E5%8F%A3%E5%92%8CAPI%E7%9A%84%E8%AE%BE%E8%AE%A1/" data-toggle="tooltip" data-placement="top" title="Objective-C中接口和API的设计">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="/2016/03/22/Objective-C中的消息"
+                        data-title="Objective-C中的消息"
+                        data-url="https://gougoumemeda.github.io/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Web" title="Web" rel="3">
+                                    Web
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="12">
+                                    技术
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="9">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="6">
+                                    Objective-C
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Javascript" title="Javascript" rel="2">
+                                    Javascript
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="2">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://huangxuan.me">Hux Blog</a></li>
+                    
+                        <li><a href="#">Foo</a></li>
+                    
+                        <li><a href="#">Bar</a></li>
+                    
+                        <li><a href="#">Example Friends</a></li>
+                    
+                        <li><a href="#">It helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'georgejin';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/u/3033630677">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/金嘉骏">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/gougoumemeda">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-81336472-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '23710bb6f40c572032327a0420b5fd57';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

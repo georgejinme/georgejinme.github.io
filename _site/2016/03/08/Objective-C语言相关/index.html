@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>About - 金嘉骏的博客 | GeorgeJin Blog</title>
+    <title>Objective-C语言相关 - 金嘉骏的博客 | GeorgeJin Blog</title>
 
-    <link rel="canonical" href="https://gougoumemeda.github.io/about/">
+    <link rel="canonical" href="https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -123,250 +123,241 @@
 </script>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/about-bg.jpg')">
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-2015.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-2015.jpg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>About</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">Hey, this is Hux.</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                        <a class="tag" href="/tags/#Objective-C" title="Objective-C">Objective-C</a>
+                        
+                    </div>
+                    <h1>Objective-C语言相关</h1>
+                    
+                    
+                    <h2 class="subheading">《Effective Objective-C 2.0》OC语言部分笔记</h2>
+                    
+                    <span class="meta">Posted by George on March 8, 2016</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-        
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-<!-- USE SIDEBAR -->
     <!-- Post Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-    			<!-- Language Selector -->
-<select onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> 中文 Chinese </option>
-    <option value="1"> 英语 English </option>
-</select>
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-<!-- Chinese Version -->
-<div class="zh post-container">
-    <blockquote>
-        写写代码，做做设计，看看产品。
-        世界那么大，多玩玩看看。
-    </blockquote>
-    9月21日上午，阳光明媚，鲜花斗艳。帕洛阿尔托苹果店里欢声笑语，人头攒动。苹果公司首席执行官蒂姆·库克先生在店长欧阳猛南陪同下，不远千米，深入到一线店面，为那里的员工带去节曰的问候和良好的祝愿。<br><br>“果粉们，你们辛苦了，我代表某果公司，祝你们身体健康，生活幸福，工作成功！”库克亲切慰问广大员工和顾客，并就iOS7、iPhone 5S和iPhone 5C的销售状况进行调研。 <br><br>“您现在每月工资有多少？肾5S拿到了吗？”在店里，库克关切地向果粉们问起这一问题。当听说果粉们排到了5S，库克满意地连连点头。接着他指出，近年来苹果事业发展取得巨大成就，特别是iPhone影响剧增，老百姓对iOS满意度逐步提高，在这个转变过程中，果粉的辛勤工作功不可没。<br><br>库克看到一个中国小朋友在排队买iPhone 5S，亲切的问：“5288元一台能承受不？”小朋友回答到：“能！”当得知这位小朋友卖了一个肾来买iPhone 5S时，库克叮嘱道：“在支持苹果的同时，也要爱护身体。”<br><br>库克与购买苹果手机的果粉们兴致勃勃地参观了苹果专卖店，和员工们拉了拉家常，并饶有兴趣地玩了四盘切西瓜游戏，与普通员工同乐。<br><br>在交谈中，库克多次关心地强调：“有了iPhone 5C，就不卖iPhone 5了。”并对顾客说：“好好休息，身体是革命的本钱嘛！”会谈始终在亲切友好的气氛中进行。<br><br>顾客们就库克的讲话达成了广泛的共识，并承认世界上只有iOS最流畅，要紧紧的团结在以库克先生为首席执行官的苹果公司集体周围，一心一意抓学习，聚精会神谋发展。<br>
-    <br>帕洛阿尔托苹果专卖店当日原则通过《蒂姆·库克首席执行官在加州新苹果店的讲话纪要》，并下发各分店认真学习、研讨。
+				<p>最近正好在看<em>《Effective Objective-C 2.0》</em>，简单记录一下每一章节的内容吧，也算是复习了一下。</p>
 
-    <p style="text-align:right;">
-        —— <a href="http://www.zhihu.com/question/19687065">李书航 － 什么是「共产中文腔调」？ </a>
-    </p>
+<p>那首先我们从语言本身开始说起。Objective-C是使用消息结构而非函数调用的，因此其运行时所执行的代码是由运行的环境来决定，而并非由编译器决定。这样的特性使得Objective-C非常之灵活，因为运行时确定，所以我们可以在写代码的时候展现一些黑科技，比如说运行时的代码替换，Swizzling等。相比而言Swift就更加严谨了，现在常见的一些运行时效果也是通过Objective-C的那一套来实现的。因为Objective-C的这样的特性，因此所有的Foundation中的对象都是保存在堆上而不是栈上，所以我们写代码的时候都使用指针，如下：</p>
 
+<div class="highlighter-rouge"><pre class="highlight"><code>NSString *someString = @\"the string\";
+</code></pre>
 </div>
 
-<!-- English Version -->
-<div class="en post-container">
-    <blockquote>
-        Designer or Engineer, things in between.
-    </blockquote>
+<p>当然，非Foundation对象，例如CGRect等，都是保存在栈上的。</p>
 
-    <p>
-        Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle. As with all matters of the heart, you’ll know when you find it.
-    </p>
+<p>本书给我们的第一条建议是“在类的头文件中尽量少引入其他头文件”。道理很简单，头文件a中引入了头文件b，相当于把头文件b的接口信息都暴露给了头文件a，这些信息是无用的。写代码的时候我们要确保其低耦合，因此这么做是非常值得的。那如果我们要使用b中的某个类呢？这时候可以用向前声明：</p>
 
-    <p>
-    If you want to live your life in a creative way, as an artist, you have to not look back too much. You have to be willing to take whatever you’ve done and whoever you were and throw them away.
-    </p>
-
-    <p style="text-align:right;">
-    -- Steve Jobs
-    </p>
-
+<div class="highlighter-rouge"><pre class="highlight"><code>@class SomeClass;
+</code></pre>
 </div>
 
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    function onLanChange(index){
-        if(index == 0){
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }else{
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        }
-    }
-    onLanChange(0);
-</script>
+<p>这样我们可以直接使用类名，而把头文件的引入放在实现文件中了。除此之外，在头文件中引入其他头文件也容易产生循环引用，这与内存管理中的循环引用是类似的，不再重复了。</p>
 
+<p>关于对象，我们需要多用字面量语法，就像我们平时在c++，swift中做的那样。不同的是，我们需要把字面量转换成一个Foundation对象，只需要在字面量前加上@就可以了。例如：</p>
 
-
-
-<!-- 多说评论框 start -->
-<div class="comment">
-    <div class="ds-thread"
-    
-        data-thread-key="georgejin/about"
-    
-
-    data-title="About"
-    data-url="https://gougoumemeda.github.io/about/"></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>NSNumber *someNum = [NSNumber numberWithInt: 1];
+NSNumber *someNum = @1;
+</code></pre>
 </div>
-<!-- 多说评论框 end -->
 
-<!-- Duoshuo hacking -->
-<input id="dsUser" type="hidden" value="georgejin"  />
+<p>上面两句话是等效的。所有的Foundation对象都可以这么定义，不过有几点需要注意：</p>
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User hacking by Hux
-    var _user = document.getElementById('dsUser').value;
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
+<ol>
+  <li>
+    <p>不能出现nil</p>
+  </li>
+  <li>
+    <p>字典与数组中的元素/键值必须都是Foundation对象</p>
+  </li>
+  <li>
+    <p>用字面量创建出的对象都是不可变的</p>
+  </li>
+</ol>
+
+<p>此外，很多人喜欢用#define定义宏来表示某些常量，其实在OC中，完全可以用static const来取代。在编译器的处理上说，两者几乎没有区别，而常量增加了一个类型的信息，对于程序员更加友好。如果要定义一个全局的常量，可以使用extern关键字，头文件：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>extern NSString *const someStr;
+</code></pre>
+</div>
+
+<p>实现文件中：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>NSString *const someStr = @\"fuck\";
+</code></pre>
+</div>
+
+<p>最后，聊一下枚举。我们可以使用enum来定义一个枚举类型，枚举类型的默认值也可以指定，因此我们可以将不同的值进行或运算，产生某种选项的效果。但是OC给我们提供了两个更加优雅的宏来定义枚举和选项：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>typedef NS_ENUM(NSUIngeter, ConnectionState) {
+	Connected,
+	NotConnected,
+};
+typedef NS_OPTION(NSUIngeter, PermittedDirection) {
+	Left,
+	Right,
+	Up,
+	Down,
+};
+</code></pre>
+</div>
+
+<p>从名字就可以看出这两个宏是表示什么意思了吧，宏的第一个参数表示底层的存储类型，第二个参数表示枚举/选项类型的名字。注意一点，我们在switch语句中，如果判断的是枚举类型，则不要加default，否则如果之后新增一种情况的话，很容易增加case语句，编译器也不会给我们任何的警告。</p>
 
 
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2016/03/08/Objective-C语言相关"
+                    data-title="Objective-C语言相关"
+                    data-url="https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/"
+                    data-images="https://gougoumemeda.github.io/img/post-bg-2015.jpg"
+                    data-content="最近正好在看《Effective Objective-C 2.0》，简单记录一下每一章节的内容吧，也算是复习了一下。
+
+那首先我们从语言本身开始说起。Ob... | 金嘉骏的博客 | GeorgeJin Blog " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
 
 
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/03/01/%E5%85%B3%E4%BA%8EGrand-Central-Dispatch%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86/" data-toggle="tooltip" data-placement="top" title="关于Grand Central Dispatch的一些知识">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/" data-toggle="tooltip" data-placement="top" title="Objective-C中的消息">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
 
-    		</div>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="/2016/03/08/Objective-C语言相关"
+                        data-title="Objective-C语言相关"
+                        data-url="https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
+        				
                             
-                                <a href="/tags/#Web" title="Web" rel="3">
+                				<a href="/tags/#Web" title="Web" rel="3">
                                     Web
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#技术" title="技术" rel="12">
+                				<a href="/tags/#技术" title="技术" rel="12">
                                     技术
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#iOS" title="iOS" rel="9">
+                				<a href="/tags/#iOS" title="iOS" rel="9">
                                     iOS
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#Objective-C" title="Objective-C" rel="6">
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="6">
                                     Objective-C
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#Javascript" title="Javascript" rel="2">
+                				<a href="/tags/#Javascript" title="Javascript" rel="2">
                                     Javascript
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Python" title="Python" rel="2">
+                				<a href="/tags/#Python" title="Python" rel="2">
                                     Python
                                 </a>
                             
-                        
+        				
                             
-                        
-                    </div>
+        				
+        			</div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-                        
-                            <img src="/img/avatar-hux.jpg" />
-                        
-                        
-                            <p>与其感慨路难行，不如马上出发。</p>
-                        
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="http://weibo.com/u/3033630677">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://www.facebook.com/金嘉骏">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://github.com/gougoumemeda">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
@@ -385,10 +376,70 @@
                     
                 </ul>
                 
-    		</div>
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'georgejin';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
 
 
     <!-- Footer -->

@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>About - 金嘉骏的博客 | GeorgeJin Blog</title>
+    <title>金嘉骏的博客 | GeorgeJin Blog</title>
 
-    <link rel="canonical" href="https://gougoumemeda.github.io/about/">
+    <link rel="canonical" href="https://gougoumemeda.github.io/page2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -124,14 +124,14 @@
 
 
     <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/about-bg.jpg')">
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
                 <div class="site-heading">
-                    <h1>About</h1>
+                    <h1>GeorgeJin</h1>
                     <!--<hr class="small">-->
-                    <span class="subheading">Hey, this is Hux.</span>
+                    <span class="subheading">iOS和Web工程师。Dota2低分选手，守望先锋中等水平。</span>
                 </div>
             </div>
         </div>
@@ -152,100 +152,70 @@
                 col-xs-12
                 post-container
             ">
-    			<!-- Language Selector -->
-<select onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> 中文 Chinese </option>
-    <option value="1"> 英语 English </option>
-</select>
+    			
+<div class="post-preview">
+    <a href="/2016/02/22/%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8EARC%E7%9A%84/">
+        <h2 class="post-title">
+            一些关于ARC的
+        </h2>
+        
+        <h3 class="post-subtitle">
+            《Objective-C高级编程 iOS与OS X多线程和内存管理》ARC部分笔记
+        </h3>
+        
+        <div class="post-content-preview">
+            刚看了《Objective-C高级编程 iOS与OS X多线程和内存管理》的第一章，非常有意思，主要讲的是iOS中新引进的ARC系统。
 
-<!-- Chinese Version -->
-<div class="zh post-container">
-    <blockquote>
-        写写代码，做做设计，看看产品。
-        世界那么大，多玩玩看看。
-    </blockquote>
-    9月21日上午，阳光明媚，鲜花斗艳。帕洛阿尔托苹果店里欢声笑语，人头攒动。苹果公司首席执行官蒂姆·库克先生在店长欧阳猛南陪同下，不远千米，深入到一线店面，为那里的员工带去节曰的问候和良好的祝愿。<br><br>“果粉们，你们辛苦了，我代表某果公司，祝你们身体健康，生活幸福，工作成功！”库克亲切慰问广大员工和顾客，并就iOS7、iPhone 5S和iPhone 5C的销售状况进行调研。 <br><br>“您现在每月工资有多少？肾5S拿到了吗？”在店里，库克关切地向果粉们问起这一问题。当听说果粉们排到了5S，库克满意地连连点头。接着他指出，近年来苹果事业发展取得巨大成就，特别是iPhone影响剧增，老百姓对iOS满意度逐步提高，在这个转变过程中，果粉的辛勤工作功不可没。<br><br>库克看到一个中国小朋友在排队买iPhone 5S，亲切的问：“5288元一台能承受不？”小朋友回答到：“能！”当得知这位小朋友卖了一个肾来买iPhone 5S时，库克叮嘱道：“在支持苹果的同时，也要爱护身体。”<br><br>库克与购买苹果手机的果粉们兴致勃勃地参观了苹果专卖店，和员工们拉了拉家常，并饶有兴趣地玩了四盘切西瓜游戏，与普通员工同乐。<br><br>在交谈中，库克多次关心地强调：“有了iPhone 5C，就不卖iPhone 5了。”并对顾客说：“好好休息，身体是革命的本钱嘛！”会谈始终在亲切友好的气氛中进行。<br><br>顾客们就库克的讲话达成了广泛的共识，并承认世界上只有iOS最流畅，要紧紧的团结在以库克先生为首席执行官的苹果公司集体周围，一心一意抓学习，聚精会神谋发展。<br>
-    <br>帕洛阿尔托苹果专卖店当日原则通过《蒂姆·库克首席执行官在加州新苹果店的讲话纪要》，并下发各分店认真学习、研讨。
-
-    <p style="text-align:right;">
-        —— <a href="http://www.zhihu.com/question/19687065">李书航 － 什么是「共产中文腔调」？ </a>
+相信大部分人都很熟悉ARC系统了，其实本质上来说就是增加一个retainCount引用计数，来表示当前有多少变量在使用一个对象。如果计数为0，则销毁这个对象，因此大部分的销毁变量的代码都省去了，因为编译器会自动帮我们搞定这些。这是ARC的思想，c++中sh...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by George on February 22, 2016
     </p>
-
 </div>
+<hr>
 
-<!-- English Version -->
-<div class="en post-container">
-    <blockquote>
-        Designer or Engineer, things in between.
-    </blockquote>
+<div class="post-preview">
+    <a href="/2016/02/15/%E5%85%B3%E4%BA%8E%E6%97%A7%E7%89%88%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/">
+        <h2 class="post-title">
+            关于旧版个人主页
+        </h2>
+        
+        <h3 class="post-subtitle">
+            一些技术细节，包括pjax，low-poly picture等。
+        </h3>
+        
+        <div class="post-content-preview">
+            
+  “需要说明一下，这只是我之前个人主页的一些说明。现在你看到的是新版，部分博客会直接从旧版网页拷贝到新版。关于新版网页的说明请看后续博文。如果要访问旧版，请关注导航栏。”
 
-    <p>
-        Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle. As with all matters of the heart, you’ll know when you find it.
+
+前言
+
+跳过废话，直接看技术实现 
+
+春节不上班，闲来无事就在家里写了一个个人网页。
+
+其实本意是想介绍一下自己，算是一份小小的简历，但在是否将博客功能嵌入这个问题上纠结许久，最后还是想直接集成在一个网页中。目前还...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by George on February 15, 2016
     </p>
-
-    <p>
-    If you want to live your life in a creative way, as an artist, you have to not look back too much. You have to be willing to take whatever you’ve done and whoever you were and throw them away.
-    </p>
-
-    <p style="text-align:right;">
-    -- Steve Jobs
-    </p>
-
 </div>
-
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    function onLanChange(index){
-        if(index == 0){
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }else{
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        }
-    }
-    onLanChange(0);
-</script>
+<hr>
 
 
+<!-- Pager -->
 
-
-<!-- 多说评论框 start -->
-<div class="comment">
-    <div class="ds-thread"
+<ul class="pager">
     
-        data-thread-key="georgejin/about"
+    <li class="previous">
+        <a href="/">&larr; Newer Posts</a>
+    </li>
     
-
-    data-title="About"
-    data-url="https://gougoumemeda.github.io/about/"></div>
-</div>
-<!-- 多说评论框 end -->
-
-<!-- Duoshuo hacking -->
-<input id="dsUser" type="hidden" value="georgejin"  />
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User hacking by Hux
-    var _user = document.getElementById('dsUser').value;
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
-
-
-
+    
+</ul>
 
 
     		</div>

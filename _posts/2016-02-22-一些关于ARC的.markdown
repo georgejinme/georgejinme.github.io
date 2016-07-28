@@ -1,0 +1,51 @@
+---
+layout:     post
+title:      "一些关于ARC的"
+subtitle:   "《Objective-C高级编程 iOS与OS X多线程和内存管理》ARC部分笔记"
+date:       2016-02-22 12:00:00
+author:     "George"
+header-img: "img/post-bg-2015.jpg"
+tags:
+    - iOS
+    - 技术
+    - 内存管理
+---
+
+刚看了*《Objective-C高级编程 iOS与OS X多线程和内存管理》*的第一章，非常有意思，主要讲的是iOS中新引进的ARC系统。
+
+相信大部分人都很熟悉ARC系统了，其实本质上来说就是增加一个retainCount引用计数，来表示*当前有多少变量在使用一个对象*。如果计数为0，则销毁这个对象，因此大部分的销毁变量的代码都省去了，因为编译器会自动帮我们搞定这些。这是ARC的思想，c++中sharedPtr, weakPtr也是这么实现的。
+
+然而java管理内存用的是另一套东西：*垃圾收集器(Garbage Collector)*。GC会在每一个对象上增加一个字段，用来指向这个对象引用的其他对象。如果在一个代码块结束的时候，有一个对象没有任何其他对象去引用，那么他就是没用的，可以把他回收了，这也是很符合常理的对吧。其数据结构抽象出来我自己觉得很像一棵树，大家可以想象一下。
+
+回到ARC，虽然很好用，但是也有问题，会产生循环引用。概念就不必多说了，我们只要加上weak修饰符就可以。虽然看上去这样的解决方法很优雅，但是也有问题，因为weak修饰符不会持有对象，因此我们在使用带有weak修饰符的对象时，还是会创建一个strong的临时变量，并把他注册到autoreleasepool。像这样的一段代码:
+
+```
+@autoreleasepool {
+	id __strong obj = [[NSObject alloc] init];
+	id __weak obj2 = obj;
+	NSLog(@\"so?\", _objc_root_RetainCount(obj));
+}
+```
+
+最终会输出2。当我们离开这个块的时候，strong的obj会release一次，在autoreleasepool中的临时变量会release一次，因此obj的计数为0，可以销毁，这在使用上没有问题。问题在于，每次使用weak类型的对象，都会创建一个临时变量并注册，这对cpu的负载是相当之大的，所以还是少用为妙，只有在循环引用时才使用。
+
+对了，现在常用@property属性声明，其属性和修饰符对应关系如下：
+
+```
+assign				__unsafe_unretained
+copy				__strong
+retain				__strong
+strong 				__strong
+unsafe_untained 		__unsafe_unretained
+weak 				__weak
+```
+
+
+
+
+
+
+
+
+
+

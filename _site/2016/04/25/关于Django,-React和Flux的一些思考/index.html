@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="My personal webpage">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>关于Django, React和Flux的一些思考 - 金嘉骏的博客 | GeorgeJin Blog</title>
+
+    <link rel="canonical" href="https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">GeorgeJin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-2015.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-2015.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Javascript" title="Javascript">Javascript</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
+                        
+                        <a class="tag" href="/tags/#Web" title="Web">Web</a>
+                        
+                    </div>
+                    <h1>关于Django, React和Flux的一些思考</h1>
+                    
+                    
+                    <h2 class="subheading">数据库课程设计大作业的准备工作</h2>
+                    
+                    <span class="meta">Posted by George on April 25, 2016</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<p>最近在用Django作为后端写一个SJTU Lost的Web应用，主要是一个失物招领的平台吧，交大学生如果丢了什么东西可以发布过去，如果捡到什么东西也可以在上面贴出来。</p>
+
+<p>然而我在做的过程中遇到了不少的问题。</p>
+
+<p>首先，Django这个后端框架我还是比较熟悉的，外接了MySQL数据库之后，后台并没有遇到太大的问题。然而在选择前端的框架是我纠结了很久：是使用比较传统简单的jQuery还是比较新但是上手比较困难的React？最终我还是选择了React，算是给自己的一个挑战，也是让我接触新知识的一个很好的机会。毕竟以后web component是一种趋势，而jQuery终究会过时。</p>
+
+<p>实际上，ReactJS只是一个View的框架，他能很好的帮助我们创建组件视图，但是并不能够很优雅的保存一些状态与数据，在处理一些交互动作时也显得略微笨重。在React这个前端技术栈中，现在比较流行的是React+Flux+ReactRouter。</p>
+
+<p>Flux实际上提供了单向数据流的传递方案，Action，Dispatcher和Store能够很好的解决React中没办法保存状态数据的问题。</p>
+
+<p>大概流程是，用户在View上点击一个按钮，产生一个Action，Action会调动Dispatcher来分发相应的数据，Store中数据的改变又会让View进行更新，最终显示用户想要的内容在页面上。</p>
+
+<p>ReactRouter我并没有使用，简单来说就是定义一些url和相应显示的component。因为Django自带有router功能，所以我直接把这部分抛弃了。</p>
+
+<p>要安装Flux和ReactJS的话最好还是使用npm，所以引入了一部分nodejs的知识，其实也就是很简单的require一个模块方面的内容，但是作为一个从来没有用过nodejs的人，我发现浏览器没有办法识别出require函数。。。搜索资料过后，发现要先用browserify/webpack将其打包，并且用执行的工具将代码编译成浏览器能识别的js文件。前者是比较传统的工具，缺点是很多东西不支持，比如jsx。后者可以自己定制想要的效果，保存在webpack.config.js文件中，因此最终选择了后者。ES6语法转换成ES5语法直接用Babel就好了，jsx文件也有对应的jsx-loader！</p>
+
+<p>好，介绍完了技术背景之后，我来说一下我遇到的问题和一些思考。</p>
+
+<p>如何在整个浏览器生命周期中共享一份Store/Action/Dispatcher?</p>
+
+<p>其实这个问题非常的普遍。我们第一次进入一个页面后，将一部分信息保存在Store里面。如果我们导航到这个页面的一个子页面，我们还是希望能够继续得到这部分信息的。如果重新跟后台请求，那会再一次产生网络负担，而如果这部分信息能一直保存在Store中的话，就节约了这部分开销，相当于缓存在浏览器中。</p>
+
+<p>但是！我并没有找到合适的解决方案，目前进入不同的页面还是会产生一个新的Store实例，然后从后台得到相应的数据。我觉得Flux设计的理念是和我想的一样的，但是我没有办法在Django框架下解决这个问题（除非我们写单页应用，即只有一个url，那我们在一个js文件中只需要require一次，相应的Store/Action/Dispatcher肯定也只有一个了）。Django的路由决定了视图，因此切换到不同的url时，视图会被加载，视图中的js文件也会被加载（即使是相同的视图也会重新加载一次，导致了新的实例的产生）。当然我知道现在很多跨url保存一些数据（比如购物车里的东西）比较常见的做法是使用cookie，之后如果时间充足应该也会考虑这样的做法（其实可以用session来存放，但是那样我就感觉Flux没啥存在的价值。。。）</p>
+
+<p>现在有一个导航栏，如何保证在所有页面中我们使用的是一个导航栏(减少加载)?</p>
+
+<p>这个问题本质和问题1是一样的，每一次访问一个Django的新路由，都会加载或者重新加载一个视图，只要导航在这个视图中，就会重新加载。</p>
+
+<p>如果要解决这个问题，第一是可以考虑用Ajax，但是这样的话就只能使用一个url了。</p>
+
+<p>还有一种方法是使用Pjax，这是pushState+Ajax，可以在改变url的同时异步加载网页一部分内容。事实上在之前是有一个Django-Pjax的，但是作者已经很久没有更新了，似乎已经不支持现有的版本了。如果之后有时间的话也会去尝试一下这个库。</p>
+
+<p>现在还没有解决这个问题，也希望大家能够帮我想想办法。</p>
+
+<p>大概就是这样，明天继续填坑。</p>
+
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2016/04/25/关于Django, React和Flux的一些思考"
+                    data-title="关于Django, React和Flux的一些思考"
+                    data-url="https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/"
+                    data-images="https://gougoumemeda.github.io/img/post-bg-2015.jpg"
+                    data-content="最近在用Django作为后端写一个SJTU Lost的Web应用，主要是一个失物招领的平台吧，交大学生如果丢了什么东西可以发布过去，如果捡到什么东西也可以... | 金嘉骏的博客 | GeorgeJin Blog " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/04/13/Objective-C%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/" data-toggle="tooltip" data-placement="top" title="Objective-C中的系统框架">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/" data-toggle="tooltip" data-placement="top" title="SJTULost的一些体会">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="/2016/04/25/关于Django, React和Flux的一些思考"
+                        data-title="关于Django, React和Flux的一些思考"
+                        data-url="https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Web" title="Web" rel="3">
+                                    Web
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="12">
+                                    技术
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="9">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="6">
+                                    Objective-C
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Javascript" title="Javascript" rel="2">
+                                    Javascript
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="2">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://huangxuan.me">Hux Blog</a></li>
+                    
+                        <li><a href="#">Foo</a></li>
+                    
+                        <li><a href="#">Bar</a></li>
+                    
+                        <li><a href="#">Example Friends</a></li>
+                    
+                        <li><a href="#">It helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'georgejin';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/u/3033630677">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/金嘉骏">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/gougoumemeda">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-81336472-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '23710bb6f40c572032327a0420b5fd57';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+---
+layout:     post
+title:      "关于旧版个人主页"
+subtitle:   "一些技术细节，包括pjax，low-poly picture等。"
+date:       2016-02-15 12:00:00
+author:     "George"
+header-img: "img/post-bg-2015.jpg"
+tags:
+    - Web
+    - 技术
+---
+
+> "需要说明一下，这只是我之前个人主页的一些说明。现在你看到的是新版，部分博客会直接从旧版网页拷贝到新版。关于新版网页的说明请看后续博文。如果要访问旧版，请关注导航栏。"
+
+
+## 前言
+
+[跳过废话，直接看技术实现 ](#build)
+
+
+春节不上班，闲来无事就在家里写了一个个人网页。
+
+
+
+其实本意是想介绍一下自己，算是一份小小的简历，但在是否将博客功能嵌入这个问题上纠结许久，最后还是想直接集成在一个网页中。目前还没有用市面上的一些Blog框架，之后会考虑使用[Jekyll](http://jekyllrb.com)，不过都是后话了。
+
+
+<p id = "build"></p>
+---
+
+## 正文
+
+说说用到的技术吧。  
+
+Low Poly图用的是[Polyvia](http://zhangwenli.com/Polyvia/)做的，操作svg用[SVG.js](http://svgjs.com)，动画纯收撸。
+
+导航栏按钮的动画用[Segment.js](http://lmgonzalves.github.io/segment/)。
+
+博客部分，后台php，没用数据库，直接读json文件，这部分之后肯定会改用成熟的框架。写的是markdown，用[markdown.js](https://github.com/evilstreak/markdown-js/)转换成html.
+
+Projects和Me部分只是写了一些css3的动画，没有什么特殊的技巧。很多参考了[codrops](http://tympanus.net/codrops/category/tutorials/)这个网站，大家也可以去看看。
+
+[nprogess.js](https://github.com/rstacruz/nprogress)来做loading时的进度条，[Pjax](https://github.com/defunkt/jquery-pjax)做页面的跳转。
+
+大概就是这些，UI设计正在尝试突破，希望你会喜欢。
+
+
+
+## 后记
+
+虽然这个主页花了我不少的心思，看low-poly生成论文，找合适的动画效果，都让我费尽心思。但是最终我还是选择抛弃他，简单点说，就是因为他不够直观。可能也和当时的心态有关吧，喜欢酷炫的东西。但是实际上，博客是用来给别人看的，而不是自己用来炫技的地方。
+
+
+
+
+
+
+

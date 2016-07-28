@@ -5,822 +5,618 @@
     <description>My personal webpage</description>
     <link>https://gougoumemeda.github.io/</link>
     <atom:link href="https://gougoumemeda.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 27 Jul 2016 23:20:36 +0800</pubDate>
-    <lastBuildDate>Wed, 27 Jul 2016 23:20:36 +0800</lastBuildDate>
+    <pubDate>Fri, 29 Jul 2016 01:03:26 +0800</pubDate>
+    <lastBuildDate>Fri, 29 Jul 2016 01:03:26 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
-        <title>Example Post</title>
-        <description>&lt;p&gt;JavaScript 有着很奇怪的命名史。&lt;/p&gt;
+        <title>iOS应用逆向工程</title>
+        <description>&lt;p&gt;之前想深入理解一下iOS方面的知识，就看了《iOS应用逆向工程》这本书。不可否认，这本书是我目前为止看到过的有关iOS方面的最精彩的书籍之一了。&lt;/p&gt;
 
-&lt;p&gt;1995 年，它作为网景浏览器（Netscape Navigator）的一部分首次发布，网景给这个新语言命名为 LiveScript。一年后，为了搭上当时媒体热炒 Java 的顺风车，临时改名为了 JavaScript &lt;em&gt;（当然，Java 和 JavaScript 的关系，就和雷锋和雷锋塔一样 —— 并没有什么关系）&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;原先对于iOS的了解，无非就是一些苹果公开的Api，以及AppStore等非常官方的东西。这本书讲逆向工程，也就是从一个hacker的角度来看待iOS系统。当然，要越过苹果的重重障碍，必要的一点就是先越狱，为此我也在淘宝上买了一部二手的iPhone4S来作为我的测试机。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/in-post/post-js-version/javascript-java.jpg&quot; alt=&quot;java-javascript&quot; /&gt;
-&lt;small class=&quot;img-hint&quot;&gt;歪果仁的笑话怎么一点都不好笑&lt;/small&gt;&lt;/p&gt;
+&lt;p&gt;越狱后，突然间iOS系统就变得很透明了，原先不知道的文件结构现在都暴露在我们面前。其实和MacOS的文件结构还是比较类似的，自己随便看看就能大概知道什么文件夹下存放着什么信息。此外接触了一些新的工具，比如Theos，IDA，class-dump等。前者类似于Xcode，是一个开发工具，可以专门用来写Tweak，也就是我们常说的“插件”。后两者才是真正厉害的东西，IDA是一个反汇编工具，class-dump能分析出二进制文件中的头文件。有了这两个东西，理论上任何的二进制文件我们都能知道他的具体实现，就看我们读汇编的功力深不深了。&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;译者注：&lt;a href=&quot;https://en.wikipedia.org/wiki/JavaScript#History&quot;&gt;wikipedia 的 JavaScript 词条&lt;/a&gt; 更详细的叙述了这段历史&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;之前对于调试工具都不太重视，也不太愿意在程序中打断点。这恰恰是逆向工程的核心之一，打断点是在分析程序的过程中非常好的习惯，在多接触了LLDB之后，发现打断点真的能够带我们慢慢了解一个程序，而不仅仅是停留在UI层面。配合debugserver工具，任何的应用我们都能让他“随时停止”。&lt;/p&gt;
 
-&lt;p&gt;1996 年，网景将 JavaScript 提交给 &lt;a href=&quot;http://www.ecma-international.org/&quot;&gt;ECMA International（欧洲计算机制造商协会）&lt;/a&gt; 进行标准化，并最终确定出新的语言标准，它就是 ECMAScript。自此，ECMAScript 成为所有 JavaScript 实现的基础，不过，由于 JavaScript 名字的历史原因和市场原因（很显然 ECMAScript 这个名字并不令人喜欢……），现实中我们只用 ECMAScript 称呼标准，平时都还是使用 JavaScript 来称呼这个语言。&lt;/p&gt;
+&lt;p&gt;所以，在逆向工程中，流程大概是这样：&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;术语（译者注）：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Reveal定位View&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;cycript测试这个View就是我们想要的&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;找到这个View的Controller。如果是Button，找到他的响应函数，进入5&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;IDA+LLDB中找到这个Controller中的数据源&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改数据源或者响应函数，实现自己的想法&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Theos写成Tweak&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
 
-  &lt;ul&gt;
-    &lt;li&gt;&lt;em&gt;标准（Standard）&lt;/em&gt;： 用于定义与其他事物区别的一套规则&lt;/li&gt;
-    &lt;li&gt;&lt;em&gt;实现（Implementation）&lt;/em&gt;： 某个标准的具体实施/真实实践&lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;书上的案例我都跟着做了，挺有意思的。其中“将电子邮件自动标为已读”这个项目中，作者使用AlertView来选择一个电子邮件。我写的时候拓展成了UITableView，这样就可以选择多个电子邮件了。&lt;/p&gt;
 
-&lt;p&gt;不过，JavaScript 开发者们并不怎么在乎这些，因为在诞生之后的 15 年里，ECMAScript 并没有多少变化，而且现实中的很多实现都已经和标准大相径庭。其实在第一版的 ECMAScript 发布后，很快又跟进发布了两个版本，但是自从 1999 年 ECMAScript 3 发布后，十年内都没有任何改动被成功添加到官方规范里。取而代之的，是各大浏览器厂商们争先进行自己的语言拓展，web 开发者们别无选择只能去尝试并且支持这些 API。即使是在 2009 年 ECMAScript 5 发布之后，仍然用了数年这些新规范才得到了浏览器的广泛支持，可是大部分开发者还是写着 ECMAScript 3 风格的代码，并不觉得有必要去了解这些规范。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;译者注：&lt;a href=&quot;https://en.wikipedia.org/wiki/ECMAScript#4th_Edition_.28abandoned.29&quot;&gt;ECMAScript 第四版草案&lt;/a&gt;由于太过激进而被抛弃，Adobe 的 &lt;a href=&quot;https://en.wikipedia.org/wiki/ActionScript&quot;&gt;ActionScript 3.0&lt;/a&gt; 是 ECMAScript edition 4 的唯一实现（ Flash 差点就统一 Web 了）&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;到了 2012 年，事情突然开始有了转变。大家开始推动停止对旧版本 IE 浏览器的支持，用 ECMAScript 5 (ES5) 风格来编写代码也变得更加可行。与此同时，一个新的 ECMAScript 规范也开始启动。到了这时，大家开始逐渐习惯以对 ECMAScript 规范的版本支持程度来形容各种 JavaScript 实现。在正式被指名为 ECMAScript 第 6 版 (ES6) 之前，这个新的标准原本被称为 ES.Harmony（和谐）。2015 年，负责制定 ECMAScript 规范草案的委员会 TC39 决定将定义新标准的制度改为一年一次，这意味着每个新特性一旦被批准就可以添加，而不像以往一样，规范只有在整个草案完成，所有特性都没问题后才能被定稿。因此，ECMAScript 第 6 版在六月份公布之前，又被重命名为了 ECMAScript 2015（ES2015）&lt;/p&gt;
-
-&lt;p&gt;目前，仍然有很多新的 JavaScript 特性或语法正在提议中，包括 &lt;a href=&quot;https://github.com/wycats/javascript-decorators&quot;&gt;decorators（装饰者）&lt;/a&gt;，&lt;a href=&quot;https://github.com/lukehoban/ecmascript-asyncawait&quot;&gt;async-await（async-await 异步编程模型）&lt;/a&gt; 和 &lt;a href=&quot;https://github.com/jeffmo/es-class-properties&quot;&gt;static class properties（静态类属性）&lt;/a&gt;。它们通常被称为 ES7，ES2016 或者 ES.Next 的特性，不过实际上它们只能被称作提案或者说可能性，毕竟 ES2016 的规范还没有完成，有可能全部都会引入，也有可能一个都没有。TC39 把一个提案分为 4 个阶段，你可以在 &lt;a href=&quot;https://babeljs.io/docs/usage/experimental/&quot;&gt;Babel 的官网&lt;/a&gt; 上查看各个提案目前都在哪个阶段了。&lt;/p&gt;
-
-&lt;p&gt;所以，我们该如何使用这一大堆术语呢？下面的列表或许能帮助到你：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;ECMAScript&lt;/strong&gt;：一个由 ECMA International 进行标准化，TC39 委员会进行监督的语言。通常用于指代标准本身。&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;JavaScript&lt;/strong&gt;：ECMAScript 标准的各种实现的最常用称呼。这个术语并不局限于某个特定版本的 ECMAScript 规范，并且可能被用于任何不同程度的任意版本的 ECMAScript 的实现。&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;ECMAScript 5 (ES5)&lt;/strong&gt;：ECMAScript 的第五版修订，于 2009 年完成标准化。这个规范在所有现代浏览器中都相当完全的实现了。&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;ECMAScript 6 (ES6) / ECMAScript 2015 (ES2015)&lt;/strong&gt;：ECMAScript 的第六版修订，于 2015 年完成标准化。这个标准被部分实现于大部分现代浏览器。可以查阅&lt;a href=&quot;http://kangax.github.io/compat-table/es6/&quot;&gt;这张兼容性表&lt;/a&gt;来查看不同浏览器和工具的实现情况。&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;ECMAScript 2016&lt;/strong&gt;：预计的第七版 ECMAScript 修订，计划于明年夏季发布。这份规范具体将包含哪些特性还没有最终确定&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;ECMAScript Proposals&lt;/strong&gt;：被考虑加入未来版本 ECMAScript 标准的特性与语法提案，他们需要经历五个阶段：Strawman（稻草人），Proposal（提议），Draft（草案），Candidate（候选）以及 Finished （完成）。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;在这整个 Blog 中，我将把目前的 ECMAScript 版本称作 ES6（因为这是大部分开发者最习以为常的），把明年的规范称作 ES2016（因为，与 ES6/ES2015 不同，这个名字将在整个标准化过程中沿用）并且将那些还没有成为 ECMAScript 定稿或草案的未来语言概念称为 ECMAScript 提案或者 JavaScript 提案。我将尽我所能在任何可能引起困惑的场合沿用这篇文章。&lt;/p&gt;
-
-&lt;h4 id=&quot;section&quot;&gt;一些资源&lt;/h4&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;TC39 的 &lt;a href=&quot;https://github.com/tc39/ecma262&quot;&gt;Github 仓库&lt;/a&gt;上可以看到所有目前公开的提案&lt;/li&gt;
-  &lt;li&gt;如果你还不熟悉 ES6，Babel 有一个&lt;a href=&quot;https://babeljs.io/docs/learn-es2015/&quot;&gt;很不错的特性概览&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;如果你希望深入 ES6，这里有两本很不错的书： Axel Rauschmayer 的 &lt;a href=&quot;http://exploringjs.com/&quot;&gt;Exploring ES6&lt;/a&gt;和 Nicholas Zakas 的 &lt;a href=&quot;https://leanpub.com/understandinges6&quot;&gt;Understanding ECMAScript 6&lt;/a&gt;。Axel 的博客 &lt;a href=&quot;http://www.2ality.com/&quot;&gt;2ality&lt;/a&gt; 也是很不错的 ES6 资源&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img class=&quot;shadow&quot; width=&quot;320&quot; src=&quot;/img/in-post/post-js-version/keep-calm-and-learn-javascript.png&quot; /&gt;
-&lt;small class=&quot;img-hint&quot;&gt;来学 JavaScript 吧！&lt;/small&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;section-1&quot;&gt;著作权声明&lt;/h4&gt;
-
-&lt;p&gt;本文译自 &lt;a href=&quot;http://benmccormick.org/2015/09/14/es5-es6-es2016-es-next-whats-going-on-with-javascript-versioning/&quot;&gt;ES5, ES6, ES2016, ES.Next: What’s going on with JavaScript versioning?&lt;/a&gt; &lt;br /&gt;
-译者 &lt;a href=&quot;http://weibo.com/huxpro&quot;&gt;黄玄&lt;/a&gt;，首次发布于 &lt;a href=&quot;http://huangxuan.me&quot;&gt;Hux Blog&lt;/a&gt;，转载请保留以上链接&lt;/p&gt;
+&lt;p&gt;可惜的是，除了工具和汇编方面的知识，其他方面的我以后使用的地方估计不多了。当然这本书带给我的乐趣是相当多的，第一次见识到逆向的威力，也看到了iOS不为人知的一面，实在是让人兴奋。&lt;/p&gt;
 </description>
-        <pubDate>Tue, 22 Sep 2015 00:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2015/09/22/js-version/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2015/09/22/js-version/</guid>
+        <pubDate>Tue, 31 May 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</guid>
         
-        <category>前端开发</category>
+        <category>iOS</category>
         
-        <category>JavaScript</category>
+        <category>技术</category>
         
-        <category>翻译</category>
+        <category>逆向</category>
         
         
       </item>
     
       <item>
-        <title>Example Post using Keynote Layout</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;下滑这里查看更多内容&lt;/p&gt;
-&lt;/blockquote&gt;
+        <title>SJTULost的一些体会</title>
+        <description>&lt;p&gt;最近花了大约一个月的时间来开发这个SJTULost的项目，这个项目其实是我的数据库大作业，主要是一个交大学生使用的失物招领平台，从技术上介绍一下这个项目吧。&lt;/p&gt;
 
-&lt;p&gt;7月9日，我在公司内部进行了名为「JavaScript 模块化七日谈」分享，并将该 Slides 分享到了微博上。出乎意料地，这篇微博先后被 @JS小组 @尤小右 @寸志 等近 200 人转发，阅读达到 10w，获得了还不错的评价。&lt;/p&gt;
+&lt;p&gt;前端，因为之前使用过一次React但是时间比较仓促，没有仔细的去研究过这个框架具体的使用方法。这次使用了React之后也搭配了Flux作为前端的框架。确实，有了Flux之后数据在前端的传递更加清晰，将Action和Store分隔开来的做法也使得代码有更强的可读性和可拓展性。当然，前端数据和后台数据放在了Action中完成，使用Ajax来对后台进行请求，返回的数据都是Json格式的。得到返回数据后再通知Store去更新其前端数据，并且显示在用户面前。&lt;/p&gt;
 
-&lt;p&gt;于是，我决定将它重新发到我的博客上，并为它专门制作了适用于 Keynote 展示文稿的新布局。它能自动根据屏幕大小/旋转以一定比例填充屏幕，你也可以直接点击下方链接在新页面打开，来获得更好的、沉浸式的全屏体验&lt;/p&gt;
+&lt;p&gt;Action里面主要分为两个部分，一个是UserAction，主要记录用户的操作，比如修改用户信息，登录等。还有一个叫InitializationAction，记录的是其他所有的操作，包括Finding和Found的读取，过滤，更新，查询等。&lt;/p&gt;
 
-&lt;h3 id=&quot;watch-slides-httphuangxuanmejs-module-7day&quot;&gt;&lt;a href=&quot;http://huangxuan.me/js-module-7day&quot;&gt;Watch Slides →&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Store的东西相对会多一点，数据库中每一个关系对象都会有一个Store，比如Finding，Found，ItemType和Place。同时，针对一些特定的功能我们也提供了其Store，比如Rank，后台将排好序的名字返回给前端，保存在Store中并最后显示。&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://huangxuan.me/js-module-7day/attach/qrcode.png&quot; width=&quot;350&quot; height=&quot;350&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;后台用的还是Django，一方面比较成熟，另一方面因为我之前也做过Django项目，所以学习成本会低很多。&lt;/p&gt;
 
-&lt;p&gt;&lt;small class=&quot;img-hint&quot;&gt;你也可以通过扫描二维码在手机上观看&lt;/small&gt;&lt;/p&gt;
+&lt;p&gt;数据库的话，我一共建了五个表（不包括多对多关系的第三张表）。分别是Finding，Found，User，ItemType和Place。各个表之间的关系还是比较明确的。将Finding和Found分开也是因为这两者虽然字段很接近，但是其功能是截然不同的。&lt;/p&gt;
 
-&lt;p&gt;这个 Web Slides 开源在&lt;a href=&quot;https://github.com/Huxpro/js-module-7day&quot;&gt;我的 Github 上&lt;/a&gt;，欢迎你帮助我完善这个展示文稿，你可以给我提 issue，可以 fork &amp;amp; pull request。如果它能帮助到你了，希望你还能不吝啬 star 一下这个项目&lt;/p&gt;
-
-&lt;h3 id=&quot;catalog&quot;&gt;Catalog&lt;/h3&gt;
+&lt;p&gt;接下来说说看这个项目中的一些难点。&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;第一日 上古时期 &lt;strong&gt;&lt;em&gt;Module?&lt;/em&gt;&lt;/strong&gt; 从设计模式说起&lt;/li&gt;
-  &lt;li&gt;第二日 石器时代 &lt;strong&gt;&lt;em&gt;Script Loader&lt;/em&gt;&lt;/strong&gt; 只有封装性可不够，我们还需要加载&lt;/li&gt;
-  &lt;li&gt;第三日 蒸汽朋克 &lt;strong&gt;&lt;em&gt;Module Loader&lt;/em&gt;&lt;/strong&gt; 模块化架构的工业革命&lt;/li&gt;
-  &lt;li&gt;第四日 号角吹响 &lt;strong&gt;&lt;em&gt;CommonJS&lt;/em&gt;&lt;/strong&gt; 征服世界的第一步是跳出浏览器&lt;/li&gt;
-  &lt;li&gt;第五日 双塔奇兵 &lt;strong&gt;&lt;em&gt;AMD/CMD&lt;/em&gt;&lt;/strong&gt; 浏览器环境模块化方案&lt;/li&gt;
-  &lt;li&gt;第六日 精灵宝钻 &lt;strong&gt;&lt;em&gt;Browserify/Webpack&lt;/em&gt;&lt;/strong&gt; 大势所趋，去掉这层包裹！&lt;/li&gt;
-  &lt;li&gt;第七日 王者归来 &lt;strong&gt;&lt;em&gt;ES6 Module&lt;/em&gt;&lt;/strong&gt; 最后的战役&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;登录。项目中我没有自己设立登录系统，在User表中也是没有username和password这样的字段的。我使用的是交大的&lt;a href=&quot;http://developer.sjtu.edu.cn/wiki/JAccount&quot;&gt;Jaccount&lt;/a&gt;登录系统来进行判断用户的身份，也就是说，这个网站只有交大的同学才能够使用。Jaccount授权系统使用的是OAuth2，因为之前没有熟悉过，所以在开发的时候还是遇到了一些问题的，比如authorization和access token的两个url的回调函数必须是一致的，否则没有权限获取access token。得到用户信息之后，判断用户是否存在于数据库，如果不存在就创建一个新的元组。同时将这个用户在User表中的id保存在session里，有效期为两周，因此在两周内用户是不需要登录的。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;搜索。问题在于用户输入多个关键字时，我们应该怎么看待这些关键字的关系，是同时满足还是至少满足一个。因此我将与运算和或运算都加入到搜索系统里面，方便用户的查询。在后台使用queryset的field_contain参数，就能够从数据库里获取想要的信息。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;分页。分页的问题在于，我们除了需要获取那些部分的数据之外，还要获得所有数据的总数，这样才能知道什么时候用户是没有办法点击下一页的。我现在的实现中还存在着一个问题，用户每一次点击一页，相当于是重新计算了一遍再把数据返回前台。我理想的结果是，用户进入第一页之后，后台先返回第一页，然后在将后面一部分的页面读取出来缓存起来，这样如果用户点击下一页就不需要重新计算了，可以直接将数据返回前端。如果用户点击到了没有缓存过的一页，则再计算一遍。这样我们实际是利用用户浏览的时间才读取后面的内容，减少网页响应时间。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;选取时间。在网上找过一些时间的插件，但是都是用jQuery实现的，React版本的时间插件并不流行。最后选择了&lt;a href=&quot;https://github.com/YouCanBookMe/react-datetime&quot;&gt;react-datetime&lt;/a&gt;这个插件，能够和我的项目兼容。其中有一些props可以传递，包括dateFormat，timeFormat之类，都是可以在moment.js的网站上找到相应的字符格式。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;上传图片。抱歉，我实在没找到合适的React的上传文件的插件，因此还是用jQuery写成的&lt;a href=&quot;https://github.com/blueimp/jQuery-File-Upload&quot;&gt;jQuery-File-Upload&lt;/a&gt;插件。不过我将上传的动作放在了Action里，使得除了Action文件以外的地方都不会出现$这个符号。将图片传递给后台之后，使用qiniu的Python SDK将其上传到七牛云。最后把照片的url返回给前端，实时预览。&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;thanks&quot;&gt;Thanks&lt;/h3&gt;
+&lt;p&gt;关于这个项目的大概就是这些，如果有问题的话可以联系我。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://lab.hakim.se/reveal-js&quot;&gt;Reveal.js&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;项目目前还没有服务器，有没有老司机推荐一个能跑python的，便宜的，免备案的服务器？&lt;/p&gt;
 </description>
-        <pubDate>Thu, 09 Jul 2015 00:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2015/07/09/js-module-7day/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2015/07/09/js-module-7day/</guid>
+        <pubDate>Sat, 21 May 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/</guid>
         
-        <category>前端开发</category>
+        <category>Javascript</category>
         
-        <category>JavaScript</category>
+        <category>技术</category>
+        
+        <category>Python</category>
+        
+        <category>Web</category>
         
         
       </item>
     
       <item>
-        <title>Example Post with Code Highlight</title>
-        <description>&lt;h2 id=&quot;foreword&quot;&gt;Foreword&lt;/h2&gt;
+        <title>关于Django, React和Flux的一些思考</title>
+        <description>&lt;p&gt;最近在用Django作为后端写一个SJTU Lost的Web应用，主要是一个失物招领的平台吧，交大学生如果丢了什么东西可以发布过去，如果捡到什么东西也可以在上面贴出来。&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Here comes Module!&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;然而我在做的过程中遇到了不少的问题。&lt;/p&gt;
 
-&lt;p&gt;随着网站逐渐变成「互联网应用程序」，嵌入网页的 JavaScript 代码越来越庞大，越来越复杂。网页越来越像桌面程序，需要一个团队分工协作、进度管理、单元测试……我们不得不使用软件工程的方法，来管理网页的业务逻辑。&lt;/p&gt;
+&lt;p&gt;首先，Django这个后端框架我还是比较熟悉的，外接了MySQL数据库之后，后台并没有遇到太大的问题。然而在选择前端的框架是我纠结了很久：是使用比较传统简单的jQuery还是比较新但是上手比较困难的React？最终我还是选择了React，算是给自己的一个挑战，也是让我接触新知识的一个很好的机会。毕竟以后web component是一种趋势，而jQuery终究会过时。&lt;/p&gt;
 
-&lt;p&gt;于是，JavaScript 的模块化成为迫切需求。在 ES6 Module 来临之前，JavaScript 社区提供了强大支持，尝试在现有的运行环境下，实现模块的效果。&lt;/p&gt;
+&lt;p&gt;实际上，ReactJS只是一个View的框架，他能很好的帮助我们创建组件视图，但是并不能够很优雅的保存一些状态与数据，在处理一些交互动作时也显得略微笨重。在React这个前端技术栈中，现在比较流行的是React+Flux+ReactRouter。&lt;/p&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;Flux实际上提供了单向数据流的传递方案，Action，Dispatcher和Store能够很好的解决React中没办法保存状态数据的问题。&lt;/p&gt;
 
-&lt;h2 id=&quot;catalog&quot;&gt;Catalog&lt;/h2&gt;
+&lt;p&gt;大概流程是，用户在View上点击一个按钮，产生一个Action，Action会调动Dispatcher来分发相应的数据，Store中数据的改变又会让View进行更新，最终显示用户想要的内容在页面上。&lt;/p&gt;
 
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;#commonjs--node&quot;&gt;CommonJS &amp;amp; Node&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#history&quot;&gt;History&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#requirejs--amd&quot;&gt;RequireJS &amp;amp; AMD&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#seajs--cmd&quot;&gt;SeaJS &amp;amp; CMD&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#amd-vs-cmd&quot;&gt;AMD vs CMD&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#webpack&quot;&gt;WebPack&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;ReactRouter我并没有使用，简单来说就是定义一些url和相应显示的component。因为Django自带有router功能，所以我直接把这部分抛弃了。&lt;/p&gt;
 
-&lt;h2 id=&quot;commonjs--node&quot;&gt;CommonJS &amp;amp; Node&lt;/h2&gt;
+&lt;p&gt;要安装Flux和ReactJS的话最好还是使用npm，所以引入了一部分nodejs的知识，其实也就是很简单的require一个模块方面的内容，但是作为一个从来没有用过nodejs的人，我发现浏览器没有办法识别出require函数。。。搜索资料过后，发现要先用browserify/webpack将其打包，并且用执行的工具将代码编译成浏览器能识别的js文件。前者是比较传统的工具，缺点是很多东西不支持，比如jsx。后者可以自己定制想要的效果，保存在webpack.config.js文件中，因此最终选择了后者。ES6语法转换成ES5语法直接用Babel就好了，jsx文件也有对应的jsx-loader！&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Javascript: not just for browsers any more! —— CommonJS Slogen&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;好，介绍完了技术背景之后，我来说一下我遇到的问题和一些思考。&lt;/p&gt;
 
-&lt;p&gt;前端模块化的事实标准之一，2009 年 8 月，&lt;a href=&quot;http://wiki.commonjs.org/wiki/CommonJS&quot;&gt;CommonJS&lt;/a&gt; 诞生。&lt;/p&gt;
+&lt;p&gt;如何在整个浏览器生命周期中共享一份Store/Action/Dispatcher?&lt;/p&gt;
 
-&lt;p&gt;CommonJS 本质上只是一套规范（API 定义），而 Node.js 采用并实现了部分规范，CommonJS Module 的写法也因此广泛流行。&lt;/p&gt;
+&lt;p&gt;其实这个问题非常的普遍。我们第一次进入一个页面后，将一部分信息保存在Store里面。如果我们导航到这个页面的一个子页面，我们还是希望能够继续得到这部分信息的。如果重新跟后台请求，那会再一次产生网络负担，而如果这部分信息能一直保存在Store中的话，就节约了这部分开销，相当于缓存在浏览器中。&lt;/p&gt;
 
-&lt;p&gt;让我们看看 Node 中的实现：&lt;/p&gt;
+&lt;p&gt;但是！我并没有找到合适的解决方案，目前进入不同的页面还是会产生一个新的Store实例，然后从后台得到相应的数据。我觉得Flux设计的理念是和我想的一样的，但是我没有办法在Django框架下解决这个问题（除非我们写单页应用，即只有一个url，那我们在一个js文件中只需要require一次，相应的Store/Action/Dispatcher肯定也只有一个了）。Django的路由决定了视图，因此切换到不同的url时，视图会被加载，视图中的js文件也会被加载（即使是相同的视图也会重新加载一次，导致了新的实例的产生）。当然我知道现在很多跨url保存一些数据（比如购物车里的东西）比较常见的做法是使用cookie，之后如果时间充足应该也会考虑这样的做法（其实可以用session来存放，但是那样我就感觉Flux没啥存在的价值。。。）&lt;/p&gt;
 
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 由于 Node 原生支持模块的作用域，并不需要额外的 wrapper&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// &quot;as though the module was wrapped in a function&quot;&lt;/span&gt;
+&lt;p&gt;现在有一个导航栏，如何保证在所有页面中我们使用的是一个导航栏(减少加载)?&lt;/p&gt;
 
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;./a&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 加载模块（同步加载）&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;         &lt;span class=&quot;c1&quot;&gt;// 等上一句执行完才会执行&lt;/span&gt;
+&lt;p&gt;这个问题本质和问题1是一样的，每一次访问一个Django的新路由，都会加载或者重新加载一个视图，只要导航在这个视图中，就会重新加载。&lt;/p&gt;
 
-&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 暴露 b 函数接口&lt;/span&gt;
-  &lt;span class=&quot;c1&quot;&gt;// do something&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
+&lt;p&gt;如果要解决这个问题，第一是可以考虑用Ajax，但是这样的话就只能使用一个url了。&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;exports&lt;/code&gt;是一个内置对象，就像&lt;code class=&quot;highlighter-rouge&quot;&gt;require&lt;/code&gt;是一个内置加载函数一样。如果你希望直接赋值一个完整的对象或者构造函数，覆写&lt;code class=&quot;highlighter-rouge&quot;&gt;module.exports&lt;/code&gt;就可以了。&lt;/p&gt;
+&lt;p&gt;还有一种方法是使用Pjax，这是pushState+Ajax，可以在改变url的同时异步加载网页一部分内容。事实上在之前是有一个Django-Pjax的，但是作者已经很久没有更新了，似乎已经不支持现有的版本了。如果之后有时间的话也会去尝试一下这个库。&lt;/p&gt;
 
-&lt;p&gt;CommonJS 前身叫 ServerJS ，&lt;strong&gt;后来希望能更加 COMMON，成为通吃各种环境的模块规范，改名为 CommonJS&lt;/strong&gt; 。CommonJS 最初只专注于 Server-side 而非浏览器环境，因此它采用了同步加载的机制，这对服务器环境（硬盘 I/O 速度）不是问题，而对浏览器环境（网速）来说并不合适。&lt;/p&gt;
+&lt;p&gt;现在还没有解决这个问题，也希望大家能够帮我想想办法。&lt;/p&gt;
 
-&lt;p&gt;因此，各种适用于浏览器环境的模块框架与标准逐个诞生，他们的共同点是：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;采用异步加载（预先加载所有依赖的模块后回调执行，符合浏览器的网络环境）&lt;/li&gt;
-  &lt;li&gt;虽然代码风格不同，但其实都可以看作 CommonJS Modules 语法的变体。&lt;/li&gt;
-  &lt;li&gt;都在向着 &lt;strong&gt;COMMON&lt;/strong&gt; 的方向进化：&lt;strong&gt;兼容不同风格，兼容浏览器和服务器两种环境&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;本文接下来要讨论的典例是：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;RequireJS &amp;amp; AMD（异步加载，预执行，依赖前置。默认推荐 AMD 写法）&lt;/li&gt;
-  &lt;li&gt;SeaJS &amp;amp; CMD（异步加载，懒执行，依赖就近，默认推荐 CommonJS 写法）&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;history&quot;&gt;History&lt;/h2&gt;
-
-&lt;!--&lt;h2 id=&quot;history&quot;&gt; History &lt;/h2&gt;--&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;此段落参考自玉伯的 &lt;a href=&quot;https://github.com/seajs/seajs/issues/588&quot;&gt;前端模块化开发那点历史&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;09-10 年间，CommonJS（那时还叫 ServerJS） 社区推出 &lt;a href=&quot;http://wiki.commonjs.org/wiki/Modules&quot;&gt;Modules/1.0&lt;/a&gt; 规范，并且在 Node.js 等环境下取得了很不错的实践。&lt;/p&gt;
-
-&lt;p&gt;09年下半年这帮充满干劲的小伙子们想把 ServerJS 的成功经验进一步推广到浏览器端，于是将社区改名叫 CommonJS，同时激烈争论 Modules 的下一版规范。分歧和冲突由此诞生，逐步形成了三大流派：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;strong&gt;Modules/1.x&lt;/strong&gt; 流派。这个观点觉得 1.x 规范已经够用，只要移植到浏览器端就好。要做的是新增 &lt;a href=&quot;http://wiki.commonjs.org/wiki/Modules/Transport&quot;&gt;Modules/Transport&lt;/a&gt; 规范，即在浏览器上运行前，先通过转换工具将模块转换为符合 Transport 规范的代码。主流代表是服务端的开发人员。现在值得关注的有两个实现：越来越火的 component 和走在前沿的 es6 module transpiler。&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Modules/Async&lt;/strong&gt; 流派。这个观点觉得浏览器有自身的特征，不应该直接用 Modules/1.x 规范。这个观点下的典型代表是 &lt;a href=&quot;http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition&quot;&gt;AMD&lt;/a&gt; 规范及其实现 &lt;a href=&quot;http://requirejs.org/&quot;&gt;RequireJS&lt;/a&gt;。这个稍后再细说。&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Modules/2.0&lt;/strong&gt; 流派。这个观点觉得浏览器有自身的特征，不应该直接用 Modules/1.x 规范，但应该尽可能与 Modules/1.x 规范保持一致。这个观点下的典型代表是 BravoJS 和 FlyScript 的作者。BravoJS 作者对 CommonJS 的社区的贡献很大，这份 Modules/2.0-draft 规范花了很多心思。FlyScript 的作者提出了 Modules/Wrappings 规范，这规范是 CMD 规范的前身。可惜的是 BravoJS 太学院派，FlyScript 后来做了自我阉割，将整个网站（flyscript.org）下线了。这个观点在本文中的典型代表就是 SeaJS 和 CMD 了&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;补一嘴：阿里 KISSY 的 KMD 其实跟 AMD 非常类似，只是用 &lt;code class=&quot;highlighter-rouge&quot;&gt;add&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;use&lt;/code&gt; 两个源自于 YUI Modules 的函数名替换了 &lt;code class=&quot;highlighter-rouge&quot;&gt;define&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;require&lt;/code&gt; ，但其原理更接近 RequireJS ，与 YUI Modules 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;Y&lt;/code&gt; 沙箱 Attach 机制并不相同&lt;/p&gt;
-
-&lt;h2 id=&quot;requirejs--amd&quot;&gt;RequireJS &amp;amp; AMD&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://wiki.commonjs.org/wiki/Modules/AsynchronousDefinition&quot;&gt;AMD (Async Module Definition)&lt;/a&gt; 是 RequireJS 在推广过程中对模块定义的规范化产出。&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;RequireJS is a JavaScript file and module loader. It is optimized for in-browser use, but it can be used in other JavaScript environments&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;RequireJS 主要解决的还是 CommonJS 同步加载脚本不适合浏览器 这个问题：&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//CommonJS&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Employee&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;types/Employee&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Programmer&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//do something&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;  
-
-&lt;span class=&quot;nx&quot;&gt;Programmer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Employee&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;//如果 require call 是异步的，那么肯定 error&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;//因为在执行这句前 Employee 模块肯定来不及加载进来&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;As the comment indicates above, if require() is async, this code will not work. However, loading scripts synchronously in the browser kills performance. So, what to do?&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;所以我们需要 &lt;strong&gt;Function Wrapping&lt;/strong&gt; 来获取依赖并且提前通过 script tag 提前加载进来&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//AMD Wrapper&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;types&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Employee&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;//依赖&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Employee&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//这个回调会在所有依赖都被加载后才执行&lt;/span&gt;
-
-        &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Programmer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
-            &lt;span class=&quot;c1&quot;&gt;//do something&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-        &lt;span class=&quot;nx&quot;&gt;Programmer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;prototype&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Employee&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Programmer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//return Constructor&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;当依赖模块非常多时，这种&lt;strong&gt;依赖前置&lt;/strong&gt;的写法会显得有点奇怪，所以 AMD 给了一个语法糖， &lt;strong&gt;simplified CommonJS wrapping&lt;/strong&gt;，借鉴了 CommonJS 的 require 就近风格，也更方便对 CommonJS 模块的兼容：&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dependency1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;dependency1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;dependency2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;dependency2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;The AMD loader will parse out the &lt;code class=&quot;highlighter-rouge&quot;&gt;require(&#39;&#39;)&lt;/code&gt; calls by using &lt;code class=&quot;highlighter-rouge&quot;&gt;Function.prototype.toString()&lt;/code&gt;, then internally convert the above define call into this:&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;require&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;dependency1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;dependency2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;dependency1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;dependency1&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;dependency2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;dependency2&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;出于&lt;code class=&quot;highlighter-rouge&quot;&gt;Function.prototype.toString()&lt;/code&gt;兼容性和性能的考虑，最好的做法还是做一次 &lt;strong&gt;optimized build&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;AMD 和 CommonJS 的核心争议如下：&lt;/p&gt;
-
-&lt;h3 id=&quot;section&quot;&gt;1. &lt;strong&gt;执行时机&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;Modules/1.0:&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 执行到此时，a.js 才同步下载并执行&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;AMD: （使用 require 的语法糖时）&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;require&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)){&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// 在这里，a.js 已经下载并且执行好了&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// 使用 require() 并不是 AMD 的推荐写法&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 此处仅仅是取模块 a 的 exports&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;AMD 里提前下载 a.js 是出于对浏览器环境的考虑，只能采取异步下载，这个社区都认可（Sea.js 也是这么做的）&lt;/p&gt;
-
-&lt;p&gt;但是 AMD 的执行是 Early Executing，而 Modules/1.0 是第一次 require 时才执行。这个差异很多人不能接受，包括持 Modules/2.0 观点的人也不能接受。&lt;/p&gt;
-
-&lt;h3 id=&quot;section-1&quot;&gt;2. &lt;strong&gt;书写风格&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;AMD 推荐的风格并不使用&lt;code class=&quot;highlighter-rouge&quot;&gt;require&lt;/code&gt;，而是通过参数传入，破坏了&lt;strong&gt;依赖就近&lt;/strong&gt;：&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;a&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;c&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// 提前申明了并初始化了所有模块&lt;/span&gt;
-
-    &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;//即便根本没用到模块 b，但 b 还是提前执行了。&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;不过，在笔者看来，风格喜好因人而异，主要还是&lt;strong&gt;预执行&lt;/strong&gt;和&lt;strong&gt;懒执行&lt;/strong&gt;的差异。&lt;/p&gt;
-
-&lt;p&gt;另外，require 2.0 也开始思考异步处理&lt;strong&gt;软依赖&lt;/strong&gt;（区别于一定需要的&lt;strong&gt;硬依赖&lt;/strong&gt;）的问题，提出了这样的方案：&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// 函数体内：&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;a&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;seajs--cmd&quot;&gt;SeaJS &amp;amp; CMD&lt;/h2&gt;
-
-&lt;p&gt;CMD (Common Module Definition) 是 &lt;a href=&quot;http://seajs.org/docs/&quot;&gt;SeaJS&lt;/a&gt; 在推广过程中对模块定义的规范化产出，是 Modules/2.0 流派的支持者，因此 SeaJS 的模块写法尽可能与 Modules/1.x 规范保持一致。&lt;/p&gt;
-
-&lt;p&gt;不过目前国外的该流派都死得差不多了，RequireJS 目前成为浏览器端模块的事实标准，国内最有名气的就是玉伯的 Sea.js ，不过对国际的推广力度不够。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CMD Specification
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;https://github.com/cmdjs/specification/blob/master/draft/module.md&quot;&gt;English (CMDJS-repo)&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;https://github.com/seajs/seajs/issues/242&quot;&gt;Chinese (SeaJS-repo)&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;CMD 主要有 define, factory, require, export 这么几个东西&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;define &lt;code class=&quot;highlighter-rouge&quot;&gt;define(id?, deps?, factory)&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;factory &lt;code class=&quot;highlighter-rouge&quot;&gt;factory(require, exports, module)&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;require &lt;code class=&quot;highlighter-rouge&quot;&gt;require(id)&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;exports &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;CMD 推荐的 Code Style 是使用 CommonJS 风格的 &lt;code class=&quot;highlighter-rouge&quot;&gt;require&lt;/code&gt;：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;这个 require 实际上是一个全局函数，用于加载模块，这里实际就是传入而已&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// 获取模块 a 的接口&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;./a&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// 调用模块 a 的方法&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// 对外提供 foo 属性&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;foo&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;bar&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// 对外提供 doSomething 方法&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{};&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;但是你也可以使用 AMD 风格，或者使用 return 来进行模块暴露&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;hello&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;jquery&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// 模块代码...&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// 直接通过 return 暴露接口&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;bar&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-        &lt;span class=&quot;na&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Sea.js 借鉴了 RequireJS 的不少东西，比如将 FlyScript 中的 module.declare 改名为 define 等。Sea.js 更多地来自 Modules/2.0 的观点，但尽可能去掉了学院派的东西，加入了不少实战派的理念。&lt;/p&gt;
-
-&lt;h2 id=&quot;amd-vs-cmd&quot;&gt;AMD vs CMD&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;虽然两者目前都兼容各种风格，但其底层原理并不相同，从其分别推荐的写法就可以看出两者背后原理的不同：&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;对于依赖的模块，AMD 是&lt;strong&gt;提前执行&lt;/strong&gt;，CMD 是&lt;strong&gt;懒执行&lt;/strong&gt;。（都是先加载）
-    &lt;ul&gt;
-      &lt;li&gt;CMD 推崇&lt;strong&gt;依赖就近&lt;/strong&gt;，AMD 推崇&lt;strong&gt;依赖前置&lt;/strong&gt;。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;看代码：&lt;/p&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// AMD 默认推荐&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;./a&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;./b&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 依赖前置，提前执行&lt;/span&gt;
-
-    &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;language-js highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// CMD&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;define&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;./a&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;./b&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 依赖就近，延迟执行&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;doSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;webpack&quot;&gt;WebPack&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;working…&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;大概就是这样，明天继续填坑。&lt;/p&gt;
 </description>
-        <pubDate>Mon, 25 May 2015 00:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2015/05/25/js-module-loader/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2015/05/25/js-module-loader/</guid>
+        <pubDate>Mon, 25 Apr 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</guid>
         
-        <category>前端开发</category>
+        <category>Javascript</category>
         
-        <category>JavaScript</category>
+        <category>技术</category>
+        
+        <category>Python</category>
+        
+        <category>Web</category>
         
         
       </item>
     
       <item>
-        <title>Example Post</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;This document is not completed and will be updated anytime.&lt;/p&gt;
-&lt;/blockquote&gt;
+        <title>Objective-C中的系统框架</title>
+        <description>&lt;p&gt;iOS开发中有两个最重要的系统框架: Foundation和CoreFoundation，前者定义了OC对象，后者是C语言的API和数据结构。对于Foundation中的每一个OC对象，我们都有一个对应的CoreFoundation数据结构，使用__bridge可以进行无缝桥接：&lt;/p&gt;
 
-&lt;h2 id=&quot;catagory&quot;&gt;Catagory&lt;/h2&gt;
+&lt;p&gt;__bridge: ARC仍然具备这个OC对象的所有权&lt;/p&gt;
+
+&lt;p&gt;__bridge_retained: ARC交出这个OC对象的所有权，我们需要手动Release&lt;/p&gt;
+
+&lt;p&gt;__bridge_transfer: ARC获得对象的所有权&lt;/p&gt;
+
+&lt;p&gt;在OC中，我们遍历一个Collection有以下几种方法：&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;#unix&quot;&gt;Unix&lt;/a&gt;
-    &lt;ol&gt;
-      &lt;li&gt;&lt;a href=&quot;#bell-labs&quot;&gt;Bell Labs&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#xenix&quot;&gt;Xenix&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#bsd&quot;&gt;BSD&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#freebsd--apple&quot;&gt;FreeBSD &amp;amp; Apple&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#nextstep&quot;&gt;NeXTStep&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#darwin&quot;&gt;Darwin&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#posix&quot;&gt;POSIX&lt;/a&gt;&lt;/li&gt;
-    &lt;/ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;常规的for循环，和C语言一样&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#unix-like&quot;&gt;Unix-like&lt;/a&gt;
-    &lt;ol&gt;
-      &lt;li&gt;&lt;a href=&quot;#single-unix-specification&quot;&gt;Single Unix Specification&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#apple-ios&quot;&gt;Apple iOS&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#xnu-kernel&quot;&gt;XNU Kernel&lt;/a&gt;&lt;/li&gt;
-    &lt;/ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;NSEnumerator来遍历：nextObject方法来返回枚举里的下个对象，最后一个对象则返回nil&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#linux&quot;&gt;Linux&lt;/a&gt;
-    &lt;ol&gt;
-      &lt;li&gt;&lt;a href=&quot;#linux-kernel&quot;&gt;Linux Kernel&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#gnu-project&quot;&gt;GNU Project&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#android&quot;&gt;Android&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#android-kernel&quot;&gt;Android Kernel&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#android-rom&quot;&gt;Android ROM&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#chrome-os&quot;&gt;Chrome OS&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#chromium-os&quot;&gt;Chromium OS&lt;/a&gt;&lt;/li&gt;
-    &lt;/ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;快速遍历：for…in&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;块遍历：enumerateObjectsUsingBlock, enumerateKeysAndObjectsUsingBlock&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;块遍历可以提供对象，下标和指向是否终止的布尔值的指针。&lt;/p&gt;
 
-&lt;h2 id=&quot;unix&quot;&gt;Unix&lt;/h2&gt;
+&lt;p&gt;在进行网络请求下载资源的时候，我们通常会把内容缓存下来。这时候应该采用NSCache。NSCache会在系统资源将要耗尽的时候，自动删减缓存。我们可以设置NSCache的对象的上线和总成本，来定义缓存删减其中对象的时机。&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Unix is a &lt;strong&gt;family&lt;/strong&gt; of multitasking, multiuser computer OS.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Derive from the original &lt;strong&gt;AT&amp;amp;T Unix&lt;/strong&gt;, Developed in the 1970s at &lt;strong&gt;Bell Labs&lt;/strong&gt; (贝尔实验室), initially intended for use inside the &lt;strong&gt;Bell System&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;h4 id=&quot;bell-labs&quot;&gt;Bell Labs&lt;/h4&gt;
-    &lt;p&gt;Bell 和 AT&amp;amp;A 在那时已经是一家了，可以看到那时的通信公司真是一线 IT 公司呢。
-&lt;strong&gt;C 语言也是 Bell Labs 的产物&lt;/strong&gt;，从一开始就是为了用于 Unix 而设计出来的。所以 Unix （在 73 年用 C 重写）在高校流行后，C 语言也获得了广泛支持。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;AT&amp;amp;T licensed Unix to outside parties(第三方) from the late 1970s, leading to a variety of both &lt;strong&gt;academic&lt;/strong&gt; (最有有名的 BSD ) and &lt;strong&gt;commercial&lt;/strong&gt; (Microsoft Xenix, IBM AIX, SunOS Solaris)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;h4 id=&quot;xenix&quot;&gt;Xenix&lt;/h4&gt;
-    &lt;p&gt;微软 1979 年从 AT&amp;amp;A 授权来的 Unix OS，配合着 x86 成为当时最受欢迎的 Unix 发行版。后来 M$ 和 IBM 合作开发 OS/2 操作系统后放弃，后来最终转向 &lt;strong&gt;Windows NT&lt;/strong&gt;。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;h4 id=&quot;bsd&quot;&gt;BSD&lt;/h4&gt;
-    &lt;p&gt;&lt;strong&gt;Barkeley Software Distribution&lt;/strong&gt;, also called Berkeley Unix. Today the term “BSD” is used to refer to any of the BSD descendants(后代) which together form a branch of the family of Unix-like OS.(共同组成了一个分支)&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;strong&gt;BSD 最大的贡献是在 BSD 中率先增加了虚拟存储器和 Internet 协议&lt;/strong&gt;，其 TCP/IP(IPv4 only) 代码仍然在现代 OS 上使用（ Microsoft Windows and most of the foundation of Apple’s OS X and iOS ）&lt;/li&gt;
-      &lt;li&gt;BSD 后来发展出了众多开源后代，包括 FreeBSD, OpenBSD, NetBSD 等等……很多闭源的 vendor Unix 也都从 BSD 衍生而来。&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;h4 id=&quot;freebsd--apple&quot;&gt;FreeBSD &amp;amp; Apple&lt;/h4&gt;
-    &lt;p&gt;FreeBSD 不但是 Open Source BSD 中占有率最高的，还直接影响了 Apple Inc : NeXT Computer 的团队在 FreeBSD 上衍生出了 NeXTSTEP 操作系统，这货后来在 Apple 时期演化成了 &lt;strong&gt;Darwin&lt;/strong&gt; ，这个“达尔文”居然还是个开源系统，而且是 the Core of &lt;strong&gt;Mac OS X&lt;/strong&gt; and &lt;strong&gt;iOS&lt;/strong&gt;.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;h4 id=&quot;nextstep&quot;&gt;NeXTSTEP&lt;/h4&gt;
-    &lt;p&gt;An &lt;strong&gt;object-oriented&lt;/strong&gt;, multitasking OS. Low-level C but High-level OC language and runtime the first time, combined with an &lt;strong&gt;OO aplication layer&lt;/strong&gt; and including several “kits”.  &lt;br /&gt;
-大家都知道 NeXT 是 Steve Jobs 被 forced out of Apple 后和 a few of his coworkers 创办的，所以 &lt;strong&gt;NeXTSTEP 绝对是证明 Jobs 实力的作品。&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;h4 id=&quot;darwin&quot;&gt;Darwin&lt;/h4&gt;
-    &lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Darwin_(operating_system\)&quot;&gt;Darwin&lt;/a&gt;, the core set of components upon which Mac OS X and iOS based, mostly POSIX compatible, but has never, by itself, been certified as being compatible with any version of &lt;strong&gt;POSIX&lt;/strong&gt;. (OS X, since Leopard, has been certified as compatible with the Single UNIX Specification version 3)&lt;br /&gt;
-&lt;strong&gt;所以说 Mac OS X 算是很正统 Unix 的了&lt;/strong&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;h4 id=&quot;posix&quot;&gt;POSIX&lt;/h4&gt;
-    &lt;p&gt;可移植操作系统接口, Portable Operating System Interface, is a family of standards specified by the IEEE from maintaining compatibility between OS, defines the API along with Command Line Shells and utility interfaces, for software comaptibility with variants of Unix and other OS.&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Fully POSIX compliant:
-        &lt;ul&gt;
-          &lt;li&gt;OS X&lt;/li&gt;
-          &lt;li&gt;QNX OS (BlackBerry)&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Mostly complicant:
-        &lt;ul&gt;
-          &lt;li&gt;Linux&lt;/li&gt;
-          &lt;li&gt;OpenBSD/FreeBSD&lt;/li&gt;
-          &lt;li&gt;Darwin (Core of &lt;strong&gt;iOS&lt;/strong&gt; &amp;amp; OS X)&lt;/li&gt;
-          &lt;li&gt;&lt;strong&gt;Android&lt;/strong&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Complicant via compatibility feature （通过兼容功能实现兼容）
-        &lt;ul&gt;
-          &lt;li&gt;Windows NT Kernel
-            &lt;ul&gt;
-              &lt;li&gt;Windows Server 2000, 2003, 2008, 2008 R2, 2012&lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-          &lt;li&gt;Symbian OS (with PIPS)
-            &lt;ul&gt;
-              &lt;li&gt;Symbian was a closed-source OS.&lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;unix-like&quot;&gt;Unix-like&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A Unix-like (sometimes referred to as UN*X or *nix) operating system is one that behaves in a manner similar to a Unix system, while not necessarily conforming to or being certified to any version of the &lt;strong&gt;Single UNIX Specification&lt;/strong&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;There is no standard for defining the term.&lt;br /&gt;
-其实 Unix-like 是个相对模糊的概念：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;最狭义的 Unix 单指 Bell Labs’s Unix&lt;/li&gt;
-  &lt;li&gt;稍广义的 Unix 指代所有 Licensed Unix, 即通过了 SUS 的 Unix-like ，比如 OS X&lt;/li&gt;
-  &lt;li&gt;最广义的 Unix 即所有 Unix-like 系统，无论它是否通过过任何 SUS，包括 Linux，BSD Family 等&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;single-unix-specification&quot;&gt;Single UNIX Specification&lt;/h4&gt;
-&lt;p&gt;The Single UNIX Specification (SUS) is the collective name of a family of standards for computer OS, compliance with which is required to &lt;strong&gt;qualify for the name “Unix”&lt;/strong&gt;, like &lt;strong&gt;POSIX&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h4 id=&quot;apple-ios&quot;&gt;Apple iOS&lt;/h4&gt;
-&lt;p&gt;iOS is a &lt;strong&gt;Unix-like OS based on Darwin(BSD)&lt;/strong&gt; and OS X, which share some frameworks including Core Foundation, Founadtion and the Darwin foundation with OS X, but, Unix-like shell access is not avaliable for users and restricted for apps, &lt;strong&gt;making iOS not fully Unix-compatible either.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The iOS kernal is &lt;strong&gt;XNU&lt;/strong&gt;, the kernal of Darwin.&lt;/p&gt;
-
-&lt;h4 id=&quot;xnu-kernel&quot;&gt;XNU Kernel&lt;/h4&gt;
-&lt;p&gt;XNU, the acronym(首字母缩写) for &lt;strong&gt;&lt;em&gt;X is Not Unix&lt;/em&gt;&lt;/strong&gt;, which is the &lt;strong&gt;Computer OS Kernel&lt;/strong&gt; developed at Apple Inc since Dec 1996 for use in the Mac OS X and released as free open source software as part of Darwin.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;linux&quot;&gt;Linux&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Linux is a Unix-like and mostly POSIX-compliant computer OS.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Unix_timeline.en.svg/800px-Unix_timeline.en.svg.png&quot; alt=&quot;Unix_timeline&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;linux-kernel&quot;&gt;Linux Kernel&lt;/h4&gt;
-
-&lt;p&gt;严格来讲，术语 Linux 只表示 &lt;a href=&quot;http://en.wikipedia.org/wiki/Linux_kernel&quot;&gt;Linux Kernel&lt;/a&gt; 操作系统内核本身，比如说 Android is Based on Linux (Kernel). Linus 编写的也只是这一部分，一个免费的 Unix-like Kernel，并不属于 GNU Project 的一部分。&lt;/p&gt;
-
-&lt;p&gt;但通常把 Linux 作为 Linux Kernel 与大量配合使用的 GNU Project Software Kit (包括 Bash, Lib, Compiler, 以及后期的 GUI etc) 所组合成的 OS 的统称。（包括各类 Distribution 发行版）&lt;/p&gt;
-
-&lt;p&gt;这类操作系统也被称为 &lt;strong&gt;GNU/Linux&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;gnu-project&quot;&gt;GNU Project&lt;/h4&gt;
-
-&lt;p&gt;The GNU Project is a &lt;strong&gt;free software, mass collaboration&lt;/strong&gt; project, which based on the following freedom rights:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Users are free to run the software, share (copy, distribute), study and modify it.&lt;/li&gt;
-  &lt;li&gt;GNU software guarantees these freedom-rights legally (via its license).&lt;/li&gt;
-  &lt;li&gt;So it is not only FREE but, more important, FREEDOM.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In order to ensure that the &lt;em&gt;entire&lt;/em&gt; software of a computer grants its users all freedom rights (use, share, study, modify), even the most fundamental and important part, &lt;strong&gt;the operating system&lt;/strong&gt;, needed to be written.&lt;/p&gt;
-
-&lt;p&gt;This OS is decided to called &lt;strong&gt;GNU (a recursive acronym meaning “GNU is not Unix”)&lt;/strong&gt;. By 1992, the GNU Project had completed all of the major OS components except for their kernel, &lt;em&gt;GNU Hurd&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;With the release of the third-party &lt;strong&gt;Linux Kernel&lt;/strong&gt;, started independently by &lt;em&gt;Linus Torvalds&lt;/em&gt; in 1991 and released under the GPLv0.12 in 1992, for the first time it was possible to run an OS &lt;strong&gt;composed completely of free software&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Though the Linux kernel is not part of the GNU project, it was developed using GCC and other GNU programming tools and was released as free software under the GPL.&lt;/p&gt;
-
-&lt;p&gt;Anyway, there eventually comes to the &lt;strong&gt;GNU/Linux&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;GPL&lt;/strong&gt;: GNU General Public License&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;GCC&lt;/strong&gt;: GNU Compiler Collection&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;其他与 GPL 相关的自由/开源软件公共许可证：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Mozilla_Public_License&quot;&gt;Mozilla Public License&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/MIT_License&quot;&gt;MIT License&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/BSD_licenses&quot;&gt;BSD Public License&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;GPL 强制后续版本必须是自由软件，而 BSD 的后续可以选择继续开源或者封闭&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Apache_License&quot;&gt;Apache License&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://dl2.iteye.com/upload/attachment/0047/4142/d770c85a-49b7-3c7f-8ae2-cbb6451e00d8.png&quot; alt=&quot;Public License&quot; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;android&quot;&gt;Android&lt;/h4&gt;
-
-&lt;p&gt;Android is a mobile OS based on &lt;strong&gt;Linux Kernel&lt;/strong&gt;, so it’s definitely &lt;strong&gt;Unix-like&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Linux is under GPL so Android has to be open source&lt;/strong&gt;.
-Android’s source code is released by Google under open source licenses, although most Android devices ultimately ship with a combination of open source and proprietary software, including proprietary software developed and licensed by Google &lt;em&gt;(GMS are all proprietary)&lt;/em&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;android-kernel&quot;&gt;Android Kernel&lt;/h4&gt;
-
-&lt;p&gt;Android’s kernel is based on one of the Linux kernel’s long-term support (LTS) branches.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Android’s variant of the Linux kernel&lt;/strong&gt; has further architectural changes that are implemented by Google outside the typical Linux kernel development cycle, and, certain features that Google contributed back to the Linux kernel. Google maintains a public code repo that contains their experimental work to re-base Android off the latest stable Linux versions.&lt;/p&gt;
-
-&lt;p&gt;Android Kernel 大概是 Linux Kernel 最得意的分支了，Android 也是 Linux 最流行的发行版。不过，也有一些 Google 工程师认为 Android is not Linux in the traditional Unix-like Linux distribution sense. 总之这类东西就算有各种协议也还是很难说清楚，在我理解里 Android Kernel 大概就是 fork Linux Kernel 之后改动和定制比较深的例子。&lt;/p&gt;
-
-&lt;h4 id=&quot;android-rom&quot;&gt;Android ROM&lt;/h4&gt;
-
-&lt;p&gt;既然提到 Android 就不得不提提 Android ROM&lt;/p&gt;
-
-&lt;p&gt;ROM 的本义实际上是只读内存：&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Read-only memory&lt;/strong&gt; (ROM) is a class of storage medium used in computers and other electronic devices. Data stored in ROM can only be modified slowly, with difficulty, or not at all, so it is &lt;strong&gt;mainly used to distribute firmware (固件)&lt;/strong&gt; (software that is very closely tied to specific hardware, and unlikely to need frequent updates).&lt;/p&gt;
-
-&lt;p&gt;ROM 在发展的过程中不断进化，从只读演变成了可编程可擦除，并最终演化成了 Flash&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;PROM (Programmable read-only memory)&lt;/li&gt;
-  &lt;li&gt;EPROM (Erasable programmable read-only memory)&lt;/li&gt;
-  &lt;li&gt;EEPROM (Electrically erasable programmable read-only memory)
-    &lt;ul&gt;
-      &lt;li&gt;Flash memory (闪存)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Flash 的出现是历史性的，它不但可以作为 ROM 使用，又因其极高的读写速度和稳定性，先后发展成为U盘（USB flash drives）、移动设备主要内置存储，和虐机械硬盘几条街的固态硬盘（SSD），可以说这货基本统一了高端存储市场的技术规格。&lt;/p&gt;
-
-&lt;p&gt;所以我们平时习惯说的 ROM 其实还是来源于老单片机时代，那时的 ROM 真的是写了就很难（需要上电复位）、甚至无法修改，所以那时往 ROM 里烧下去的程序就被称作 firmware ，固件。久而久之，虽然技术发展了，固件仍然指代那些不常需要更新的软件，而 ROM 这个词也就这么沿用下来了。&lt;/p&gt;
-
-&lt;p&gt;所以在 wiki 里是没有 Android ROM 这个词条的，只有 &lt;a href=&quot;http://en.wikipedia.org/wiki/List_of_custom_Android_firmwares&quot;&gt;List of custom Android firmwares&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A custom firmware, also known as a custom ROM, ROM, or custom OS, is an aftermarket distribution of the Android operating system. They are based on the Android Open Source Project (AOSP), hence most are open-sourced releases, unlike proprietary modifications by device manufacturers.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;各类 Android ROM 在 Android 词类下也都是属于 &lt;strong&gt;Forks and distributions&lt;/strong&gt; 一类的。&lt;/p&gt;
-
-&lt;p&gt;所以我说，其实各类 Android ROM 也好，fork Android 之流的 YunOS、FireOS 也好，改了多少东西，碰到多深的 codebase ……&lt;strong&gt;其实 ROM 和 Distribution OS 的界限是很模糊的&lt;/strong&gt;，为什么 Android 就不可以是移动时代的 Linux ，为什么 Devlik/ART 就不能是移动时代的 GCC 呢？&lt;/p&gt;
-
-&lt;h4 id=&quot;chrome-os&quot;&gt;Chrome OS&lt;/h4&gt;
-
-&lt;p&gt;Chrome OS is an operating system based on the &lt;strong&gt;Linux kernel&lt;/strong&gt; and designed by Google to work with web applications and installed applications.&lt;/p&gt;
-
-&lt;p&gt;虽然目前只是个 Web Thin Client OS ，但是 RoadMap 非常酷……&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Chrome Packaged Application&lt;/strong&gt; (Support working offline and installed)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Android App Runtime&lt;/strong&gt; (run Android applications natively…fxxking awesome)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;平复一下激动的心情，还是回到正题来：&lt;/p&gt;
-
-&lt;h4 id=&quot;chromium-os&quot;&gt;Chromium OS&lt;/h4&gt;
-
-&lt;p&gt;Chrome OS is based on Chromium OS, which is the open-source development version of Chrome OS, which is a &lt;strong&gt;Linux distribution&lt;/strong&gt; designed by Google.&lt;/p&gt;
-
-&lt;p&gt;For Detail, Chromium OS based on &lt;a href=&quot;http://en.wikipedia.org/wiki/Gentoo_Linux&quot;&gt;Gentoo Linux&lt;/a&gt;, emm…&lt;/p&gt;
+&lt;p&gt;initialize和load方法是OC对象两个比较特殊的初始化方法。前者在第一次使用对象的时候调用，后者在APP启动的时候调用。需要注意的是，这两个方法都是阻塞的，因此我们不能放太多的操作在这两个方法之中。在load方法中我们不能调用其他类中的方法，因为初始化的顺序和时机是程序员不能确定的。&lt;/p&gt;
 </description>
-        <pubDate>Tue, 14 Apr 2015 00:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2015/04/14/unix-linux-note/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2015/04/14/unix-linux-note/</guid>
+        <pubDate>Wed, 13 Apr 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/04/13/Objective-C%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/13/Objective-C%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/</guid>
         
-        <category>OS</category>
+        <category>iOS</category>
         
-        <category>Unix</category>
+        <category>技术</category>
         
-        <category>Linux</category>
+        <category>Objective-C</category>
         
         
       </item>
     
       <item>
-        <title>Welcome to Hux Blog</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;“Yeah It’s on. ”&lt;/p&gt;
-&lt;/blockquote&gt;
+        <title>Objective-C中的协议和分类</title>
+        <description>&lt;p&gt;delegate也是iOS编程中的一个重点，他定义了一套接口，如果一个对象想接受另一个对象的委托，则需要遵从此接口，以便成为其委托对象。这个委托的意思，实际上就是把函数的实现写在另一个类中，这个函数可以使用那个类的方法和数据成员。看上去就像是这个类帮别人做了写事情，成为委托的对象。委托的协议用@protocal来定义，在存放委托对象的类中，可以这么写：&lt;/p&gt;
 
-&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SomeProtocal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delegate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;Hux 的 Blog 就这么开通了。&lt;/p&gt;
+&lt;p&gt;我们必须用weak修饰符来避免循环引用。上述代码的id指向遵循这个协议的类，表示我们不关心这个类具体是什么，我们只注意到这个类遵循了这个协议。当然，对于可选的方法，我们在前面加上@optional即可。&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;#build&quot;&gt;跳过废话，直接看技术实现 &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下面来说说分类这个东西。OC中的分类对应swift就是其extension。我们可以通过分类把类实现代码按照逻辑分散到几个文件中:&lt;/p&gt;
 
-&lt;p&gt;2015 年，Hux 总算有个地方可以好好写点东西了。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SomeClass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;AboutSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;作为一个程序员， Blog 这种轮子要是挂在大众博客程序上就太没意思了。一是觉得大部分 Blog 服务都太丑，二是觉得不能随便定制不好玩。之前因为太懒没有折腾，结果就一直连个写 Blog 的地儿都没有。&lt;/p&gt;
-
-&lt;p&gt;在玩了一段时间知乎之后，答题的快感又激起了我开博客的冲动。之前的&lt;a href=&quot;http://huangxuan.me/portfolio&quot;&gt;个人网站&lt;/a&gt;是作品集形式的（现在集成进来了），并不适合用来写博文，一不做二不休，花一天搞一个吧！&lt;/p&gt;
-
-&lt;p id=&quot;build&quot;&gt;&lt;/p&gt;
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
-
-&lt;p&gt;接下来说说搭建这个博客的技术细节。&lt;/p&gt;
-
-&lt;p&gt;正好之前就有关注过 &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt; + &lt;a href=&quot;http://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; 快速 Building Blog 的技术方案，非常轻松时尚。&lt;/p&gt;
-
-&lt;p&gt;其优点非常明显：&lt;/p&gt;
+&lt;p&gt;分类中的方法是直接添加在类里面的，就好比是这个类的固有方法，因此会有覆写的可能性。需要注意的一点是，我们不要在分类中声明属性，因为在分类中是不能添加实例变量的。那不代表不能声明属性，通过@dynamic关键字，或者关联对象，都能够解决这个问题。但是保险起见，还是不要声明属性。当然，不是说所有的分类都不能，有一种分类叫做class-continuation就是例外，他有如下的特点：&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Markdown&lt;/strong&gt; 带来的优雅写作体验&lt;/li&gt;
-  &lt;li&gt;非常熟悉的 Git workflow ，&lt;strong&gt;Git Commit 即 Blog Post&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;利用 GitHub Pages 的域名和免费无限空间，不用自己折腾主机
-    &lt;ul&gt;
-      &lt;li&gt;如果需要自定义域名，也只需要简单改改 DNS 加个 CNAME 就好了&lt;/li&gt;
-    &lt;/ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;必须定义在其所接续的那个类的实现文件里&lt;/p&gt;
   &lt;/li&gt;
-  &lt;li&gt;Jekyll 的自定制非常容易，基本就是个模版引擎&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;唯一能够声明实例变量的分类&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;分类没有名字&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;分类中的所有属性和方法都是隐藏的，只能在本类中使用&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;可以修改某属性的读写性，只读的属性可以在此分类中扩展为可读写&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;本来觉得最大的缺点可能是 GitHub 在国内访问起来太慢，所以第二天一起床就到 GitCafe(Chinese GitHub Copy) 迁移了一个&lt;a href=&quot;http://huxpro.gitcafe.io&quot;&gt;镜像&lt;/a&gt;出来，结果还是巨慢。&lt;/p&gt;
+&lt;p&gt;比如这样：&lt;/p&gt;
 
-&lt;p&gt;哥哥可是个前端好嘛！ 果断开 Chrome DevTool 查了下网络请求，原来是 &lt;strong&gt;pending 在了 Google Fonts&lt;/strong&gt; 上，页面渲染一直被阻塞到请求超时为止，难怪这么慢。&lt;br /&gt;
-忍痛割爱，只好把 Web Fonts 去了（反正超时看到的也只能是 fallback ），果然一下就正常了，而且 GitHub 和 GitCafe 对比并没有感受到明显的速度差异，虽然 github 的 ping 值明显要高一些，达到了 300ms，于是用 DNSPOD 优化了一下速度。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SomeClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;当然，协议也可以隐藏在class-continuation中：&lt;/p&gt;
 
-&lt;p&gt;配置的过程中也没遇到什么坑，基本就是 Git 的流程，相当顺手&lt;/p&gt;
-
-&lt;p&gt;大的 Jekyll 主题上直接 fork 了 Clean Blog（这个主题也相当有名，就不多赘述了。唯一的缺点大概就是没有标签支持，于是我给它补上了。）&lt;/p&gt;
-
-&lt;p&gt;本地调试环境需要 &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install jekyll&lt;/code&gt;，结果 rubygem 的源居然被墙了……后来手动改成了我大淘宝的镜像源才成功&lt;/p&gt;
-
-&lt;p&gt;Theme 的 CSS 是基于 Bootstrap 定制的，看得不爽的地方直接在 Less 里改就好了（平时更习惯 SCSS 些），&lt;strong&gt;不过其实我一直觉得 Bootstrap 在移动端的体验做得相当一般，比我在淘宝参与的团队 CSS 框架差多了……&lt;/strong&gt;所以为了体验，也补了不少 CSS 进去&lt;/p&gt;
-
-&lt;p&gt;最后就进入了耗时反而最长的&lt;strong&gt;做图、写字&lt;/strong&gt;阶段，也算是进入了&lt;strong&gt;写博客&lt;/strong&gt;的正轨，因为是类似 Hack Day 的方式去搭这个站的，所以折腾折腾着大半夜就过去了。&lt;/p&gt;
-
-&lt;p&gt;第二天考虑中文字体的渲染，fork 了 &lt;a href=&quot;http://www.typeisbeautiful.com/&quot;&gt;Type is Beautiful&lt;/a&gt; 的 &lt;code class=&quot;highlighter-rouge&quot;&gt;font&lt;/code&gt; CSS，调整了字号，适配了 Win 的渣渲染，中英文混排效果好多了。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;后记&lt;/h2&gt;
-
-&lt;p&gt;回顾这个博客的诞生，纯粹是出于个人兴趣。在知乎相关问题上回答并获得一定的 star 后，我决定把这个博客主题当作一个小小的开源项目来维护。&lt;/p&gt;
-
-&lt;p&gt;在经历 v1.0 - v1.5 的蜕变后，这个博客主题愈发完整，不但增加了诸多 UI 层的优化（opinionated）；在代码层面，更加丰富的配置项也使得这个主题拥有了更好的灵活性与可拓展性。而作为一个开源项目，我也积极的为其完善文档与解决 issue。&lt;/p&gt;
-
-&lt;p&gt;如果你恰好逛到了这里，希望你也能喜欢这个博客主题。&lt;/p&gt;
-
-&lt;p&gt;—— Hux 后记于 2015.10&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SomeClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SomeProtocal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
-        <pubDate>Thu, 29 Jan 2015 20:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2015/01/29/hello-2015/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2015/01/29/hello-2015/</guid>
+        <pubDate>Mon, 04 Apr 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/04/04/Objective-C%E4%B8%AD%E7%9A%84%E5%8D%8F%E8%AE%AE%E5%92%8C%E5%88%86%E7%B1%BB/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/04/Objective-C%E4%B8%AD%E7%9A%84%E5%8D%8F%E8%AE%AE%E5%92%8C%E5%88%86%E7%B1%BB/</guid>
         
-        <category>生活</category>
+        <category>iOS</category>
+        
+        <category>技术</category>
+        
+        <category>Objective-C</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Objective-C中接口和API的设计</title>
+        <description>&lt;p&gt;首先有一点需要注意，在OC中是没有命名空间这个概念的。也就是说，我们用以区分不同变量的唯一方法就是变量名。所以我们会看到很多NS开头的对象，这些对象是Foundation库的。UI开头的对象是在UIKit库中。CF开头的对象是在CoreFoundation库中。所以我们自定义的库往往都用一些大写字母来开头，以区分不同的变量名。例如AFNetwork。不过，所有两个字母前缀都被苹果所保留了，我们最好以三个字母前缀开头。&lt;/p&gt;
+
+&lt;p&gt;在很多的OC类中，有许多不同的初始化方法。但是往往只有一个全能初始化方法(designated initializer)，其他所有初始化方法都是调用了这个全能初始化方法。如果这个类有一个子类，而子类的全能初始化方法名称与父类不同，那么我们必须重写其父类的全能初始化方法。当然，有时候我们不需要父类的全能初始化方法，那么我们重写的时候抛出异常即可。&lt;/p&gt;
+
+&lt;p&gt;说说OC中打印的技巧。很多时候我们用NSLog来答应对象，比如：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSLog(@\&quot;%@\&quot;, object)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;但是如果用这种方法来打印一个自定义的类的话，我们得到的信息只有类似于这样的:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;SomeClass: 0x123456789ab&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果要打印出我们想要的信息，那么我们必须重写description，这个函数返回一个被打印出的字符串。&lt;/p&gt;
+
+&lt;p&gt;我们在写一个类的时候，应当尽量使用不得变对象，只需要在property中加上readonly修饰符，这样我们不会为此生成setter，也就无法修改了。如果我们想在类的实现文件中对其进行修改，我们可以在class-continuation中修改他的修饰符为readwrite，这样我们就只能在类中对其进行修改。如果我们有一个业务逻辑上可变的collection，也不能将其直接公开，而应当是提供相应的方法，对其进行改变。除了属性以外，还有一些方法也是只在类中才能使用，OC没有办法把一个类标注成private的，因此我们需要加上一些前缀来区分他们。常用的可以是一个p加上下划线来进行处理。当然，私有的方法不应该出现在类的接口定义中。&lt;/p&gt;
+
+&lt;p&gt;最后来说一下NSCopying这个协议。我们经常在NSString的属性加上copy这个修饰符，那这个修饰符到底有什么作用呢？事实上，在OC中，我们可以把一个可变对象赋给一个不可变的对象，而copy方法会返回一个不可变对象，即NSMutableString返回一个NSString。如果不这样做，那么原来的不可变对象可能会遭到别人修改。同理，mutableCopy方法会返回一个可变对象。如果我们需要对自己的类实现copy方法，我们需要在类中实现copyWithZone:方法，要实现mutableCopy的话，需要实现mutableCopyWithZone方法。&lt;/p&gt;
+
+&lt;p&gt;在OC中，还有深拷贝和浅拷贝之分。浅拷贝仅仅拷贝了对象，而其底层的数据是共用一套的。深拷贝与此相反，同时拷贝了一套底层的数据。我们需要知道的是，如果一个不可变对象调用了copy方法，那么这时候是浅拷贝(因为本身和拷贝出来的对象都是不可变的，因此底层数据可以共用一套)。而如果其中之一为可变的，那么就是深拷贝，因为我们并不希望改变了其中一个值之后，另一个值也发生改变(对于不可变的值更是禁忌)。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 02 Apr 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/04/02/Objective-C%E4%B8%AD%E6%8E%A5%E5%8F%A3%E5%92%8CAPI%E7%9A%84%E8%AE%BE%E8%AE%A1/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/02/Objective-C%E4%B8%AD%E6%8E%A5%E5%8F%A3%E5%92%8CAPI%E7%9A%84%E8%AE%BE%E8%AE%A1/</guid>
+        
+        <category>iOS</category>
+        
+        <category>技术</category>
+        
+        <category>Objective-C</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Objective-C中的消息</title>
+        <description>&lt;p&gt;我们先来介绍一下OC中属性的用法。属性就是我们在实际工程中运用的最多的形式，以@property开头。用属性有什么好处呢？简单来说，属性有利于我们对内存的管理，系统会自动生成一套setter和getter来处理对属性的读取和写入操作，同时满足用户指定的strong，week等修饰符。当然，只要在属性头加上@dynamic，系统就不会自动去生成setter和getter。同时，系统会为每一个属性增加一个实例的变量，在属性名前加上下划线作为实例变量的名字。实际上，系统的setter和getter都是对其实例变量进行操作。我们可以理解成属性把实例变量封装了起来。需要说明的是，我们在一个对象/类中，最好直接访问实例变量。如果用的是属性，那么会经过setter和getter方法，这是通过OC的方法派发来完成的，所以效率会比较低，而实例变量会绕过内存管理的语义，在速度上有优势。&lt;/p&gt;
+
+&lt;p&gt;接下来说明一下对象等同性。在OC中，==比较的是指针，isEqual(或其类似方法)比较的是其内容。这个应该很好理解，我们应当使用isEqual。当然，我们可以对自己写的类写一个isEqual方法。&lt;/p&gt;
+
+&lt;p&gt;如果我们想临时给一个类增加一个变量，有什么好用的方法呢？OC给我们提供了一种叫做关联对象的方法。有如下函数：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void objc_setAssociatedObject(id object, void* key, id value, objc_AssociationPolicy policy)
+id objc_getAssociatedObject(id object, void* key)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;我们可以把关联对象想想成一个字典，需要存放时就增加一个键值对，取出增加的东西时也可以根据键进行选择。但是，此方法慎用，因为滥用的话我们会对一个对象失去可控性。&lt;/p&gt;
+
+&lt;p&gt;我们都知道，OC是一种动态语言，对于一些方法的调用，都是在运行时才去使用。这种方法叫做传递消息，而传递消息最关键的方法就是objc_msgSend。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;id returnVal = objc_msgSend(someObject, @selector(msg:), parameter)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其中，someObject为消息的接受者(调用函数方)， msg为选择子(函数名)。对于每一个类，我们有一个快速的映射表，如果我们第一次发送一个消息成功后，我们会把匹配的方法名和方法实现放在这个表中作为缓存。那么如果我们找不到一个方法呢？这时候我们就会调用OC的消息转发，具体来说，有三步：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;寻找是否有新增加的选择子。这个方法要求我们提前写好代码，等着运行的时候动态插在类里面。常见于@dynamic属性。寻找选择子时，会调用的方法为:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;+ (Bool)resolveInstanceMethod: (SEL)selector
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;selector即为我们所没有找到的选择子。class_addMethod方法会为类增加一个方法实现，而这个实现的新方法名就是我们没有找到的选择子。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;寻找备援接受者，这限于在对象内的其他对象&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;完整的消息转发，也就是改变调用目标。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;后两个在开发中其实非常的少见。&lt;/p&gt;
+
+&lt;p&gt;接下来要介绍一个黑科技，叫做方法调配Method Swizzling。由于OC的方法调用是在运行时才确定的，因此我们可以在运行时替换方法的实现。
+替换方法实现的方法为&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void method_exchangeImplementations(Method m1, Method m2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;而根据方法名，得到其实现的方法为：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Method class_getInstanceMethod(Class aClass, SEL aSelector)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;我们只需要根据方法名，取出其实现然后交换就好啦！&lt;/p&gt;
+
+&lt;p&gt;最后，介绍一下OC中的类。对于一个id类型的实例，其本质为一个struct：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;typedef struct objc_object {
+	Class isa;
+} *id;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;isa指向其所属的类。而对于一个类，其也为一个struct，保存了一些类的数据。在这个struct中，也有一个Class类型的isa，指向这个类的元类。这个元类保存了这个类的一些元数据。而这个struct的super_class指针指向了这个类的父类。那么我们需要查询一个id实例的类型时，可以用如下方法：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;isMemberOfClass，查询实例是否为某个类&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;isKindOfClass，查询实例是否为一个类或其子类&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;当然，在比较类型时，我们可以用==运算符，因为每一个类在OC中都是单例的，只有一个类对象，也就没有地址不同这样的说法了。例如：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ([object class] == [SomeClass class]) {
+	...
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;关于OC的语言特性，其实还有很多，但是其消息和动态的特性是最为关键的。&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 22 Mar 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/</guid>
+        
+        <category>iOS</category>
+        
+        <category>技术</category>
+        
+        <category>Objective-C</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Objective-C语言相关</title>
+        <description>&lt;p&gt;最近正好在看&lt;em&gt;《Effective Objective-C 2.0》&lt;/em&gt;，简单记录一下每一章节的内容吧，也算是复习了一下。&lt;/p&gt;
+
+&lt;p&gt;那首先我们从语言本身开始说起。Objective-C是使用消息结构而非函数调用的，因此其运行时所执行的代码是由运行的环境来决定，而并非由编译器决定。这样的特性使得Objective-C非常之灵活，因为运行时确定，所以我们可以在写代码的时候展现一些黑科技，比如说运行时的代码替换，Swizzling等。相比而言Swift就更加严谨了，现在常见的一些运行时效果也是通过Objective-C的那一套来实现的。因为Objective-C的这样的特性，因此所有的Foundation中的对象都是保存在堆上而不是栈上，所以我们写代码的时候都使用指针，如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSString *someString = @\&quot;the string\&quot;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;当然，非Foundation对象，例如CGRect等，都是保存在栈上的。&lt;/p&gt;
+
+&lt;p&gt;本书给我们的第一条建议是“在类的头文件中尽量少引入其他头文件”。道理很简单，头文件a中引入了头文件b，相当于把头文件b的接口信息都暴露给了头文件a，这些信息是无用的。写代码的时候我们要确保其低耦合，因此这么做是非常值得的。那如果我们要使用b中的某个类呢？这时候可以用向前声明：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;@class SomeClass;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这样我们可以直接使用类名，而把头文件的引入放在实现文件中了。除此之外，在头文件中引入其他头文件也容易产生循环引用，这与内存管理中的循环引用是类似的，不再重复了。&lt;/p&gt;
+
+&lt;p&gt;关于对象，我们需要多用字面量语法，就像我们平时在c++，swift中做的那样。不同的是，我们需要把字面量转换成一个Foundation对象，只需要在字面量前加上@就可以了。例如：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSNumber *someNum = [NSNumber numberWithInt: 1];
+NSNumber *someNum = @1;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;上面两句话是等效的。所有的Foundation对象都可以这么定义，不过有几点需要注意：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;不能出现nil&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;字典与数组中的元素/键值必须都是Foundation对象&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;用字面量创建出的对象都是不可变的&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;此外，很多人喜欢用#define定义宏来表示某些常量，其实在OC中，完全可以用static const来取代。在编译器的处理上说，两者几乎没有区别，而常量增加了一个类型的信息，对于程序员更加友好。如果要定义一个全局的常量，可以使用extern关键字，头文件：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;extern NSString *const someStr;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;实现文件中：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;NSString *const someStr = @\&quot;fuck\&quot;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;最后，聊一下枚举。我们可以使用enum来定义一个枚举类型，枚举类型的默认值也可以指定，因此我们可以将不同的值进行或运算，产生某种选项的效果。但是OC给我们提供了两个更加优雅的宏来定义枚举和选项：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;typedef NS_ENUM(NSUIngeter, ConnectionState) {
+	Connected,
+	NotConnected,
+};
+typedef NS_OPTION(NSUIngeter, PermittedDirection) {
+	Left,
+	Right,
+	Up,
+	Down,
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;从名字就可以看出这两个宏是表示什么意思了吧，宏的第一个参数表示底层的存储类型，第二个参数表示枚举/选项类型的名字。注意一点，我们在switch语句中，如果判断的是枚举类型，则不要加default，否则如果之后新增一种情况的话，很容易增加case语句，编译器也不会给我们任何的警告。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 08 Mar 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/</guid>
+        
+        <category>iOS</category>
+        
+        <category>技术</category>
+        
+        <category>Objective-C</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>关于Grand Central Dispatch的一些知识</title>
+        <description>&lt;p&gt;GCD是什么，其实就是一堆控制线程的API，高度封装，而且性能优秀。&lt;/p&gt;
+
+&lt;p&gt;为什么要有多线程呢？实际上我们打开一个app之后，主线程也就是我们看到的线程只有一个，但是我们会有很多后台的操作，比如下载图片，计算一个很复杂的公式等，如果在主线程中运行，那么用户就不能执行其他的操作。所以一般而言主线程用来更新UI和响应事件，其他的高负荷运算放在另一个线程中。&lt;/p&gt;
+
+&lt;p&gt;GCD有两种queue，一种是serial dispatch queue，另外一种是concurrent dispatch queue。顾名思义，前者单线程，后者多线程。他们都是FIFO来执行任务的。我们有五个系统自带的dispatch queue，一个main dispatch queue，是serial的，四个global dispatch queue，是concurrent的，以优先级来区分。&lt;/p&gt;
+
+&lt;p&gt;简单讲讲各个API的作用吧：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchQueueCreate: 创建一个线程，此线程由程序员负责释放&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchSetTargetQueue: 设置线程的优先级&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchAfter: 在某个时间点的某个队列中执行某操作&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchAsync: 异步的将某个操作放入某个队列中执行&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchBarrierAsync: 完成此代码之前的操作再执行此代码，最后执行此代码之后的操作&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchSync: 将某个操作放入某个队列中执行，队列销毁后才能继续执行&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchApply: 按指定的次序将操作放入队列中执行&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchSuspend: 暂停某队列&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;dispatchResume: 恢复某队列&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;简单说说GCD的实现吧，执行线程上操作的步骤如下：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Block加入dispatch continuation&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;调用pthreadWorkqueueAdditemUp，将队列和continuation信息传回&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;调用pthreadWorkqueue，执行Block操作\n\n4. 如果队列中还有操作，则回到2&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;差不多就是这些，具体的也要看项目的需求。&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 01 Mar 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/03/01/%E5%85%B3%E4%BA%8EGrand-Central-Dispatch%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/03/01/%E5%85%B3%E4%BA%8EGrand-Central-Dispatch%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86/</guid>
+        
+        <category>iOS</category>
+        
+        <category>技术</category>
+        
+        <category>多线程</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Objective-C中的Block</title>
+        <description>&lt;p&gt;Block是什么呢？&lt;/p&gt;
+
+&lt;p&gt;其实就是C++中的Lambda表达式，js中的匿名函数，swift中的闭包等。&lt;/p&gt;
+
+&lt;p&gt;Block能截取自动变量值，本质上来说，Block就是一个struct，我们截取到的变量值会存储在这个struct中，这个存储是拷贝存储，也就是说，值是不会随着之后的代码而改变的。更重要的一点是，我们无法对这样捕获到的值进行修改，除非我们增加block修饰符：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;__block id tmp;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这个block修饰符本质也是一个struct，其中有一个指向自己的指针forwarding，这个指针的作用稍后会说明。&lt;/p&gt;
+
+&lt;p&gt;作为一个struct，结合之前的ARC，我们知道会有一个retainCount，当一个Block被声明之后，是存在于栈上的，超出作用域就会废弃。但是，如果我们将Block复制到堆，就可以在之后的作用域中继续使用这个Block，而其block修饰符也会复制到堆中。复制的情况发生于以下：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;调用Block的copy方法&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Block作为函数返回值返回时&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;将Block赋值给有strong修饰符id类型的类&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;在方法名中含有usingBlock的Cocoa框架方法&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;那么，forwarding到底是用来干嘛的呢？因为Block可以在栈和堆两个地方，所以无论是栈中的Block还是堆中的Block，其内部的forwarding指针会始终指向堆的Block。&lt;/p&gt;
+
+&lt;p&gt;还有的可能就是Block中的循环引用问题，但是这个问题真的不是问题，所以也就不多说了吧。&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 28 Feb 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/02/28/Objective-C%E4%B8%AD%E7%9A%84Block/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/02/28/Objective-C%E4%B8%AD%E7%9A%84Block/</guid>
+        
+        <category>iOS</category>
+        
+        <category>技术</category>
+        
+        <category>Objective-C</category>
         
         
       </item>
