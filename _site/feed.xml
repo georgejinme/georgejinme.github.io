@@ -5,9 +5,87 @@
     <description>My personal webpage</description>
     <link>https://gougoumemeda.github.io/</link>
     <atom:link href="https://gougoumemeda.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 29 Jul 2016 01:03:26 +0800</pubDate>
-    <lastBuildDate>Fri, 29 Jul 2016 01:03:26 +0800</lastBuildDate>
+    <pubDate>Fri, 29 Jul 2016 23:35:24 +0800</pubDate>
+    <lastBuildDate>Fri, 29 Jul 2016 23:35:24 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>鹅厂是个好地方</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;“来腾讯实习快两周了，感触颇深。”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;放假之前&lt;/h2&gt;
+
+&lt;p&gt;其实给我Offer的也只有两个公司。一个是携程，还有一个就是腾讯了。虽然腾讯把我安排到了深圳，但毕竟是大厂，能进去总觉得有一种自豪感。所以两者之中，我还是毫不犹豫的选择了腾讯。&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;放假中&lt;/h2&gt;
+
+&lt;p&gt;在去腾讯之前，去了一次欧洲。游玩了德国和荷兰，为时九天。荷兰的夜生活相当丰富，荷兰的法律相当开明，可能这也是uber遵循荷兰法律的原因之一吧。40欧就能看到真人AV秀，你值得拥有。&lt;/p&gt;
+
+&lt;p&gt;应该算是第二次来深圳，上次来的时候还是大一暑假，也是南山，也是腾讯。两年之后故地重游，也就有了一丝亲切感。到住的地方是凌晨两点，因为深圳的暴雨，飞机延误了四个小时。住的地方很简陋，一张桌，一个衣柜，没了。第二天赶紧购置了一批生活用品，买了一张床上桌子，否则真的没有办法写代码。&lt;/p&gt;
+
+&lt;p&gt;13号，周三，正式入职的一天。早上就一直在忙碌着各种手续，在腾大和科兴之间来回穿梭。在科兴吃了一顿午饭，竟然要30元，这让月薪不足3000的我怎么活下去？见到导师大约是下午两点半，高高瘦瘦，非常干净，说话声音很轻，一眼就可以看出来是一个二次元，有着二次元男性透露出的那种宅属性。公司配置的电脑相当给力，i7，960，16G，这个配置完全可以特效全开的玩守望先锋。想到这里，我不禁心里暗喜。&lt;/p&gt;
+
+&lt;p&gt;你以为我就这样可以玩游戏了？公司的网络是不能访问外网的，需要配置各种代理。于是我的守望先锋计划整整延后了两周，终于在公司KM平台上找到了运行的方法。每天中午的午休时间就变成了我的战斗时间。&lt;/p&gt;
+
+&lt;p&gt;导师人相当不错，培养思路非常清晰，第一周我熟悉一下Unity这个平台，然后开发一款游戏出来。我选择的是我大一做过的游戏是男人就坚持二十秒。其实游戏思路很简单，只是我要去慢慢熟悉这个平台。完成之后还没结束，我需要将其优化，通用化，增加他的鲁棒性和可拓展性。&lt;/p&gt;
+
+&lt;p&gt;比如说，生成岩石的过程中，RockController来控制每一个独立的岩石，Pool控制所有岩石的初始化，销毁与复用，RockGenerator来设置每一波岩石的各个参数，比如速度，数量等，而SpawnManager就是真正让一波岩石移动的类。这样的结构用在这个项目上看上去有一点大材小用，但是当项目规模大了，这样的架构就非常有必要。&lt;/p&gt;
+
+&lt;p&gt;腾讯的食堂味道也非常不错，每顿还会有免费的水果。除了价格比较贵，其他真的挑不出什么毛病。如果你加班到晚上八点之后，还会获得一张夜宵券，虽然叫夜宵券，但他是可以用来刷晚饭的，也就是说，免费请你吃一顿第二天的晚餐。&lt;/p&gt;
+
+&lt;p&gt;之前在知乎上看到，如何评价2016年的腾讯。在回答中，大家基本上都是在表扬腾讯。BAT三家中，似乎腾讯已经成为了最出色的一家。来到腾讯之后，深觉腾讯的确是这样一家公司。有时候会抱怨他的收费贵，但是他是一家做实事的公司。你以为只有你们吐槽腾讯吗！每次在KM平台上都会看到腾讯自己人对自己产品的各种抱怨，当然也会有相关的负责人员及时反馈与修复，所以腾讯才能越来越壮大。&lt;/p&gt;
+
+&lt;p&gt;我所在的部门是IEG，互动娱乐事业群，也就是做游戏，娱乐相关的。说来有点惭愧，我现在没有在玩任何一款腾讯系的游戏。有时候会想，腾讯在世界上游戏行业收入第一，那么为什么没有独立研发出现象级的游戏产品呢？我们耳熟能详的英雄联盟，CF都是其他公司开发，腾讯代理或者收购的。近来腾讯也收购了前段时间风靡全球的部落冲突的开发商supercell，但是在收购之后，又出来了Pokemon Go。大家总说腾讯喜欢抄，没错，可能就是因为这样的抄，让腾讯没有办法在游戏行业成为像暴雪那样的信仰公司。腾讯总是会去收购，代理一些成熟的，已经风靡的游戏，而不敢去接触一些未知的领域和挑战（比如AR技术Pokemon Go），可能这就是原因吧。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;放假之后&lt;/h2&gt;
+
+&lt;p&gt;虽然两周时间已经很喜欢腾讯了，但是我还是想回上海，想和大伙儿们一起去网吧开黑，一起吃火锅，一起洗澡。在深圳觉得自己就是一个废人，除了上班就是看剧，除了看剧就是写博文，除了写博文就是打游戏，活生生的变成了葛优。&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 25 Jul 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/07/25/%E9%B9%85%E5%8E%82%E6%98%AF%E4%B8%AA%E5%A5%BD%E5%9C%B0%E6%96%B9/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/25/%E9%B9%85%E5%8E%82%E6%98%AF%E4%B8%AA%E5%A5%BD%E5%9C%B0%E6%96%B9/</guid>
+        
+        <category>生活</category>
+        
+        <category>腾讯</category>
+        
+        <category>工作</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>告别浮夸，新版博客你好</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;“总觉得自己的审美提高了一大步。”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;正文&lt;/h2&gt;
+
+&lt;p&gt;讲真，现在回过头看自己过去的那个个人主页，已经有点不堪入目了。bug相当多，而且操作也不友好，优化也做得很差。这次修改，不仅是想让自己网站变得更加干净，也希望自己能够更加简单一些吧。&lt;/p&gt;
+
+&lt;p&gt;我使用的是&lt;a href=&quot;http://huangxuan.me&quot;&gt;Hux&lt;/a&gt;的网页作为参考，有关于任何技术方面的细节，可以去他的网站看。如果你也想做一个类似的博客，可以去clone他在github上面挂的模板。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;关于我的博客，如果你有任何问题，请联系gougoumemeda@sjtu.edu.cn&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 24 Jul 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/</guid>
+        
+        <category>Web</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
     
       <item>
         <title>iOS应用逆向工程</title>
@@ -492,125 +570,6 @@ typedef NS_OPTION(NSUIngeter, PermittedDirection) {
         <pubDate>Tue, 08 Mar 2016 20:00:00 +0800</pubDate>
         <link>https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/</guid>
-        
-        <category>iOS</category>
-        
-        <category>技术</category>
-        
-        <category>Objective-C</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>关于Grand Central Dispatch的一些知识</title>
-        <description>&lt;p&gt;GCD是什么，其实就是一堆控制线程的API，高度封装，而且性能优秀。&lt;/p&gt;
-
-&lt;p&gt;为什么要有多线程呢？实际上我们打开一个app之后，主线程也就是我们看到的线程只有一个，但是我们会有很多后台的操作，比如下载图片，计算一个很复杂的公式等，如果在主线程中运行，那么用户就不能执行其他的操作。所以一般而言主线程用来更新UI和响应事件，其他的高负荷运算放在另一个线程中。&lt;/p&gt;
-
-&lt;p&gt;GCD有两种queue，一种是serial dispatch queue，另外一种是concurrent dispatch queue。顾名思义，前者单线程，后者多线程。他们都是FIFO来执行任务的。我们有五个系统自带的dispatch queue，一个main dispatch queue，是serial的，四个global dispatch queue，是concurrent的，以优先级来区分。&lt;/p&gt;
-
-&lt;p&gt;简单讲讲各个API的作用吧：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchQueueCreate: 创建一个线程，此线程由程序员负责释放&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchSetTargetQueue: 设置线程的优先级&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchAfter: 在某个时间点的某个队列中执行某操作&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchAsync: 异步的将某个操作放入某个队列中执行&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchBarrierAsync: 完成此代码之前的操作再执行此代码，最后执行此代码之后的操作&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchSync: 将某个操作放入某个队列中执行，队列销毁后才能继续执行&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchApply: 按指定的次序将操作放入队列中执行&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchSuspend: 暂停某队列&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;dispatchResume: 恢复某队列&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;简单说说GCD的实现吧，执行线程上操作的步骤如下：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Block加入dispatch continuation&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;调用pthreadWorkqueueAdditemUp，将队列和continuation信息传回&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;调用pthreadWorkqueue，执行Block操作\n\n4. 如果队列中还有操作，则回到2&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;差不多就是这些，具体的也要看项目的需求。&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 01 Mar 2016 20:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2016/03/01/%E5%85%B3%E4%BA%8EGrand-Central-Dispatch%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/03/01/%E5%85%B3%E4%BA%8EGrand-Central-Dispatch%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86/</guid>
-        
-        <category>iOS</category>
-        
-        <category>技术</category>
-        
-        <category>多线程</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Objective-C中的Block</title>
-        <description>&lt;p&gt;Block是什么呢？&lt;/p&gt;
-
-&lt;p&gt;其实就是C++中的Lambda表达式，js中的匿名函数，swift中的闭包等。&lt;/p&gt;
-
-&lt;p&gt;Block能截取自动变量值，本质上来说，Block就是一个struct，我们截取到的变量值会存储在这个struct中，这个存储是拷贝存储，也就是说，值是不会随着之后的代码而改变的。更重要的一点是，我们无法对这样捕获到的值进行修改，除非我们增加block修饰符：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;__block id tmp;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这个block修饰符本质也是一个struct，其中有一个指向自己的指针forwarding，这个指针的作用稍后会说明。&lt;/p&gt;
-
-&lt;p&gt;作为一个struct，结合之前的ARC，我们知道会有一个retainCount，当一个Block被声明之后，是存在于栈上的，超出作用域就会废弃。但是，如果我们将Block复制到堆，就可以在之后的作用域中继续使用这个Block，而其block修饰符也会复制到堆中。复制的情况发生于以下：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;调用Block的copy方法&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Block作为函数返回值返回时&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;将Block赋值给有strong修饰符id类型的类&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;在方法名中含有usingBlock的Cocoa框架方法&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;那么，forwarding到底是用来干嘛的呢？因为Block可以在栈和堆两个地方，所以无论是栈中的Block还是堆中的Block，其内部的forwarding指针会始终指向堆的Block。&lt;/p&gt;
-
-&lt;p&gt;还有的可能就是Block中的循环引用问题，但是这个问题真的不是问题，所以也就不多说了吧。&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 28 Feb 2016 20:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2016/02/28/Objective-C%E4%B8%AD%E7%9A%84Block/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/02/28/Objective-C%E4%B8%AD%E7%9A%84Block/</guid>
         
         <category>iOS</category>
         

@@ -4,7 +4,7 @@ title:      "关于Grand Central Dispatch的一些知识"
 subtitle:   "《Objective-C高级编程 iOS与OS X多线程和内存管理》GCD部分笔记"
 date:       2016-03-01 12:00:00
 author:     "George"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bg-ios.jpg"
 tags:
     - iOS
     - 技术

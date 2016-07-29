@@ -4,7 +4,7 @@ title:      "iOS应用逆向工程"
 subtitle:   "《iOS应用逆向工程》笔记"
 date:       2016-05-31 12:00:00
 author:     "George"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bg-ios.jpg"
 tags:
     - iOS
     - 技术

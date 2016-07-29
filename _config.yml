@@ -69,7 +69,7 @@ ga_domain: auto
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "与其感慨路难行，不如马上出发。"
-sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/avatar-george.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
@@ -84,17 +84,5 @@ friends: [
     {
         title: "Hux Blog",
         href: "http://huangxuan.me"
-    },{
-        title: "Foo",
-        href: "#"
-    },{
-        title: "Bar",
-        href: "#"
-    },{
-        title: "Example Friends",
-        href: "#"
-    },{
-        title: "It helps SEO",
-        href: "#"
     }
 ]

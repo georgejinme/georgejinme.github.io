@@ -154,6 +154,56 @@
             ">
     			
 <div class="post-preview">
+    <a href="/2016/03/01/%E5%85%B3%E4%BA%8EGrand-Central-Dispatch%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86/">
+        <h2 class="post-title">
+            关于Grand Central Dispatch的一些知识
+        </h2>
+        
+        <h3 class="post-subtitle">
+            《Objective-C高级编程 iOS与OS X多线程和内存管理》GCD部分笔记
+        </h3>
+        
+        <div class="post-content-preview">
+            GCD是什么，其实就是一堆控制线程的API，高度封装，而且性能优秀。
+
+为什么要有多线程呢？实际上我们打开一个app之后，主线程也就是我们看到的线程只有一个，但是我们会有很多后台的操作，比如下载图片，计算一个很复杂的公式等，如果在主线程中运行，那么用户就不能执行其他的操作。所以一般而言主线程用来更新UI和响应事件，其他的高负荷运算放在另一个线程中。
+
+GCD有两种queue，一种是seria...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by George on March 1, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2016/02/28/Objective-C%E4%B8%AD%E7%9A%84Block/">
+        <h2 class="post-title">
+            Objective-C中的Block
+        </h2>
+        
+        <h3 class="post-subtitle">
+            《Objective-C高级编程 iOS与OS X多线程和内存管理》Block部分笔记
+        </h3>
+        
+        <div class="post-content-preview">
+            Block是什么呢？
+
+其实就是C++中的Lambda表达式，js中的匿名函数，swift中的闭包等。
+
+Block能截取自动变量值，本质上来说，Block就是一个struct，我们截取到的变量值会存储在这个struct中，这个存储是拷贝存储，也就是说，值是不会随着之后的代码而改变的。更重要的一点是，我们无法对这样捕获到的值进行修改，除非我们增加block修饰符：
+
+__block id t...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by George on February 28, 2016
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
     <a href="/2016/02/22/%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8EARC%E7%9A%84/">
         <h2 class="post-title">
             一些关于ARC的
@@ -235,13 +285,13 @@
                     <div class="tags">
                         
                             
-                                <a href="/tags/#Web" title="Web" rel="3">
+                                <a href="/tags/#Web" title="Web" rel="4">
                                     Web
                                 </a>
                             
                         
                             
-                                <a href="/tags/#技术" title="技术" rel="12">
+                                <a href="/tags/#技术" title="技术" rel="13">
                                     技术
                                 </a>
                             
@@ -276,6 +326,12 @@
                         
                             
                         
+                            
+                        
+                            
+                        
+                            
+                        
                     </div>
                 </section>
                 
@@ -285,7 +341,7 @@
                     <hr><h5><a href="/about/">ABOUT ME</a></h5>
                     <div class="short-about">
                         
-                            <img src="/img/avatar-hux.jpg" />
+                            <img src="/img/avatar-george.jpg" />
                         
                         
                             <p>与其感慨路难行，不如马上出发。</p>
@@ -344,14 +400,6 @@
                 <ul class="list-inline">
                     
                         <li><a href="http://huangxuan.me">Hux Blog</a></li>
-                    
-                        <li><a href="#">Foo</a></li>
-                    
-                        <li><a href="#">Bar</a></li>
-                    
-                        <li><a href="#">Example Friends</a></li>
-                    
-                        <li><a href="#">It helps SEO</a></li>
                     
                 </ul>
                 

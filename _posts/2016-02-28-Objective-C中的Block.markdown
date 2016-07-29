@@ -4,7 +4,7 @@ title:      "Objective-C中的Block"
 subtitle:   "《Objective-C高级编程 iOS与OS X多线程和内存管理》Block部分笔记"
 date:       2016-02-28 12:00:00
 author:     "George"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bg-ios.jpg"
 tags:
     - iOS
     - 技术

@@ -4,7 +4,7 @@ title:      "关于旧版个人主页"
 subtitle:   "一些技术细节，包括pjax，low-poly picture等。"
 date:       2016-02-15 12:00:00
 author:     "George"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bg-oldblog.jpg"
 tags:
     - Web
     - 技术

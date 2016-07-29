@@ -4,7 +4,7 @@ title:      "Objective-C中接口和API的设计"
 subtitle:   "《Effective Objective-C 2.0》接口与API部分笔记"
 date:       2016-04-02 12:00:00
 author:     "George"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bg-ios.jpg"
 tags:
     - iOS
     - 技术
