@@ -4,7 +4,7 @@ title:      "告别浮夸，新版博客你好"
 subtitle:   "简单直观才是王道。"
 date:       2016-07-24 12:00:00
 author:     "George"
-header-img: "img/post-bg-2015.jpg"
+header-img: "img/post-bg-newblog.jpg"
 tags:
     - Web
     - 技术
