@@ -19,13 +19,13 @@ Line Renderer和Billboard还有一些不一样，billboard对着你的角度也�
 
 给一张line的图片好了~
 
-缺图
+![img](/img/in-post/LineRenderer/line-render.png)
 
 ## 我们究竟要干什么呢
 
 用过Unity的朋友都知道，Unity自带了一种Line Renderer，在Effect Component中可以找到。这个line可以调整的参数是，起点的位置，终点的位置，起点的宽度以及终点的宽度，如下图：
 
-缺图
+![img](/img/in-post/LineRenderer/para.png)
 
 我想测试一下这个renderer的性能，于是我放了500个对象上去，发现他竟然用了500个draw call来一个一个画。嗯，是时候给Line Renderer瘦瘦身了！接下来我们就来自己实现这样一个line renderer，并且让他的性能比原生的更好。CPU的能耗很大一部分都在draw call上面，把这部分draw call给合并成一个，那么能耗会大大下降，而合并的方法，就是batch。Unity提供了静态Batch和动态Batch，当然也可以用代码手动创建Batch。除此之外，我们不能为一个GameObject创建Mesh Renderer，因为我们需要手动去batch，所以batch后的mesh也需要我们手动去绘制。
 
@@ -122,9 +122,23 @@ CombineMeshes函数就是把所有的Mesh合并成一个Mesh，DrawMesh就是讲
 
 ## 性能对比
 
-我们先创建2000个对象，并且挂载系统自带的Line Renderer，得到的性能图像如下：
+我们先在安卓手机上创建2000个对象，并且挂载系统自带的Line Renderer，得到的性能图像如下：
 
-未完待续。
+![img](/img/in-post/LineRenderer/system.png)
+
+我们只需要关注Camera.Render的耗时，因为这一项代表的就是draw call的耗时，也是我们可以优化的一项。我们发现数值大约为93ms。
+
+现在我们挂载自己的Line Renderer，也是2000个对象：
+
+![img](/img/in-post/LineRenderer/mine.png)
+
+我们发现Camera.Render的耗时只有0.49ms！！足足快了大约190倍！可见batch的强大之处。那么这是不是意味着我们的Line Renderer就完胜系统的呢？其实不是的，在GPU的消耗上，我们略微的输给了系统的，但是因为CPU才是主要影响性能的因素，所以我们会把大部分的注意力都放在CPU上面，换句话说，我们的Line Renderer是成功的。
+
+## 后记
+
+可能是长期在写业务逻辑的缘故，对于这样的优化以及改进我一开始是无从下手的。但当我们真正“入门”之后，会发现优化是一件非常有趣非常有成就感的事情，我也能够感受到自己是一名“程序员”而不是“码农”，我想，不停的超越也是写代码的乐趣之一吧。
+
+
 
 
 
