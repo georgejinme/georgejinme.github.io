@@ -5,8 +5,8 @@
     <description>My personal webpage</description>
     <link>https://gougoumemeda.github.io/</link>
     <atom:link href="https://gougoumemeda.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 04 Aug 2016 00:37:17 +0800</pubDate>
-    <lastBuildDate>Thu, 04 Aug 2016 00:37:17 +0800</lastBuildDate>
+    <pubDate>Thu, 04 Aug 2016 22:51:48 +0800</pubDate>
+    <lastBuildDate>Thu, 04 Aug 2016 22:51:48 +0800</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -143,9 +143,9 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
 &lt;p&gt;可能是长期在写业务逻辑的缘故，对于这样的优化以及改进我一开始是无从下手的。但当我们真正“入门”之后，会发现优化是一件非常有趣非常有成就感的事情，我也能够感受到自己是一名“程序员”而不是“码农”，我想，不停的超越也是写代码的乐趣之一吧。&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 25 Jul 2016 20:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2016/07/25/Unity%E4%B8%ADLineRender%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%8E%E4%BC%98%E5%8C%96/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/25/Unity%E4%B8%ADLineRender%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%8E%E4%BC%98%E5%8C%96/</guid>
+        <pubDate>Wed, 27 Jul 2016 20:00:00 +0800</pubDate>
+        <link>https://gougoumemeda.github.io/2016/07/27/Unity%E4%B8%ADLineRender%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%8E%E4%BC%98%E5%8C%96/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/27/Unity%E4%B8%ADLineRender%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%8E%E4%BC%98%E5%8C%96/</guid>
         
         <category>Unity</category>
         
