@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Objective-C中的消息 - 金嘉骏的博客 | GeorgeJin Blog</title>
+    <title>使用Shader实现任意曲线的颜色渐变和纹理移动 - 金嘉骏的博客 | GeorgeJin Blog</title>
 
-    <link rel="canonical" href="https://gougoumemeda.github.io/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/">
+    <link rel="canonical" href="https://gougoumemeda.github.io/2016/08/05/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -129,12 +129,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-ios.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-unity.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-ios.jpg')
+        background-image: url('/img/post-bg-unity.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -144,19 +144,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#Unity" title="Unity">Unity</a>
                         
                         <a class="tag" href="/tags/#技术" title="技术">技术</a>
                         
-                        <a class="tag" href="/tags/#Objective-C" title="Objective-C">Objective-C</a>
+                        <a class="tag" href="/tags/#腾讯" title="腾讯">腾讯</a>
                         
                     </div>
-                    <h1>Objective-C中的消息</h1>
+                    <h1>使用Shader实现任意曲线的颜色渐变和纹理移动</h1>
                     
                     
-                    <h2 class="subheading">《Effective Objective-C 2.0》Message部分笔记</h2>
+                    <h2 class="subheading">腾讯实习技术第二炮</h2>
                     
-                    <span class="meta">Posted by George on March 22, 2016</span>
+                    <span class="meta">Posted by George on August 5, 2016</span>
                 </div>
             </div>
         </div>
@@ -174,92 +174,178 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>我们先来介绍一下OC中属性的用法。属性就是我们在实际工程中运用的最多的形式，以@property开头。用属性有什么好处呢？简单来说，属性有利于我们对内存的管理，系统会自动生成一套setter和getter来处理对属性的读取和写入操作，同时满足用户指定的strong，week等修饰符。当然，只要在属性头加上@dynamic，系统就不会自动去生成setter和getter。同时，系统会为每一个属性增加一个实例的变量，在属性名前加上下划线作为实例变量的名字。实际上，系统的setter和getter都是对其实例变量进行操作。我们可以理解成属性把实例变量封装了起来。需要说明的是，我们在一个对象/类中，最好直接访问实例变量。如果用的是属性，那么会经过setter和getter方法，这是通过OC的方法派发来完成的，所以效率会比较低，而实例变量会绕过内存管理的语义，在速度上有优势。</p>
+				<h2 id="section">扯蛋时间</h2>
 
-<p>接下来说明一下对象等同性。在OC中，==比较的是指针，isEqual(或其类似方法)比较的是其内容。这个应该很好理解，我们应当使用isEqual。当然，我们可以对自己写的类写一个isEqual方法。</p>
+<p>上次做了一个LineRender，手动Batch，对于我一个新手而言，这无疑是黑科技。</p>
 
-<p>如果我们想临时给一个类增加一个变量，有什么好用的方法呢？OC给我们提供了一种叫做关联对象的方法。有如下函数：</p>
+<p>但是我想错了。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>void objc_setAssociatedObject(id object, void* key, id value, objc_AssociationPolicy policy)
-id objc_getAssociatedObject(id object, void* key)
+<p>这次导师给我布置的任务才是真正的黑科技，我们需要在Material Inspector中绘制任意的曲线，来控制材质的颜色渐变和纹理的平移。我们都知道，shader中支持的类型都是非常基本的，float啊，int啊，稍微复杂一点的比如float4这样的，但是并没有一个类型能表示一条曲线。所以这次对我而言看上去是一个不小的挑战，但是既然来了腾讯，就要有面对挑战的决心和觉悟。当然，我也是完成了这项任务之后才来写这篇Blog的。我的导师非常善良，没有让我直接去画不规则曲线，而是先做了一个Sin函数变化曲线，然后通过设置参数的方式来调整一个他的图像，并且在Material Inspector中直观的显示出来。</p>
+
+<p>感兴趣的话，可以继续看下去。如果想直接看任意曲线部分，<a href="#curve">请猛戳我!</a></p>
+
+<h2 id="sin">Sin函数图像</h2>
+
+<p>我们先来看看结果是怎么样的。</p>
+
+<p><img src="/img/in-post/Curve/inspector.png" alt="img" /></p>
+
+<p>介绍一下各个参数吧：
+- Time：动画的周期
+- Speed：Sin函数在y轴上的拉伸
+- OffsetY：Sin函数在y轴上的平移
+- OffsetX：Sin函数在x轴上的平移
+- 颜色选择框：Sin函数在两个极值时的颜色
+- OffsetMax：纹理平移的最大位置
+- OffsetMin：纹理平移的最小位置
+- OffsetSpeedX：纹理在X轴平移的速度
+- OffsetSpeedY：纹理在Y轴平移的速度</p>
+
+<p>我们可以看到，虽然说可以显示Sin函数的图像，但是其局限性还是相当大的。首先他本质上就是一个Sin函数，然后我们只是通过修改参数，看到Sin函数的变化，而不能在图像上直接增减Keyframe。但这个做法为我们之后任意曲线提供了思路。</p>
+
+<p>我们先定位到Shader文件中。在Shader中，我们实现了具体的算法，也就是说，给定上述提到的各个参数，怎么把颜色或者纹理的变化画出来。我们在绘制两种颜色之间的渐变时，使用的是插值的技术，也就是将两部分颜色按照一定的比例混合起来，如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>o.color = v.color * (_TintColor * t + (1 - t) * _TintColorMin);
 </code></pre>
 </div>
 
-<p>我们可以把关联对象想想成一个字典，需要存放时就增加一个键值对，取出增加的东西时也可以根据键进行选择。但是，此方法慎用，因为滥用的话我们会对一个对象失去可控性。</p>
+<p>两个变量的含义从名字就可以看出来。现在我们要思考如何把t算出来，这个t事实上就是Sin函数的y值。有过高中数学知识的朋友都知道，Sin函数的一般形式为<code class="highlighter-rouge">y=Asin(w(x + t)) + b</code>。其中周期为2pi / w。我们将上述的参数都带入，得到：</p>
 
-<p>我们都知道，OC是一种动态语言，对于一些方法的调用，都是在运行时才去使用。这种方法叫做传递消息，而传递消息最关键的方法就是objc_msgSend。</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>id returnVal = objc_msgSend(someObject, @selector(msg:), parameter)
+<div class="highlighter-rouge"><pre class="highlight"><code>float t = saturate(sin((time + _SpeedColorOffsetX) / _Interval * 6.283185307) * _SpeedColorCutoff + _SpeedColorOffset);
 </code></pre>
 </div>
 
-<p>其中，someObject为消息的接受者(调用函数方)， msg为选择子(函数名)。对于每一个类，我们有一个快速的映射表，如果我们第一次发送一个消息成功后，我们会把匹配的方法名和方法实现放在这个表中作为缓存。那么如果我们找不到一个方法呢？这时候我们就会调用OC的消息转发，具体来说，有三步：</p>
+<p>这样，我们就把颜色渐变的部分完成了，最外面的saturate函数是保证t的值始终在0-1之间，因为插值技术只支持t的范围为0-1。</p>
 
-<ul>
-  <li>寻找是否有新增加的选择子。这个方法要求我们提前写好代码，等着运行的时候动态插在类里面。常见于@dynamic属性。寻找选择子时，会调用的方法为:</li>
-</ul>
+<p>现在我们来看看纹理的平移要如何达到。其实纹理的平移更加简单，速度乘以时间就是平移的距离，但是要注意我们有一个最大最小值，要保证平移的距离在这个范围之内：</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>+ (Bool)resolveInstanceMethod: (SEL)selector
+<div class="highlighter-rouge"><pre class="highlight"><code>currentUV += clamp(time * float2(_SpeedX, _SpeedY), _MinX, _MaxX);
 </code></pre>
 </div>
 
-<p>selector即为我们所没有找到的选择子。class_addMethod方法会为类增加一个方法实现，而这个实现的新方法名就是我们没有找到的选择子。</p>
+<p>有一点需要提到，因为我们的动画是可以循环的，所以time的值为真实的时间对周期取模：</p>
 
-<ul>
-  <li>
-    <p>寻找备援接受者，这限于在对象内的其他对象</p>
-  </li>
-  <li>
-    <p>完整的消息转发，也就是改变调用目标。</p>
-  </li>
-</ul>
-
-<p>后两个在开发中其实非常的少见。</p>
-
-<p>接下来要介绍一个黑科技，叫做方法调配Method Swizzling。由于OC的方法调用是在运行时才确定的，因此我们可以在运行时替换方法的实现。
-替换方法实现的方法为</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>void method_exchangeImplementations(Method m1, Method m2)
+<div class="highlighter-rouge"><pre class="highlight"><code>float time = fmod(_Time.y, _Interval);
 </code></pre>
 </div>
 
-<p>而根据方法名，得到其实现的方法为：</p>
+<p>上面就是Shader的主要思路，现在我们回到Editor，看看如何把这个Sin函数曲线画出来。其实非常简单，因为我们已经知道怎么算Sin函数了，所以我们只要在Editor中再算一边即可。</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Method class_getInstanceMethod(Class aClass, SEL aSelector)
-</code></pre>
-</div>
-
-<p>我们只需要根据方法名，取出其实现然后交换就好啦！</p>
-
-<p>最后，介绍一下OC中的类。对于一个id类型的实例，其本质为一个struct：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>typedef struct objc_object {
-	Class isa;
-} *id;
-</code></pre>
-</div>
-
-<p>isa指向其所属的类。而对于一个类，其也为一个struct，保存了一些类的数据。在这个struct中，也有一个Class类型的isa，指向这个类的元类。这个元类保存了这个类的一些元数据。而这个struct的super_class指针指向了这个类的父类。那么我们需要查询一个id实例的类型时，可以用如下方法：</p>
-
-<ol>
-  <li>
-    <p>isMemberOfClass，查询实例是否为某个类</p>
-  </li>
-  <li>
-    <p>isKindOfClass，查询实例是否为一个类或其子类</p>
-  </li>
-</ol>
-
-<p>当然，在比较类型时，我们可以用==运算符，因为每一个类在OC中都是单例的，只有一个类对象，也就没有地址不同这样的说法了。例如：</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>if ([object class] == [SomeClass class]) {
-	...
+<div class="highlighter-rouge"><pre class="highlight"><code>for (float x = 0; x &lt; interval; x = x + interval / 100)
+{
+	float value = Mathf.Sin((x + speedColorOffsetX) / interval * 6.283185307f) * speedColorCutoff + speedColorOffset;
+	value = Mathf.Clamp(value, 0, 1);
+	colorCurve.AddKey(new Keyframe(x, value));
 }
 </code></pre>
 </div>
 
-<p>关于OC的语言特性，其实还有很多，但是其消息和动态的特性是最为关键的。</p>
+<p>我们在Sin函数上取100个点进行采样，计算出这一百个点的值，然后把他封装成一个Keyframe，添加到AnimationCurve的Key中。注意一点，Keyframe是需要添加入切线和出切线的，但是我们并没有添加，所以在点少的情况下看上去并不像一个Sin函数，因此我们选择100个采样点，让两个点更加靠近，看上去就更像是一根平滑的曲线。至此，我们的Sin函数图像的绘制的就全部结束了，剩下的一下EditorGUILayout的调用查阅API手册即可。</p>
 
+<p id="curve"></p>
+
+<h2 id="section-1">任意曲线绘制</h2>
+<p>简单来说，我们接下去要做的事，就是能够直接在图像上增减Keyframe，不用手动输入参数，然后能够在Shader中计算出对应的值，通过插值的方法达到颜色渐变和纹理平移的效果。我们这里只说颜色渐变的方法，因为纹理平移和颜色渐变的思路是一模一样的，复制两次代码即可。</p>
+
+<p>老规矩，先看一张成品图：</p>
+
+<p><img src="/img/in-post/Curve/curveinspector.png" alt="img" /></p>
+
+<p>这里我们的参数就少了很多，唯一有的是：</p>
+
+<ul>
+  <li>Loop：是否循环播放</li>
+  <li>Duration：周期</li>
+</ul>
+
+<p>我们这次先来讲讲大致的思路是怎么样的。我遇到的第一个疑问是，对于任意一根曲线，怎么计算出在某一个x上的y的值？unity自带有一个方法叫做AnimationCurve.Evaluate(time)，我们传进去一个time，也就是x，就能帮我们计算出y的值。但是这个方法只能在C#中使用，如果要像Sin函数那样在Shader中计算一遍，那该怎么做呢？有同学可能会说，在C#中计算好再传进去，那样我们每一帧都要传递一个值，开销会很大，所以建议还是在Shader中做计算。事实上，我们只需要知道Evaluate函数具体的算法，在Shader中实现一遍就好了，于是我谷歌到了下面的东西：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>float evaluate(float time, float4 keyframe1, float4 keyframe0)
+{
+	float t = (time  - keyframe0.x) / (keyframe1.x - keyframe0.x);
+	float dt = keyframe1.x - keyframe0.x;
+	float m0 = keyframe0.w * dt;
+	float m1 = keyframe1.z * dt;
+	float t2 = t * t;
+	float t3 = t2 * t;
+	float a = 2 * t3 - 3 * t2 + 1;
+	float b = t3 - 2 * t2 + t;
+	float c = t3 - t2;
+	float d = -2 * t3 + 3 * t2;
+	float value = a * keyframe0.y + b * m0 + c * m1 + d * keyframe1.y;
+	return saturate(value);
+}
+</code></pre>
+</div>
+
+<p>Nice！这就是Unity的Evaluate函数的具体实现。我们只要把这个函数搬到Shader的CGPROGRAM代码块中就好啦！</p>
+
+<p>但是新的问题又来了，这个函数需要两个keyframe参数（相邻的两个keyframe），这两个keyframe肯定是要从material editor中传进去的，如果我们只传这两个参数，那和用C#计算完把结果穿进去有什么区别呢，还是需要每一帧（可能多个帧）传递数据一次，毕竟时间在x轴上跑，相邻的两个keyframe会变。我们最理想的情况是，不会因为时间的缘故而传递数据。因此，我们需要在曲线绘制完毕后，就将所有的keyframe传进去，然后在Shader中计算此时相邻的keyframe是哪两个，这样开销会小很多。所以现在的关键点是，如何传递所有的keyframe到Shader中，以及如何计算出当前时间相邻的两个Keyframe？</p>
+
+<p>我们先来回答第一个问题。回到Editor，我们绘制曲线在OnInpectorGUI()这个函数中，有一点需要注意，我们必须将绘制完的曲线赋给原来的变量，否则曲线是不会变化的！</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>colorCurve = EditorGUILayout.CurveField(colorCurve, Color.green, new Rect(0, 0, 1.0f, 1.0f), GUILayout.Height(150));
+</code></pre>
+</div>
+
+<p>然后，<code class="highlighter-rouge">colorCurve</code>就是我们最终得到的动画曲线。我们只要取colorCurve.keys就能够得到他所有的Keyframe了。这里有一点需要注意，我们在Editor中设置的曲线范围都是0-1之间的，而且keyFrame必须至少有2个，否则曲线就失去了意义，这点在代码中需要判断一下。另外，我们有一个Duration变量来控制周期，所以我们需要保证最后一个keyframe的x坐标必须为1，表示1秒，在最终绘制曲线的时候，会将时间放慢Duration倍，达到周期为Duration的效果，例如如果想在3.5秒完成一次动画，就把Duration设置成3.5即可。总而言之，Curve的绘制只是告诉我们变化的曲线，具体变化需要多久，由Duration来控制，这样做会使得美术更加容易理解，代码的实现也会更加简单。这部分代码在Shader中实现，Editor中只需要保证x的坐标为1即可：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if (number &gt;= 2)
+{
+	keys[number - 1].time = 1.0f;
+}
+</code></pre>
+</div>
+
+<p>然后我们遍历每一个KeyFrame，传递到Shader中就好。</p>
+
+<p>现在回答第二个问题，如何知道离时间最近的两个Keyframe。最简单的方法就是在Shader中遍历所有的Keyframe，判断时间的关系。这么做可以，但是非常耗时，每一帧都需要遍历，而且每一个顶点都要遍历一遍。所以我没有采用这样的方法，而是做了一个Hash Table，在Editor中计算完之后传递给Shader，把变量命名为TimeTable，其中他的下标是时间（取整），值就是在下标表示的时间时下一个Keyframe的序号（Index）。这里需要插一句话，Keyframe在Shader中需要float4来存储，我们规定一根曲线上不能超过10个keyframe，所以三根曲线就有30个float4。而CG最多支持128个float4，因此我们大约只能再用90个float4。所以TimeTable的类型为float4，其中x，y，z分别为三根曲线所用。这里我们只介绍颜色，所以用x分量就可以。</p>
+
+<p>可能会有同学好奇，时间取整作为下标，那3.2秒和3.6秒时对应的Keyframe是同一个咯？如果在3.5秒和3.7秒有一个Keyframe的话，计算出的结果就是错误的！我们现在换个思路，TimeTable的大小为90，也就是说动画周期最长可以是90，但实际上我们根本不需要这么久的时间，动画周期在Editor里就已经确定了，而Editor中Keyframe的time最大就是1.0，所以我们可以将时间“拉长”90倍，也就是说，在每一个Keyframe的time上乘以90作为一个界限。这么说有点抽象，我们举个例子：假设在0.5秒和0.6秒有两个keyframe，如果直接取整，那么0.6秒这个keyframe会直接被无视掉。现在我们乘以90，得到45和54，也就是说，当真正的时间乘上90小于45的话，会取前面的keyframe，在45-54之间的话，就会取后面的keyframe，这样就把两个keyframe“区分”开来了，更直观一点，就是把他们的距离拉长了90倍，时间可以放进去了！</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>for (; currentTime &lt;= (int)(keys[i + 1].time * 90); ++currentTime)
+{
+	timeTable[currentTime][type] = i + 1;
+}
+</code></pre>
+</div>
+
+<p>代码就是这样，type就是x，y，z分量，最终我们在Shader中使用时，只要把真实的时间乘以90作为下标，就能得到正确的下一个keyframe了！</p>
+
+<p>现在我们两个问题都解决了！去Shader中看看具体剩下的部分吧！</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>float beginTime = _Time.y - v.time.x;
+beginTime = max(0, beginTime);
+</code></pre>
+</div>
+
+<p>这一部分是控制一个GameObject什么时候开始动画，如果没有这一块，那所有的GameObject都是同步动画的，因为他们共享的是同一个Material（为了Batch）。我们需要区分他们动画开始的时间，就需要在Mesh中把开始时间传递进去，如果没到那个时间，那当前动画运行的时间就始终是0，如果到了，那就是真实的动画运行时间了。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>float time = ((1 - _Loop) * clamp(beginTime, 0, _Duration) + _Loop * fmod(beginTime, _Duration)) / _Duration;
+float4 currentVector = _TimeTable[floor(time * 90)];
+</code></pre>
+</div>
+
+<p>time控制是否需要循环播放动画，而且范围始终在0-1之间，与Editor相匹配。由于我们除以了一个Duration，所以时间被放慢了Duration倍！达到了Duration控制周期的效果！后面一行的time*90就是之前所说过的部分。</p>
+
+<p>剩下的部分，就是找到keyframe，传到evaluate函数计算出结果，与颜色做插值，这些在Sin函数部分都已经讲过了，就不再重复了。</p>
+
+<p>到此为止，我们的代码就彻底完成啦！</p>
+
+<h2 id="section-2">性能测试</h2>
+
+<p>又到了喜闻乐见的性能测试环节了，先来看看用Animation做颜色渐变和纹理平移的效果。创建500个GameObject，挂载Animation，运行在安卓手机上：</p>
+
+<p><img src="/img/in-post/Curve/animation.png" alt="img" /></p>
+
+<p>关注Camera.Render，时间大约为38ms。现在来看看我们自己写的Shader执行颜色渐变和纹理平移的效率：</p>
+
+<p><img src="/img/in-post/Curve/shader.png" alt="img" /></p>
+
+<p>发现Camera.Render的时间只要15ms左右。虽然没有Line Renderer那么惊艳，但是还是节约了一半多的时间，原因还是在Batch上面，因为我们是在Material和Shader中做这些事情，而同一个Material是自动会被Batch的，所以节约了一部分Draw Call的开销。此外，用Animation做还特别麻烦，需要每一种渐变效果都做一个Animation。而用Material，只要拖拖曲线，画画keyframe就好，美术会更加喜欢的！</p>
+
+<h2 id="section-3">后记</h2>
+<p>当然，如果你有什么问题的话，请在评论中告诉我~</p>
 
 
                 <hr>
@@ -269,11 +355,17 @@ id objc_getAssociatedObject(id object, void* key)
                 </style>
                 <div class="ds-share"
                     style="text-align: right"
-                    data-thread-key="/2016/03/22/Objective-C中的消息"
-                    data-title="Objective-C中的消息"
-                    data-url="https://gougoumemeda.github.io/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/"
-                    data-images="https://gougoumemeda.github.io/img/post-bg-ios.jpg"
-                    data-content="我们先来介绍一下OC中属性的用法。属性就是我们在实际工程中运用的最多的形式，以@property开头。用属性有什么好处呢？简单来说，属性有利于我们对内存的... | 金嘉骏的博客 | GeorgeJin Blog " >
+                    data-thread-key="/2016/08/05/使用Shader实现任意曲线的颜色渐变和纹理移动"
+                    data-title="使用Shader实现任意曲线的颜色渐变和纹理移动"
+                    data-url="https://gougoumemeda.github.io/2016/08/05/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/"
+                    data-images="https://gougoumemeda.github.io/img/post-bg-unity.jpg"
+                    data-content="扯蛋时间
+
+上次做了一个LineRender，手动Batch，对于我一个新手而言，这无疑是黑科技。
+
+但是我想错了。
+
+这次导师给我布置的任务才是真正的黑... | 金嘉骏的博客 | GeorgeJin Blog " >
                     <div class="ds-share-inline">
                       <ul  class="ds-share-icons-16">
                         <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -293,13 +385,9 @@ id objc_getAssociatedObject(id object, void* key)
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/" data-toggle="tooltip" data-placement="top" title="Objective-C语言相关">&larr; Previous Post</a>
+                        <a href="/2016/07/27/Unity%E4%B8%ADLineRender%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%8E%E4%BC%98%E5%8C%96/" data-toggle="tooltip" data-placement="top" title="Unity中LineRender的实现与优化">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2016/04/02/Objective-C%E4%B8%AD%E6%8E%A5%E5%8F%A3%E5%92%8CAPI%E7%9A%84%E8%AE%BE%E8%AE%A1/" data-toggle="tooltip" data-placement="top" title="Objective-C中接口和API的设计">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
@@ -308,9 +396,9 @@ id objc_getAssociatedObject(id object, void* key)
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                        data-thread-key="/2016/03/22/Objective-C中的消息"
-                        data-title="Objective-C中的消息"
-                        data-url="https://gougoumemeda.github.io/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/" >
+                        data-thread-key="/2016/08/05/使用Shader实现任意曲线的颜色渐变和纹理移动"
+                        data-title="使用Shader实现任意曲线的颜色渐变和纹理移动"
+                        data-url="https://gougoumemeda.github.io/2016/08/05/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/" >
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
