@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="My personal webpage">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Unity中使用Animation提高Animator的性能 - 金嘉骏的博客 | GeorgeJin Blog</title>
+
+    <link rel="canonical" href="https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">GeorgeJin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-unity.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-unity.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Unity" title="Unity">Unity</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                        <a class="tag" href="/tags/#腾讯" title="腾讯">腾讯</a>
+                        
+                    </div>
+                    <h1>Unity中使用Animation提高Animator的性能</h1>
+                    
+                    
+                    <h2 class="subheading">腾讯实习技术第三炮</h2>
+                    
+                    <span class="meta">Posted by George on September 9, 2016</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h2 id="section">序言</h2>
+<p>这次我要跟大家分享的是使用Animation来实现Animator的功能。其实效果没有之前Curve那么酷炫，但是工作量比之前的会大上好多。</p>
+
+<p>为什么要使用Animation来实现Animator呢？很大一部分原因是在于性能。Animator的性能是被人们所诟病的，在模拟之前我也不知道使用Animation能提高多少的性能，只是觉得可能是一种方式，所以就做了这件事。下面我们就进入正题，聊聊具体的方式。</p>
+
+<h2 id="section-1">正文</h2>
+<p>平台：Unity 4.6</p>
+
+<h3 id="section-2">概念与运作方式</h3>
+<p>首先我们来明确一下Animator的概念以及运作方式。Animator本质上就是一个组件（Component），可以挂载到任意一个GameObject上，其核心在于AnimatorController。我们平常所看到的AnimatorController的图形化结构是这样的：</p>
+
+<p><img src="/img/in-post/Animation/1.png" alt="img" /></p>
+
+<p>本质上而言，AnimatorController就是多个状态机的组合，其中的状态就是动画，而状态的转换就是动画的过渡。我们要实现的呢，就是状态机。只不过里面还有很多细节和其他功能比如Layer，BlendTree等。</p>
+
+<p>我们从宏观到微观的角度来看controller，序号越小表示所包含的东西越多，概念越大：
+1. controller本身，其中主要是paramaters和各个layer的基本信息。
+2. layer，在animator中，我们对每一个layer都需要进行state和transition的更新。
+3. stateMachine，通常来说，一个layer就是一个stateMachine，但是stateMachine也可以包含其他的sub-stateMachine。
+4. state和transition，这些都是包含在stateMachine中的，也是controller中最核心的部分。
+5. animationClip，包含在一个state中，真正动画播放的东西。</p>
+
+<p>下面我们一个一个具体的介绍上述部件的功能。</p>
+
+<h4 id="parameters">Parameters</h4>
+<p>“参数”是用来控制Transition的发生的。当参数满足一个Transition触发的所有条件时，这个Transition就会执行。从图形化的角度来看，参数就是以下图来表示的：</p>
+
+<p><img src="/img/in-post/Animation/2.png" alt="img" /></p>
+
+<p>我们在代码中，可以通过SetInt，SetFloat等方法来修改参数的值。具体使用方法可以参考Unity手册。</p>
+
+<h4 id="layer">Layer</h4>
+<p>Layer在AnimatorController中，表示如下：</p>
+
+<p><img src="/img/in-post/Animation/3.png" alt="img" /></p>
+
+<p>他的作用主要是用来控制不同层动画的混合，比如你有一个投掷的动画和一个走路的动画，你想上半身来投掷，下半身 走路的话，就可以通过Layer来实现。在Layer中我们看到有weight，Mask和Blending可以供开发者选择。weight用来控制混合 的权重，0表示不混合（动画不播放），其他数值会以一个融合的比重来播放动画，这里weight的值并不是绝对的，还会根据Blending的选择来更 改，如果Blending为Override，那么最终播放的时候当前层的动画会覆盖更浅层的动画，如果Blending为Additive，那么当前层 的weight会与更浅层的weight相加，再归一化。Mask是用来控制当前Layer的动画使用在身体的哪个部分的。我们可以在Unity中创建一 个Mask Avatar，通过设置它来达到控制身体部位的效果。</p>
+
+<h4 id="statemachine">StateMachine</h4>
+
+<p>一个StateMachine就是一个状态机，也就是我们最直观的看到的那一块区域：</p>
+
+<p><img src="/img/in-post/Animation/4.png" alt="img" /></p>
+
+<p>通常来说，一个layer就是一个stateMachine，但是stateMachine也可以包含其他的sub-stateMachine。</p>
+
+<h4 id="state">State</h4>
+<p>State在AnimatorController中表示为：</p>
+
+<p><img src="/img/in-post/Animation/5.png" alt="img" /></p>
+
+<p>实际上，一个State就包含了一个动画或者多个动画的融合（BlendTree）。在每一个State中，我们都可以找到AnimationClip，而它就是真正被播放的东西。我们状态机就是在不同的State之间进行转换，也就是在不同的动画中进行过渡与播放。值得一提的是，我们有一个很特殊的State叫AnyState，它可以表示任何一个State，换句话说，从它发出的Transition可以看作是从其他State中发出的。</p>
+
+<h4 id="transition">Transition</h4>
+<p>Transition就是在AnimatorController中的箭头，表示为：</p>
+
+<p><img src="/img/in-post/Animation/6.png" alt="img" /></p>
+
+<p>当我们选中一个Transition时，可以在右边看到触发时的条件，这些条件必须全部都满足时才会被触发。Transition是一个动画到另一个动画的过渡，这个过渡是有时间的。当过渡完成之后，动画的状态才会切换。有一类Transition的条件仅仅是Exit Time，表示当动画播放了一段时间后自动会触发这个Transition。</p>
+
+<p>具体我们模拟Animator的时候，可以这么做（Update函数）：
+1. 遍历每一个layer（可用多线程）
+2. 在一个layer中，遍历当前state发出的所有transition，看看是否有所有conditions都满足的transition
+3. 如果没有，结束
+4. 如果有，则开始这个transition
+5. transition是有时间的，所以当transition结束后，将当前的state设置成transition的dstState</p>
+
+<h3 id="section-3">实现</h3>
+
+<h4 id="section-4">解析</h4>
+<p>在实现这个Animator的时候，因为我们使用的是Unity 4.6，并没有与AnimatorController相关的API，所以我们需要自己解析controller文件。如果要看到controller文 件的原内容，我们需要设置一下Project Setting - Edtior，将其中的Aseet Serialization设置为Force Text，然后将controller文件使用任意编辑器打开（sublime），就能看到controller中所有的数据结构啦。我们在实际解析这些数据结构的时候，可以在代码中直接创建相应的类和成员变量，以State为例，在controller中他是这么表示的：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="gd">--- !u!1102 &amp;110273390
+</span>State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Attack01
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: 904f2f79e9c87534f903a673c7adb132, type: 3}
+  m_ParentStateMachine: {fileID: 110728656}
+  m_Position: {x: -94, y: 183, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
+</code></pre>
+</div>
+
+<p>我们创建的类如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class State
+{
+    public int m_id;
+    public string m_Name;
+    public float m_Speed;
+    public float m_CycleOffset;
+    public bool m_IKOnFeet;
+    public bool m_Mirror;
+
+    public List&lt;AnimationClip&gt; m_Motions; // one motion per motion set  
+    public BlendTree m_MotionsWithBlendTree;
+
+    public StateMachine m_ParentStateMachine;
+    public Vector3 m_Position;
+    public string m_Tag;
+
+    public State(int id)
+    {
+        m_id = id;
+        m_Motions = new List&lt;AnimationClip&gt;();
+    }
+}
+</code></pre>
+</div>
+
+<p>其中，id为controller中第一行最后的那一串数字，其他的成员变量名字和controller中的大致都是一样的。因为一个 State可能是一个BlendTree，所以我们添加了一个m_MotionsWithBlendTree来表示这个State对应的 BlendTree（如果有的话）。然后，m_Motions存储的就是要被Animation播放的动画片段。</p>
+
+<p>这里有一点需要注意，我们需要将原来的动画片段复制一遍，把他的animationType设置成Lagecy，才能被Animation所支持。具体复制和设置的代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>string animationPath = "Assets/Character/Animations/" + guid + state.m_id + ".FBX";
+//AssetDatabase.CopyAsset(AssetDatabase.GUIDToAssetPath(guid), animationPath);
+var animationObject = AssetDatabase.LoadAssetAtPath(animationPath, typeof(AnimationClip)) as AnimationClip;
+if (!animationObject.name.Contains(state.m_id.ToString()))
+      animationObject.name = animationObject.name + state.m_id;
+AnimationUtility.SetAnimationType(animationObject, ModelImporterAnimationType.Legacy);
+state.m_Motions.Add(animationObject);
+state.m_MotionsWithBlendTree = null;
+</code></pre>
+</div>
+
+<p>在上述代码中我们发现，我们对animationClip的名字进行的修改，原因在于，可能在不同Layer的两个State中有相同的AnimationClip，他们完全可以同时进行播放。在controller中，他们也是以不同的guid来表示的，说明他们是两个对象。而在Animation中，我们的Clip是以名字进行标识的，所以这里要给他们换一个名字。</p>
+
+<p>最后一点需要注意的是，还记不记得我们之前说在Layer中可以添加Mask。我们打开.mask文件后，发现会有一些m_Path，我们把m_Weight为1的所有path当成字符串保存起来，之后在模拟的时候会使用到。</p>
+
+<h4 id="section-5">模拟</h4>
+
+<p>解析完controller文件后，就可以模拟Animator的行为了。</p>
+
+<p>首先我们要将所有的动画添加到Animation中去，在添加的时候，可以设置AnimationState.layer来实现不同layer的混合效果， 然后我们要实现mask的效果，可以使用函数AddMixingTransform，他接受两个参数，一个是transform，这里我们就可以使用解析 得到的m_Path了，使用transform.find(m_Path)就能得到我们真正需要的子transform（也就是mask），另一个参数表 示是否递归，这里根据.mask的文件结构来看，我们选择false即可。</p>
+
+<p>另外需要注意的是，Animation没有直观的数据结构可以表示BlendTree，我们要根据parameter的值以及各个动画片段的threshold来计算出他们的权重。这里以1D为例，计算权重的函数如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>void UpdateWeightsAndSpeedsInBlendTree1D(AnimatorCompiler.BlendTree blendTree)
+{
+      float para = floatConditions[blendTree.m_BlendParameter.m_Name];
+      AnimatorCompiler.BlendTree.Child left = null;
+      AnimatorCompiler.BlendTree.Child right = null;
+      for (int i = 0; i &lt; blendTree.m_Childs.Count; ++i)
+      {
+            AnimatorCompiler.BlendTree.Child child = blendTree.m_Childs[i];
+            if (para &gt;= child.m_Threshold &amp;&amp; child.m_Threshold &lt; blendTree.m_MaxThreshold)
+            {
+                  if (left == null || child.m_Threshold &gt; left.m_Threshold)
+                  {
+                        left = child;
+                  }
+            }
+            else if (para &lt;= child.m_Threshold)
+            {
+                  if (right == null || child.m_Threshold &lt; right.m_Threshold)
+                  {
+                        right = child;
+                  }
+            }
+            weightInBlendTrees[blendTree][child] = 0.0f;
+            speedInBlendTrees[blendTree][child] = 0.0f;
+      }
+      if (left != null &amp;&amp; right != null)
+      {
+            float lp = 1 - (para - left.m_Threshold) / (right.m_Threshold - left.m_Threshold);
+            float rp = 1 - lp;
+            weightInBlendTrees[blendTree][left] = lp;
+            weightInBlendTrees[blendTree][right] = rp;
+            float leftTime = left.m_Motion.length / left.m_TimeScale;
+            float rightTime = right.m_Motion.length / right.m_TimeScale;
+            speedInBlendTrees[blendTree][left] = left.m_Motion.length / (leftTime * lp + rightTime * rp);
+            speedInBlendTrees[blendTree][right] = right.m_Motion.length / (leftTime * lp + rightTime * rp);
+      }
+}
+</code></pre>
+</div>
+
+<p>1D还是比较简单的，找到与parameter的值相邻的两个threshold，然后对这两个threshold所表示的AnimationClip的weight进行插值即可。2D的weight计算可以参考<a href="http://runevision.com/thesis/rune_skovbo_johansen_thesis.pdf">这篇文章</a>的6.3节。</p>
+
+<p>大部分的更新Transition的逻辑都在Update函数中完成，那么我们要怎么来模拟这个Transition的过程呢？一种比较显然的方法是使用CrossFade，我们来看看CrossFade的函数原型。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public void CrossFade(string animation, float fadeLength = 0.3F, PlayMode mode = PlayMode.StopSameLayer);
+</code></pre>
+</div>
+
+<p>animation为我们的目标动画，fadeLength就是过渡的时间，也就是transition的时间。我们解析得到的m_TransitionDuration是一个百分比，需要乘上原动画的时间。 CrossFade的原理是，将animation的weight设置成1，enable设置成true，然后在fadeLength的时间内将原动画的 weight降为0，再把他的enable设置成false。这样就有一个问题，在blendTree中的动画不一定weight就为1，而且在高层的 Layer中的weight也不一定为1，所以我们不能直接使用CrossFade，而是自己将它实现一遍再进行一些修改，大致的代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>foreach (var item in parser.animation.m_State)
+{
+      AnimatorCompiler.State state = item.Value;
+      if (state.m_id == 0)
+            continue;
+      if (state.m_ParentStateMachine.m_Index == layer.m_Index)
+      {
+            if (state.m_id != transition.m_DstState.m_id)
+            {
+                  if (state.m_MotionsWithBlendTree == null)
+                  {
+                        gameObject.animation.Blend(state.m_Motions[0].name, 0, currentTransitionInLayers[layer].m_TransitionDuration * animationLength);
+                  }
+                  else
+                  {
+                        for (int j = 0; j &lt; state.m_MotionsWithBlendTree.m_Childs.Count; ++j)
+                        {
+                              AnimatorCompiler.BlendTree.Child child = state.m_MotionsWithBlendTree.m_Childs[j];
+                              gameObject.animation.Blend(child.m_Motion.name, 0, currentTransitionInLayers[layer].m_TransitionDuration * animationLength);
+                        }
+                  }
+            }
+      }
+}
+if (currentTransitionInLayers[layer].m_DstState.m_MotionsWithBlendTree == null)
+{
+      gameObject.animation.Stop(transition.m_DstState.m_Motions[0].name);
+      gameObject.animation[transition.m_DstState.m_Motions[0].name].enabled = true;
+      gameObject.animation[transition.m_DstState.m_Motions[0].name].weight = ((layer.m_Index == 0) ? 1 : layer.m_DefaultWeight);
+}
+else
+{
+      for (int i = 0; i &lt; currentTransitionInLayers[layer].m_DstState.m_MotionsWithBlendTree.m_Childs.Count; ++i)
+      {
+            AnimatorCompiler.BlendTree.Child child = currentTransitionInLayers[layer].m_DstState.m_MotionsWithBlendTree.m_Childs[i];
+            gameObject.animation.Stop(child.m_Motion.name);
+            gameObject.animation[child.m_Motion.name].enabled = true;
+            gameObject.animation[child.m_Motion.name].weight = weightInBlendTrees[currentTransitionInLayers[layer].m_DstState.m_MotionsWithBlendTree][child];
+      }
+}
+</code></pre>
+</div>
+
+<p>剩下的部分只要细心耐心的按照animator模拟的步骤慢慢实现即可，没有什么太多的坑。</p>
+
+<h3 id="section-6">改进</h3>
+
+<p>好了，如果你按照上述的步骤写完了，然后想打包一下跃跃欲试，你会发现你失败了。原因是我们在复制AnimationClip的时候，使用了AssetDatabase，他是属于UnityEditor的一个类，而UnityEditor无法打包。因此我们需要把解析的过程放在Editor中完成，然后将解析的结果都串行化，保存起来。</p>
+
+<p>你可以小心翼翼的在每个类上面加上[System.Serializable]，但是这么做依然是不行的，因为我们在类中表示其他的对象时，使用都是其他对象的指针，所以很容易就产生循环引用，在Editor中无法被串行化，例如，state类中有一个parentStateMachine指向一个StateMachine，而在一个StateMachine中又保存了他所有state的指针。</p>
+
+<p>因此，我们需要修改整个解析得到的类的数据结构，将指针替换为对象的id（int类型）。以State为例，我们可以与之前的代码进行对比：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[System.Serializable]
+public class State
+{
+      public int m_id;
+      public string m_Name;
+      public float m_Speed;
+      public float m_CycleOffset;
+      public bool m_IKOnFeet;
+      public bool m_Mirror;
+
+      public List&lt;AnimationClip&gt; m_Motions; // one motion per motion set    
+      public int m_MotionsWithBlendTree;
+
+      public int m_ParentStateMachine;
+      public Vector3 m_Position;
+      public string m_Tag;
+
+      public State(int id)
+      {
+            m_id = id;
+            m_Motions = new List&lt;AnimationClip&gt;();
+            m_MotionsWithBlendTree = -1;
+      }
+}
+</code></pre>
+</div>
+
+<p>由于我们把解析的过程放在了Editor中完成，因此运行的速度也会更快一些。</p>
+
+<p>那么我们还有什么办法可以提高性能吗？</p>
+
+<p>答案肯定是有的，这里就采用了“生成代码”的办法。我们真正运行时的逻辑代码，是在Editor中生成的，而不是提前写好的。可能听起来有点绕，我把我的工程的文件结构给大家看一下：</p>
+
+<p>Editor：
+- AnimatorCodeGenerator.cs：生成模拟Animator的代码
+- AnimatorParser：解析controller文件</p>
+
+<p>Scripts：
+- AnimationByAnimator：模拟Animator
+- AnimationController：控制gameObject
+- AnimatorCompiler：controller文件的数据结构
+- AnimatorData：用来存储解析controller文件后的结果
+- CodeUtil：生成代码时使用的工具</p>
+
+<p>这样应该清晰了很多，那么这么做有什么好处呢？</p>
+
+<p>如果我们平常来写的话，必然会使用到大量的字典，比如parentStateMachineInStates，我们在解析的数据结构 中，parentStateMachine保存的是StateMachine的Id，只有id是没有办法直接在模拟代码中使用的，我们要把这个id换转成 真正的StateMachine的对象，因此他在模拟代码中的类型应该是Dictionary&lt;State, StateMachine&gt;。由于使用字典会产生大量的cache miss，因此性能并不出色。而生成代码最大的优势是能循环展开并且避免使用字典，其原理就在于能够“通过不同的字符串来运用变量”。</p>
+
+<p>我们来看一个例子，在codeGenerator中，有这样的一段代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>for (int i = 0; i &lt; animation.m_Transition.Count; ++i)
+{
+      AnimatorCompiler.Transition transition = animation.m_Transition[i];
+      code.Variable("", "AnimatorCompiler.State", code.Normalize("srcStateInTransitions_" + transition.m_id));
+      code.Variable("", "AnimatorCompiler.State", code.Normalize("dstStateInTransitions_" + transition.m_id));
+}
+</code></pre>
+</div>
+
+<p>Variable函数就是创建响应的变量名。运行这段代码，生成的代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>AnimatorCompiler.State srcStateInTransitions_110100396;
+AnimatorCompiler.State dstStateInTransitions_110100396;
+AnimatorCompiler.State srcStateInTransitions_110128666;
+AnimatorCompiler.State dstStateInTransitions_110128666;
+AnimatorCompiler.State srcStateInTransitions_110144588;
+AnimatorCompiler.State dstStateInTransitions_110144588;
+AnimatorCompiler.State srcStateInTransitions_110150974;
+AnimatorCompiler.State dstStateInTransitions_110150974;
+AnimatorCompiler.State srcStateInTransitions_110152432;
+AnimatorCompiler.State dstStateInTransitions_110152432;
+AnimatorCompiler.State srcStateInTransitions_110183908;
+AnimatorCompiler.State dstStateInTransitions_110183908;
+AnimatorCompiler.State srcStateInTransitions_110193682;
+AnimatorCompiler.State dstStateInTransitions_110193682;
+</code></pre>
+</div>
+
+<p>可以看到，原先的Dictionary被展开成了不同的变量，而且我们把循环函数放在了Editor中完成，因此运行时的效率会更高一些。而这些就是生成代码所给我们带来的好处。</p>
+
+<p>不过，生成代码非常非常容易出错，大家在写的时候一定要仔细！</p>
+
+<h2 id="section-7">性能</h2>
+
+<p>测试时，我们重点关注Update函数消耗的时间，无论是Animator还是我们写的这个系统，Update函数始终都是核心，也是最最耗时的一部分。</p>
+
+<p>这次我们依然在安卓机上测试，创建300个物体，先挂上Animator，得到的图如下：</p>
+
+<p><img src="/img/in-post/Animation/7.png" alt="img" /></p>
+
+<p>可以看到，所有Update函数的时间和为40.74+19.41=60.15ms。</p>
+
+<p>现在我们来看看用我们的系统：</p>
+
+<p><img src="/img/in-post/Animation/8.png" alt="img" /></p>
+
+<p>总的Update函数时间为17.82+10.95+5.85=34.62ms。</p>
+
+<p>我们可以看到，在平均情况下，Animation实现的系统已经比Animator快了接近一倍，而在实现中可以优化的地方依旧有很多，代码也不是最美观，如果你有什么好的建议，欢迎联系我！</p>
+
+
+
+                <hr>
+
+                
+                <!-- 多说 Share start -->
+                </style>
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="/2016/09/09/Unity中使用Animation提高Animator的性能"
+                    data-title="Unity中使用Animation提高Animator的性能"
+                    data-url="https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/"
+                    data-images="https://gougoumemeda.github.io/img/post-bg-unity.jpg"
+                    data-content="序言
+这次我要跟大家分享的是使用Animation来实现Animator的功能。其实效果没有之前Curve那么酷炫，但是工作量比之前的会大上好多。
+
+为什... | 金嘉骏的博客 | GeorgeJin Blog " >
+                    <div class="ds-share-inline">
+                      <ul  class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/08/05/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/" data-toggle="tooltip" data-placement="top" title="使用Shader实现任意曲线的颜色渐变和纹理移动">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="/2016/09/09/Unity中使用Animation提高Animator的性能"
+                        data-title="Unity中使用Animation提高Animator的性能"
+                        data-url="https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Web" title="Web" rel="4">
+                                    Web
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="16">
+                                    技术
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="9">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="6">
+                                    Objective-C
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Javascript" title="Javascript" rel="2">
+                                    Javascript
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="2">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#腾讯" title="腾讯" rel="4">
+                                    腾讯
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Unity" title="Unity" rel="3">
+                                    Unity
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://qinacme.com">秦鹤</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'georgejin';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/u/3033630677">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/金嘉骏">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/gougoumemeda">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-81336472-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '23710bb6f40c572032327a0420b5fd57';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
