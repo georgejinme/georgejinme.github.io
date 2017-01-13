@@ -5,9 +5,100 @@
     <description>My personal webpage</description>
     <link>https://gougoumemeda.github.io/</link>
     <atom:link href="https://gougoumemeda.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 27 Dec 2016 18:23:36 +0800</pubDate>
-    <lastBuildDate>Tue, 27 Dec 2016 18:23:36 +0800</lastBuildDate>
+    <pubDate>Fri, 13 Jan 2017 15:08:11 +0000</pubDate>
+    <lastBuildDate>Fri, 13 Jan 2017 15:08:11 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>使用Processing制作交大饮食的可视化报告</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;序言&lt;/h2&gt;
+
+&lt;p&gt;突然发现自己已经很久没有更新过博客了。主要原因是自己太闲了，大四上学期没有找什么实习，也没有课，在宿舍就是dota和日语的日子，所以就没有什么可以记录的啦。不过12月的时候，有个学弟让我帮他用Processing做一个可视化报告，我一口就答应了下来，因为有钱拿。&lt;/p&gt;
+
+&lt;p&gt;其实我之前没有用过Processing，所以也是半学半用的在写代码。令人欣慰的是，Processing出奇的简单，学弟的这个大作业，我用了两天就做完了，惬意惬意。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
+
+&lt;h3 id=&quot;processing&quot;&gt;Processing介绍&lt;/h3&gt;
+
+&lt;p&gt;我就不搬运什么网上的内容了，自己简单介绍一下Processing吧。&lt;/p&gt;
+
+&lt;p&gt;Processing是一种可视化框架，也可以理解成一个Java框架。其所用的语言就是Java，有自己完善的生命周期以及基础接口函数。用起来非常简单直接暴力，所有文件中的变量和函数都是通用的，不需要什么MVC，MVVM这样的架构，一个页面就是一个文件，清晰明了。&lt;/p&gt;
+
+&lt;p&gt;在我的理解中，Processing并不是写软件的框架，而仅仅是将数据用图像化的方式呈现出来。当然，PPT之类的软件可以做到这一点，但是从交互性和可控性来说，肯定没有Processing出色。&lt;/p&gt;
+
+&lt;h3 id=&quot;processing-1&quot;&gt;Processing的生命周期&lt;/h3&gt;
+
+&lt;p&gt;其实Processing的生命周期，好听点叫生命周期，难听点就是一个启动函数和一个刷新函数。怎么样，是不是很简单。&lt;/p&gt;
+
+&lt;p&gt;页面加载时，调用：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void setup(){}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;页面刷新时，调用：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void draw(){}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;这里有一点要注意，draw()函数在每一帧都会调用，而且不会清除上一帧的图像。即使是静止的页面，也可能是无数层相同图像的叠加。因此在draw()函数的第一行，我们通常会手动清除页面上的内容。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;实现时的一些编码细节&lt;/h3&gt;
+
+&lt;p&gt;这次我们做的是2014-2015秋季学期交大闵行校区食堂的报告（1%取样），包括消费人群性别统计，学历统计。也有所有食堂在不同月份的总共的消费额。同时，调查了人均的挑费次数和消费额度，以及在交大二餐中最受欢迎的几种菜系。&lt;/p&gt;
+
+&lt;p&gt;在使用Processing绘图的时候，可以设置一些模式，这些设置是可以被之后的设置所覆盖的。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;imageMode(CORNER);
+image(back, 20, 20);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这样我们就设置了image的绘制模式。如果在之后再次调用了imageMode但是传入了不同的参数，那么原来的CORNER模式会被覆盖掉。&lt;/p&gt;
+
+&lt;p&gt;此外，由于所有的函数和变量是在不同文件中共享的，因此我在第一次加载的时候就想所有的数据都处理完毕，这样在之后的使用过程会流畅很多。&lt;/p&gt;
+
+&lt;p&gt;所有使用到的变量如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//all the data we need
+float[] genderPortions = new float[2];
+float[] educationPortions = new float[3];
+int[][] volumnInMonths = new int[5][7];
+int[][][] volumnInTime = new int[5][7][17];
+int[][] volumnInPerson = new int[198][3];
+String[][] topName = new String[3][3];
+int[][] topValue = new int[3][3];
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;成果&lt;/h3&gt;
+
+&lt;p&gt;下面放出几张最终效果图。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Processing/1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Processing/2.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Processing/3.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;虽然很久没有写代码了，但是每次接触到代码还是会很投入。接下来的目标是做好毕设，写好小程序外包，然后参加wwdc！&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 13 Jan 2017 21:30:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2017/01/13/%E4%BD%BF%E7%94%A8Processing%E5%88%B6%E4%BD%9C%E4%BA%A4%E5%A4%A7%E9%A5%AE%E9%A3%9F%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%A5%E5%91%8A/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2017/01/13/%E4%BD%BF%E7%94%A8Processing%E5%88%B6%E4%BD%9C%E4%BA%A4%E5%A4%A7%E9%A5%AE%E9%A3%9F%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%A5%E5%91%8A/</guid>
+        
+        <category>Processing</category>
+        
+        <category>技术</category>
+        
+        <category>可视化</category>
+        
+        
+      </item>
     
       <item>
         <title>Unity中使用Animation提高Animator的性能</title>
@@ -359,7 +450,7 @@ AnimatorCompiler.State dstStateInTransitions_110193682;
 &lt;p&gt;我们可以看到，在平均情况下，Animation实现的系统已经比Animator快了接近一倍，而在实现中可以优化的地方依旧有很多，代码也不是最美观，如果你有什么好的建议，欢迎联系我！&lt;/p&gt;
 
 </description>
-        <pubDate>Fri, 09 Sep 2016 21:00:00 +0800</pubDate>
+        <pubDate>Fri, 09 Sep 2016 13:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/</guid>
         
@@ -547,9 +638,9 @@ float4 currentVector = _TimeTable[floor(time * 90)];
 &lt;h2 id=&quot;section-3&quot;&gt;后记&lt;/h2&gt;
 &lt;p&gt;当然，如果你有什么问题的话，请在评论中告诉我~&lt;/p&gt;
 </description>
-        <pubDate>Fri, 05 Aug 2016 00:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2016/08/05/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/08/05/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/</guid>
+        <pubDate>Thu, 04 Aug 2016 16:00:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2016/08/04/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/08/04/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/</guid>
         
         <category>Unity</category>
         
@@ -694,7 +785,7 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
 &lt;p&gt;可能是长期在写业务逻辑的缘故，对于这样的优化以及改进我一开始是无从下手的。但当我们真正“入门”之后，会发现优化是一件非常有趣非常有成就感的事情，我也能够感受到自己是一名“程序员”而不是“码农”，我想，不停的超越也是写代码的乐趣之一吧。&lt;/p&gt;
 
 </description>
-        <pubDate>Wed, 27 Jul 2016 20:00:00 +0800</pubDate>
+        <pubDate>Wed, 27 Jul 2016 12:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/07/27/Unity%E4%B8%ADLineRender%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%8E%E4%BC%98%E5%8C%96/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/27/Unity%E4%B8%ADLineRender%E7%9A%84%E5%AE%9E%E7%8E%B0%E4%B8%8E%E4%BC%98%E5%8C%96/</guid>
         
@@ -744,7 +835,7 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
 &lt;p&gt;虽然两周时间已经很喜欢腾讯了，但是我还是想回上海，想和大伙儿们一起去网吧开黑，一起吃火锅，一起洗澡。在深圳觉得自己就是一个废人，除了上班就是看剧，除了看剧就是写博文，除了写博文就是打游戏，活生生的变成了葛优。&lt;/p&gt;
 
 </description>
-        <pubDate>Mon, 25 Jul 2016 20:00:00 +0800</pubDate>
+        <pubDate>Mon, 25 Jul 2016 12:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/07/25/%E9%B9%85%E5%8E%82%E6%98%AF%E4%B8%AA%E5%A5%BD%E5%9C%B0%E6%96%B9/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/25/%E9%B9%85%E5%8E%82%E6%98%AF%E4%B8%AA%E5%A5%BD%E5%9C%B0%E6%96%B9/</guid>
         
@@ -774,7 +865,7 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
 &lt;p&gt;关于我的博客，如果你有任何问题，请联系gougoumemeda@sjtu.edu.cn&lt;/p&gt;
 
 </description>
-        <pubDate>Sun, 24 Jul 2016 20:00:00 +0800</pubDate>
+        <pubDate>Sun, 24 Jul 2016 12:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/</guid>
         
@@ -822,7 +913,7 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
 
 &lt;p&gt;可惜的是，除了工具和汇编方面的知识，其他方面的我以后使用的地方估计不多了。当然这本书带给我的乐趣是相当多的，第一次见识到逆向的威力，也看到了iOS不为人知的一面，实在是让人兴奋。&lt;/p&gt;
 </description>
-        <pubDate>Tue, 31 May 2016 20:00:00 +0800</pubDate>
+        <pubDate>Tue, 31 May 2016 12:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</guid>
         
@@ -873,7 +964,7 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
 
 &lt;p&gt;项目目前还没有服务器，有没有老司机推荐一个能跑python的，便宜的，免备案的服务器？&lt;/p&gt;
 </description>
-        <pubDate>Sat, 21 May 2016 20:00:00 +0800</pubDate>
+        <pubDate>Sat, 21 May 2016 12:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/</guid>
         
@@ -926,7 +1017,7 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
 
 &lt;p&gt;大概就是这样，明天继续填坑。&lt;/p&gt;
 </description>
-        <pubDate>Mon, 25 Apr 2016 20:00:00 +0800</pubDate>
+        <pubDate>Mon, 25 Apr 2016 12:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</guid>
         
@@ -974,76 +1065,9 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
 
 &lt;p&gt;initialize和load方法是OC对象两个比较特殊的初始化方法。前者在第一次使用对象的时候调用，后者在APP启动的时候调用。需要注意的是，这两个方法都是阻塞的，因此我们不能放太多的操作在这两个方法之中。在load方法中我们不能调用其他类中的方法，因为初始化的顺序和时机是程序员不能确定的。&lt;/p&gt;
 </description>
-        <pubDate>Wed, 13 Apr 2016 20:00:00 +0800</pubDate>
+        <pubDate>Wed, 13 Apr 2016 12:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/04/13/Objective-C%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/13/Objective-C%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/</guid>
-        
-        <category>iOS</category>
-        
-        <category>技术</category>
-        
-        <category>Objective-C</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Objective-C中的协议和分类</title>
-        <description>&lt;p&gt;delegate也是iOS编程中的一个重点，他定义了一套接口，如果一个对象想接受另一个对象的委托，则需要遵从此接口，以便成为其委托对象。这个委托的意思，实际上就是把函数的实现写在另一个类中，这个函数可以使用那个类的方法和数据成员。看上去就像是这个类帮别人做了写事情，成为委托的对象。委托的协议用@protocal来定义，在存放委托对象的类中，可以这么写：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@property&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nonatomic&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weak&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SomeProtocal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;delegate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;我们必须用weak修饰符来避免循环引用。上述代码的id指向遵循这个协议的类，表示我们不关心这个类具体是什么，我们只注意到这个类遵循了这个协议。当然，对于可选的方法，我们在前面加上@optional即可。&lt;/p&gt;
-
-&lt;p&gt;下面来说说分类这个东西。OC中的分类对应swift就是其extension。我们可以通过分类把类实现代码按照逻辑分散到几个文件中:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SomeClass&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;AboutSomething&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;分类中的方法是直接添加在类里面的，就好比是这个类的固有方法，因此会有覆写的可能性。需要注意的一点是，我们不要在分类中声明属性，因为在分类中是不能添加实例变量的。那不代表不能声明属性，通过@dynamic关键字，或者关联对象，都能够解决这个问题。但是保险起见，还是不要声明属性。当然，不是说所有的分类都不能，有一种分类叫做class-continuation就是例外，他有如下的特点：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;必须定义在其所接续的那个类的实现文件里&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;唯一能够声明实例变量的分类&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;分类没有名字&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;分类中的所有属性和方法都是隐藏的，只能在本类中使用&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;可以修改某属性的读写性，只读的属性可以在此分类中扩展为可读写&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;比如这样：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SomeClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;当然，协议也可以隐藏在class-continuation中：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@interface&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SomeClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SomeProtocal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;@end&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-</description>
-        <pubDate>Mon, 04 Apr 2016 20:00:00 +0800</pubDate>
-        <link>https://gougoumemeda.github.io/2016/04/04/Objective-C%E4%B8%AD%E7%9A%84%E5%8D%8F%E8%AE%AE%E5%92%8C%E5%88%86%E7%B1%BB/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/04/Objective-C%E4%B8%AD%E7%9A%84%E5%8D%8F%E8%AE%AE%E5%92%8C%E5%88%86%E7%B1%BB/</guid>
         
         <category>iOS</category>
         
