@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "2017-01-31-Acemap学术地图前端代码的重构"
+title:      "Acemap学术地图前端代码的重构"
 subtitle:   "我要毕业，我要认真做毕设"
 date:       2017-02-14 21:30:00
 author:     "George"
@@ -73,11 +73,11 @@ UI方面的话，我引入了bootstrap-standstone。相对来说还是比较美�
 
 之前的UI：
 
-[img](/img/in-post/Acemap/1.png)
+![img](/img/in-post/Acemap/1.png)
 
 现在的UI：
 
-[img](/img/in-post/Acemap/2.png)
+![img](/img/in-post/Acemap/2.png)
 
 虽然我也不是专业的设计师，但我觉得还是美观了不少的。
 
