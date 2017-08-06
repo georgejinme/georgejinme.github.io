@@ -4,7 +4,7 @@ title:      "Wap入职第一周元气满满"
 subtitle:   "认真工作，养(xiao)家(sa)糊(ren)口(sheng)"
 date:       2017-08-06 22:22:00
 author:     "George"
-header-img: "img/post-bg-acemap.jpg"
+header-img: "img/post-bg-wap.jpg"
 tags:
     - Acemap
     - Javascript
