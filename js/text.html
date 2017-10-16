@@ -1,0 +1,97 @@
+<html>
+<head>
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="chart.js"></script>
+</head>
+<body>
+
+    <div id="test">
+    <script type="text/javascript">
+        $('#test').css({
+            'margin-top': 50,
+            'margin-left': 50
+        })
+        var test = new Scatter({
+            name: 's',
+            target: $('#test'),
+            height: 600,
+            width: 600,
+            group: [
+                {
+                    'x': 0,
+                    'y': 0,
+                    'label': 'Type A',
+                    'color': '#0000FF'
+                }, {
+                    'x': 100,
+                    'y': 100,
+                    'label': 'Type B',
+                    'color': '#FF0000'
+                }
+            ],
+            data: [
+                {
+                    'x': 12,
+                    'y': 9,
+                    'info': 'a'
+                },{
+                    'x': 0,
+                    'y': 0,
+                    'info': 'b'
+                },{
+                    'x': 100,
+                    'y': 100,
+                    'info': 'c'
+                },{
+                    'x': 32,
+                    'y': 78,
+                    'info': 'd'
+                },{
+                    'x': 32,
+                    'y': 41,
+                    'info': 'e'
+                },{
+                    'x': 87,
+                    'y': 10,
+                    'info': 'f'
+                },{
+                    'x': 76,
+                    'y': 90,
+                    'info': 'g'
+                },{
+                    'x': 51,
+                    'y': 76,
+                    'info': 'h'
+                },{
+                    'x': 12,
+                    'y': 49,
+                    'info': 'i'
+                },{
+                    'x': 8,
+                    'y': 67,
+                    'info': 'j'
+                }
+            ],
+            meaning: {
+                'x': 'Quantity',
+                'y': 'Amount',
+                'xRate': false,
+                'yRate': false
+            },
+            zones: {
+                'lt': 'Zone A',
+                'ltexp': 'Zone A',
+                'rt': 'Zone B',
+                'rtexp': 'Zone B',
+                'lb': 'Zone C',
+                'lbexp': 'Zone C',
+                'rb': 'Zone D',
+                'rbexp': 'Zone D'
+            }
+        })
+        test.render();
+    </script>
+</body>
+</html>
