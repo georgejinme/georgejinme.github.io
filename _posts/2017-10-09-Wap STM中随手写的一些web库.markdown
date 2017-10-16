@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Waps STM中随手写的一些web库"
+title:      "Wap STM中随手写的一些web库"
 subtitle:   "认真工作，养(xiao)家(sa)糊(ren)口(sheng)"
 date:       2017-10-09 16:17:00
 author:     "George"

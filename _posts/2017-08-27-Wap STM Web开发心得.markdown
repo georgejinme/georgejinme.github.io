@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "Waps STM Web开发心得"
+title:      "Wap STM Web开发心得"
 subtitle:   "认真工作，养(xiao)家(sa)糊(ren)口(sheng)"
 date:       2017-08-27 20:51:00
 author:     "George"
