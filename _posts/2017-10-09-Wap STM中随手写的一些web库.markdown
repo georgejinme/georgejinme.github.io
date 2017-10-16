@@ -28,7 +28,7 @@ tags:
 
 ```
 config: {
-	name: string, // 该slider的名字
+    name: string, // 该slider的名字
     target: jQuery Object, // 该slider所要放置的jQuery对象
     width: float, // slider的宽度
     height: float, // slider的高度

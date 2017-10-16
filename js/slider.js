@@ -1,6 +1,6 @@
 /**
 config: {
-	name: string,
+    name: string,
     target: jQuery Object,
     width: float,
     height: float,
