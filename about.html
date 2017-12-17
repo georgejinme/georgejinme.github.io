@@ -61,6 +61,10 @@ header-img: "img/about-bg.jpg"
 </div>
 <!-- 多说评论框 end -->
 
+{% if site.gitment_clientId %}
+<div id="gitmentContainer"></div>
+{% endif %}
+
 <!-- Duoshuo hacking -->
 <input id="dsUser" type="hidden" value="{{site.duoshuo_username}}"  />
 
@@ -107,3 +111,24 @@ header-img: "img/about-bg.jpg"
 </script>
 <!-- disqus 公共JS代码 end -->
 {% endif %}
+
+{% if site.gitment_clientId %}
+<!-- gitment 公共JS代码 start -->
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    id: window.location.href, // 可选。默认为 location.href
+    owner: 'gougoumemeda',
+    repo: 'gougoumemeda.github.io',
+    oauth: {
+        client_id: '{{site.gitment_clientId}}',
+        client_secret: '{{site.gitment_clientSecret}}',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+<!-- gitment 公共JS代码 end -->
+{% endif %}
+
+
