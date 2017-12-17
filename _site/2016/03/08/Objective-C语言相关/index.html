@@ -246,31 +246,6 @@ typedef NS_OPTION(NSUIngeter, PermittedDirection) {
                 <hr>
 
                 
-                <!-- 多说 Share start -->
-                </style>
-                <div class="ds-share"
-                    style="text-align: right"
-                    data-thread-key="/2016/03/08/Objective-C语言相关"
-                    data-title="Objective-C语言相关"
-                    data-url="https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/"
-                    data-images="https://gougoumemeda.github.io/img/post-bg-ios.jpg"
-                    data-content="最近正好在看《Effective Objective-C 2.0》，简单记录一下每一章节的内容吧，也算是复习了一下。
-
-那首先我们从语言本身开始说起。Ob... | 金嘉骏的博客 | GeorgeJin Blog " >
-                    <div class="ds-share-inline">
-                      <ul  class="ds-share-icons-16">
-                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
-                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
-                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
-                      </ul>
-                      <div class="ds-share-icons-more">
-                      </div>
-                    </div>
-                <hr>
-                </div>
-                <!-- 多说 Share end-->
-                
 
 
                 <ul class="pager">
@@ -288,17 +263,11 @@ typedef NS_OPTION(NSUIngeter, PermittedDirection) {
 
 
                 
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                        data-thread-key="/2016/03/08/Objective-C语言相关"
-                        data-title="Objective-C语言相关"
-                        data-url="https://gougoumemeda.github.io/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/" >
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
+
                 
 
+                
+                <div id="gitmentContainer"></div>
                 
 
             </div>
@@ -317,13 +286,13 @@ typedef NS_OPTION(NSUIngeter, PermittedDirection) {
                     <div class="tags">
         				
                             
-                				<a href="/tags/#Web" title="Web" rel="4">
+                				<a href="/tags/#Web" title="Web" rel="6">
                                     Web
                                 </a>
                             
         				
                             
-                				<a href="/tags/#技术" title="技术" rel="17">
+                				<a href="/tags/#技术" title="技术" rel="21">
                                     技术
                                 </a>
                             
@@ -345,7 +314,7 @@ typedef NS_OPTION(NSUIngeter, PermittedDirection) {
                             
         				
                             
-                				<a href="/tags/#Javascript" title="Javascript" rel="2">
+                				<a href="/tags/#Javascript" title="Javascript" rel="4">
                                     Javascript
                                 </a>
                             
@@ -358,6 +327,10 @@ typedef NS_OPTION(NSUIngeter, PermittedDirection) {
         				
                             
         				
+                            
+                				<a href="/tags/#生活" title="生活" rel="2">
+                                    生活
+                                </a>
                             
         				
                             
@@ -376,6 +349,18 @@ typedef NS_OPTION(NSUIngeter, PermittedDirection) {
         				
                             
         				
+                            
+        				
+                            
+                				<a href="/tags/#Acemap" title="Acemap" rel="2">
+                                    Acemap
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Works Applications" title="Works Applications" rel="3">
+                                    Works Applications
+                                </a>
                             
         				
         			</div>
@@ -398,27 +383,28 @@ typedef NS_OPTION(NSUIngeter, PermittedDirection) {
 </article>
 
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'georgejin';
 
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
+
+
+
+
+
+<!-- gitment 公共JS代码 start -->
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    id: window.location.href, // 可选。默认为 location.href
+    owner: 'gougoumemeda',
+    repo: 'gougoumemeda.github.io',
+    oauth: {
+        client_id: 'e6336e0f06cb96722f36',
+        client_secret: '6d0eed88b21afa52d827adbe6336e61ea4cb8fb8',
+  },
+})
+gitment.render('gitmentContainer')
 </script>
-<!-- 多说公共JS代码 end -->
-
-
-
-
+<!-- gitment 公共JS代码 end -->
 
 
 

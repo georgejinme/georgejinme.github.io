@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>关于Django, React和Flux的一些思考 - 金嘉骏的博客 | GeorgeJin Blog</title>
+    <title>Acemap学术地图功能和性能的完善 - 金嘉骏的博客 | GeorgeJin Blog</title>
 
-    <link rel="canonical" href="https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/">
+    <link rel="canonical" href="https://gougoumemeda.github.io/2017/04/15/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%8A%9F%E8%83%BD%E4%B8%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%AE%8C%E5%96%84/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -129,12 +129,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-2015.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-acemap.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-2015.jpg')
+        background-image: url('/img/post-bg-acemap.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -144,21 +144,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                        <a class="tag" href="/tags/#Acemap" title="Acemap">Acemap</a>
+                        
                         <a class="tag" href="/tags/#Javascript" title="Javascript">Javascript</a>
                         
                         <a class="tag" href="/tags/#技术" title="技术">技术</a>
                         
-                        <a class="tag" href="/tags/#Python" title="Python">Python</a>
-                        
-                        <a class="tag" href="/tags/#Web" title="Web">Web</a>
-                        
                     </div>
-                    <h1>关于Django, React和Flux的一些思考</h1>
+                    <h1>Acemap学术地图功能和性能的完善</h1>
                     
                     
-                    <h2 class="subheading">数据库课程设计大作业的准备工作</h2>
+                    <h2 class="subheading">我要毕业，我要认真做毕设</h2>
                     
-                    <span class="meta">Posted by George on April 25, 2016</span>
+                    <span class="meta">Posted by George on April 15, 2017</span>
                 </div>
             </div>
         </div>
@@ -176,97 +174,125 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>最近在用Django作为后端写一个SJTU Lost的Web应用，主要是一个失物招领的平台吧，交大学生如果丢了什么东西可以发布过去，如果捡到什么东西也可以在上面贴出来。</p>
+				<h2 id="section">前言</h2>
 
-<p>然而我在做的过程中遇到了不少的问题。</p>
+<p>说一点题外话，我最终还是决定去东京。不是为了生活的有多好，只是想出去走走多看看世界。如果东京也能够容下我，那我应该也会定居在那里吧。</p>
 
-<p>首先，Django这个后端框架我还是比较熟悉的，外接了MySQL数据库之后，后台并没有遇到太大的问题。然而在选择前端的框架是我纠结了很久：是使用比较传统简单的jQuery还是比较新但是上手比较困难的React？最终我还是选择了React，算是给自己的一个挑战，也是让我接触新知识的一个很好的机会。毕竟以后web component是一种趋势，而jQuery终究会过时。</p>
+<p>其实是一个很艰难的决定，因为要顾忌到的东西有太多了。包括朋友，家人，还有东京那里的生活节奏，个人习惯等。我知道自己如果要考虑的话，还能纠结个几个月。但是纠结的日子是很痛苦的，想快点摆脱这种困扰，就狠下心来让自己做这个决定。嗯，他也是一个很草率的决定。</p>
 
-<p>实际上，ReactJS只是一个View的框架，他能很好的帮助我们创建组件视图，但是并不能够很优雅的保存一些状态与数据，在处理一些交互动作时也显得略微笨重。在React这个前端技术栈中，现在比较流行的是React+Flux+ReactRouter。</p>
+<h2 id="section-1">正文</h2>
 
-<p>Flux实际上提供了单向数据流的传递方案，Action，Dispatcher和Store能够很好的解决React中没办法保存状态数据的问题。</p>
+<h3 id="section-2">功能</h3>
 
-<p>大概流程是，用户在View上点击一个按钮，产生一个Action，Action会调动Dispatcher来分发相应的数据，Store中数据的改变又会让View进行更新，最终显示用户想要的内容在页面上。</p>
+<p>上次在寒假那会儿已经把话题地图给完成了，而且将map和searchBar的公用部分代码都已经提取出来了。因此，剩下来功能上的部分就相对来说比较简单一些，只需要套用模板就行。</p>
 
-<p>ReactRouter我并没有使用，简单来说就是定义一些url和相应显示的component。因为Django自带有router功能，所以我直接把这部分抛弃了。</p>
+<p>首先是机构地图。机构地图，顾名思义，就是以一个机构为中心，该机构中的作者为节点显示的一张图。</p>
 
-<p>要安装Flux和ReactJS的话最好还是使用npm，所以引入了一部分nodejs的知识，其实也就是很简单的require一个模块方面的内容，但是作为一个从来没有用过nodejs的人，我发现浏览器没有办法识别出require函数。。。搜索资料过后，发现要先用browserify/webpack将其打包，并且用执行的工具将代码编译成浏览器能识别的js文件。前者是比较传统的工具，缺点是很多东西不支持，比如jsx。后者可以自己定制想要的效果，保存在webpack.config.js文件中，因此最终选择了后者。ES6语法转换成ES5语法直接用Babel就好了，jsx文件也有对应的jsx-loader！</p>
+<p>原先，我们地图中的所有线条都是直线的，这样并不美观。因此我们在这里将点与点之间的边用一根贝塞尔曲线来表示，具体绘制的函数如下：</p>
 
-<p>好，介绍完了技术背景之后，我来说一下我遇到的问题和一些思考。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>function pathd(source,target,bezierCurveness){
+	var x1 = Number(source.x);
+	var y1 = Number(source.y);
+	var x2 = Number(target.x);
+	var y2 = Number(target.y);
+	var length = Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2));
+	var factor = bezierCurveness*length;
+	var v1_X = ((x2-x1+y2-y1)*factor+x1*length)/length;
+	var v1_Y = ((y2-y1+x1-x2)*factor+y1*length)/length;
+	var v2_X = ((x1-x2+y2-y1)*factor+x2*length)/length;
+	var v2_Y = ((y1-y2+x1-x2)*factor+y2*length)/length;
+	var result = "M "+String(x1.toFixed(6))+","+String(y1.toFixed(6))+" C "+String(v1_X.toFixed(6))+","+String(v1_Y.toFixed(6))+" "+String(v2_X.toFixed(6))+","+String(v2_Y.toFixed(6))+" "+String(x2.toFixed(6))+","+String(y2.toFixed(6));
+	return result;
+}
+</code></pre>
+</div>
+<p>该函数能够根据两个节点的坐标以及贝塞尔曲线的弧度来返回svg的路径。事实证明在美观程度上有了很大的提高，现在的UI如下图所示。</p>
 
-<p>如何在整个浏览器生命周期中共享一份Store/Action/Dispatcher?</p>
+<p><img src="/img/in-post/Acemap/3.png" alt="img" /></p>
 
-<p>其实这个问题非常的普遍。我们第一次进入一个页面后，将一部分信息保存在Store里面。如果我们导航到这个页面的一个子页面，我们还是希望能够继续得到这部分信息的。如果重新跟后台请求，那会再一次产生网络负担，而如果这部分信息能一直保存在Store中的话，就节约了这部分开销，相当于缓存在浏览器中。</p>
+<p>因为急着上线，因此没有截取之前UI的图片，大家脑补一下即可。</p>
 
-<p>但是！我并没有找到合适的解决方案，目前进入不同的页面还是会产生一个新的Store实例，然后从后台得到相应的数据。我觉得Flux设计的理念是和我想的一样的，但是我没有办法在Django框架下解决这个问题（除非我们写单页应用，即只有一个url，那我们在一个js文件中只需要require一次，相应的Store/Action/Dispatcher肯定也只有一个了）。Django的路由决定了视图，因此切换到不同的url时，视图会被加载，视图中的js文件也会被加载（即使是相同的视图也会重新加载一次，导致了新的实例的产生）。当然我知道现在很多跨url保存一些数据（比如购物车里的东西）比较常见的做法是使用cookie，之后如果时间充足应该也会考虑这样的做法（其实可以用session来存放，但是那样我就感觉Flux没啥存在的价值。。。）</p>
+<p>然后另外一张新地图是合作者地图，也就是以一个作者为中心，其他合作者为节点的地图。</p>
 
-<p>现在有一个导航栏，如何保证在所有页面中我们使用的是一个导航栏(减少加载)?</p>
+<p>这个地图其实要改的东西还是非常之多的。除了将svg从前端生成，把左边的侧栏实现之外，还需要将原先作者页面的所有信息都搬到地图中。这对信息的筛选和整合是一个非常大的挑战。</p>
 
-<p>这个问题本质和问题1是一样的，每一次访问一个Django的新路由，都会加载或者重新加载一个视图，只要导航在这个视图中，就会重新加载。</p>
+<p>但是，这部分挑战仅仅是产品上的问题，只要我们知道要哪些东西，舍弃哪些东西，在技术上实现是没有难度的。唯一一个比较困难的问题是作者论文这一块。因为一个作者的论文数量有很多（最多的达8000+），因此我们需要添加一个分页的功能。那么究竟是前端分页还是后台分页呢？事实上，在目前绝大多数的上线产品中，分页都是使用后台分页的。如果我们数据量很大，大到需要分页的话，那么一次从后台传输这些数据的耗时是非常高的。我们将数据从数据库中取出来的时候就规定好一个start和一个offset，这样我们进行一次数据请求，返回的内容仅仅为一页所需要的内容。这么做虽然时间上有了节约，但是我们每一次分页都需要重新向后台请求数据。大部分情况下，后台分页比前段分页是有优势的。</p>
 
-<p>如果要解决这个问题，第一是可以考虑用Ajax，但是这样的话就只能使用一个url了。</p>
+<p>除此之外，论文部分还添加了一个根据年份筛选的功能。该功能直接将参数传入后台，在SQL语句中添加WHERE即可，没有难度。</p>
 
-<p>还有一种方法是使用Pjax，这是pushState+Ajax，可以在改变url的同时异步加载网页一部分内容。事实上在之前是有一个Django-Pjax的，但是作者已经很久没有更新了，似乎已经不支持现有的版本了。如果之后有时间的话也会去尝试一下这个库。</p>
+<p>啊对了，这个分页器也是我自己写的，已经包装在一个文件中了。因为原先是想自己使用，因此也没有在接口和库文件规范上有下功夫，不过在这里我依然把代码公开一下，感兴趣的朋友可以自己用用看。<a href="/js/pagination.js">pagination.js</a>，依赖于bootstrap和jquery。</p>
 
-<p>现在还没有解决这个问题，也希望大家能够帮我想想办法。</p>
+<p>使用方法很简单，在html中插入如下语句：</p>
 
-<p>大概就是这样，明天继续填坑。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ul class="pagination pagination-sm"&gt;&lt;/ul&gt;
+</code></pre>
+</div>
+
+<p>然后，在js中初始化该pagination，初始化函数如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>function initPagination(number, func)
+</code></pre>
+</div>
+
+<p>参数number是总共的页数，func是单击页码时执行的数据操作（一般也就是请求后台）。</p>
+
+<p>下面放上一张合作者地图新的UI图吧！</p>
+
+<p><img src="/img/in-post/Acemap/4.png" alt="img" /></p>
+
+<p>之前已经完成的话题地图也做了一点改进，将年份选择做成了滑杆的形式，两个滑块之间的就是选择的年份区间。滑杆就没有自己写了，用的是nst-slider这个第三方库，还是比较方便的。</p>
+
+<h3 id="section-3">性能</h3>
+
+<p>前端性能上的提高就不提了，主要就是整理代码，减少重复的事件绑定和后台请求。这次主要是后台上的性能提高。</p>
+
+<p>首先是SQL上的query cache。之前我们把query cache一直都是打开的，然后有时候请求返回的速度就很慢。查log之后发现SQL一直在输出waiting for query cache lock。查阅了一下网上的资料，发现该cache会缓存之前使用过的SQL查询语句以及查询结果。这对于一些我们经常查询一样的内容并且表内容不频繁变化的情况会比较有用。但是在acemap中，我们每一次查询的内容几乎都是不同的，像paperid，authorid都是想变就变的。因此我们每一次查询的时候，就会刷新这个cache，刷新这个cache又会上锁。因此在并发数达到一定的情况下，就会有明显的卡顿现象了。</p>
+
+<p>然后是redis缓存。我们在话题地图的前50名作者功能中，使用了redis作为数据缓存。因为这个表的大小很大，如果每一次都从SQL中取出的话，会很占用时间。redis将数据缓存在内存之中，而且并不是使用表结构，而是我们代码中更为常见的字典结构，一个key对应一个value，因此使用上也非常的方便。在后台我们判断一下在redis中是否有数据缓存即可：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if ($redis -&gt; hExists($topicID, 'famousAuthor')){
+	$authors = json_decode($redis -&gt; hGet($topicID, 'famousAuthor'), TRUE);
+}
+</code></pre>
+</div>
+
+<p>大概就是这样。</p>
+
+<h3 id="section-4">目标</h3>
+
+<p>目前我们所有的地图上的功能都已经实现了，下一阶段会着重在搜索这一块。搜索组已经在后台开始使用了solr引擎，只不过目前还没有移植到前端。之后在了解了相应的使用方法之后，我会及时的在前端跟进的。</p>
+
+<h2 id="section-5">后记</h2>
+
+<p>看我这么认真的做毕设写博客的份上，求天赐我一个女朋友。</p>
+
 
 
                 <hr>
 
-                
-                <!-- 多说 Share start -->
-                </style>
-                <div class="ds-share"
-                    style="text-align: right"
-                    data-thread-key="/2016/04/25/关于Django, React和Flux的一些思考"
-                    data-title="关于Django, React和Flux的一些思考"
-                    data-url="https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/"
-                    data-images="https://gougoumemeda.github.io/img/post-bg-2015.jpg"
-                    data-content="最近在用Django作为后端写一个SJTU Lost的Web应用，主要是一个失物招领的平台吧，交大学生如果丢了什么东西可以发布过去，如果捡到什么东西也可以... | 金嘉骏的博客 | GeorgeJin Blog " >
-                    <div class="ds-share-inline">
-                      <ul  class="ds-share-icons-16">
-                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
-                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
-                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
-                      </ul>
-                      <div class="ds-share-icons-more">
-                      </div>
-                    </div>
-                <hr>
-                </div>
-                <!-- 多说 Share end-->
                 
 
 
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/04/13/Objective-C%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/" data-toggle="tooltip" data-placement="top" title="Objective-C中的系统框架">&larr; Previous Post</a>
+                        <a href="/2017/02/14/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84/" data-toggle="tooltip" data-placement="top" title="Acemap学术地图前端代码的重构">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/" data-toggle="tooltip" data-placement="top" title="SJTULost的一些体会">Next Post &rarr;</a>
+                        <a href="/2017/08/06/Wap%E5%85%A5%E8%81%8C%E7%AC%AC%E4%B8%80%E5%91%A8%E5%85%83%E6%B0%94%E6%BB%A1%E6%BB%A1/" data-toggle="tooltip" data-placement="top" title="Wap入职第一周元气满满">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
 
 
                 
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                        data-thread-key="/2016/04/25/关于Django, React和Flux的一些思考"
-                        data-title="关于Django, React和Flux的一些思考"
-                        data-url="https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/" >
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
+
                 
 
+                
+                <div id="gitmentContainer"></div>
                 
 
             </div>
@@ -285,13 +311,13 @@
                     <div class="tags">
         				
                             
-                				<a href="/tags/#Web" title="Web" rel="4">
+                				<a href="/tags/#Web" title="Web" rel="6">
                                     Web
                                 </a>
                             
         				
                             
-                				<a href="/tags/#技术" title="技术" rel="17">
+                				<a href="/tags/#技术" title="技术" rel="21">
                                     技术
                                 </a>
                             
@@ -313,7 +339,7 @@
                             
         				
                             
-                				<a href="/tags/#Javascript" title="Javascript" rel="2">
+                				<a href="/tags/#Javascript" title="Javascript" rel="4">
                                     Javascript
                                 </a>
                             
@@ -326,6 +352,10 @@
         				
                             
         				
+                            
+                				<a href="/tags/#生活" title="生活" rel="2">
+                                    生活
+                                </a>
                             
         				
                             
@@ -344,6 +374,18 @@
         				
                             
         				
+                            
+        				
+                            
+                				<a href="/tags/#Acemap" title="Acemap" rel="2">
+                                    Acemap
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Works Applications" title="Works Applications" rel="3">
+                                    Works Applications
+                                </a>
                             
         				
         			</div>
@@ -366,27 +408,28 @@
 </article>
 
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'georgejin';
 
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
+
+
+
+
+
+<!-- gitment 公共JS代码 start -->
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    id: window.location.href, // 可选。默认为 location.href
+    owner: 'gougoumemeda',
+    repo: 'gougoumemeda.github.io',
+    oauth: {
+        client_id: 'e6336e0f06cb96722f36',
+        client_secret: '6d0eed88b21afa52d827adbe6336e61ea4cb8fb8',
+  },
+})
+gitment.render('gitmentContainer')
 </script>
-<!-- 多说公共JS代码 end -->
-
-
-
-
+<!-- gitment 公共JS代码 end -->
 
 
 

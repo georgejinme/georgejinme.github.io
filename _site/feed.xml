@@ -5,9 +5,764 @@
     <description>My personal webpage</description>
     <link>https://gougoumemeda.github.io/</link>
     <atom:link href="https://gougoumemeda.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Fri, 13 Jan 2017 15:08:11 +0000</pubDate>
-    <lastBuildDate>Fri, 13 Jan 2017 15:08:11 +0000</lastBuildDate>
+    <pubDate>Sun, 17 Dec 2017 16:02:31 +0000</pubDate>
+    <lastBuildDate>Sun, 17 Dec 2017 16:02:31 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Wap STM中随手写的一些web库</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;十一长假结束后，公司STM的第二个assignment也要进入尾声了。有了第一个assignment的经验，这次在具体开发的过程中遇到的问题就少了很多，我也把更多的重心放在了组件化上，尝试着去写一些公共的库文件来供他人使用。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
+
+&lt;p&gt;在这次的开发中，我一共提取出了三个公共库，分别与滑杆，分页器与图表有关。我将其相关的代码写在各自的文件中，使用一个类来封装，其他人使用时，只需要声明一个新的对象然后传入相应的参数即可，不需要关注其具体的实现。下面我将各自介绍这些库的实现细节与使用方法。&lt;/p&gt;
+
+&lt;h3 id=&quot;slider&quot;&gt;Slider&lt;/h3&gt;
+&lt;p&gt;这是一个滑杆库，&lt;a href=&quot;/js/slider.js&quot;&gt;点我下载slider.js&lt;/a&gt;。目前该slider使用的是双向设计，即有两个滑块，他们中间的范围为最终我们需要的值，设计图如下所示。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/WAP/slider.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;所接受的参数如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config: {
+    name: string, // 该slider的名字
+    target: jQuery Object, // 该slider所要放置的jQuery对象
+    width: float, // slider的宽度
+    height: float, // slider的高度
+    barHeight: float, // slider中滑杆的高度，该值需要小于height
+	extremum: { // slider的两个端值
+        l: float,
+        r: float
+    },
+    initial: { // slider的两个初始值
+        l: float, 
+        r: float
+    },
+    beginDrag: function, // 开始滑动滑块时触发的操作
+    endDrag: function // 结束滑动滑块时触发的操作
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;整体实现的思路非常清晰，大致如下：
+- 绘制滑杆，并且上色
+- 根据slider的宽度、端值以及初始值绘制左滑块与右滑块
+- 在左滑块与右滑块的中间添加一个&lt;code class=&quot;highlighter-rouge&quot;&gt;validZone&lt;/code&gt;，表示当前有效的范围，高度为&lt;code class=&quot;highlighter-rouge&quot;&gt;barHeight&lt;/code&gt;，并且进行上色（配色尽量与滑杆的颜色进行搭配）
+- 绘制滑块Label，显示当前的数值
+- 绑定事件&lt;/p&gt;
+
+&lt;p&gt;在实现的过程中并没有太多困难的地方，唯一可能牵扯到一些数学知识的，应该就是计算滑块的位置。我们以左滑块为例，如果要计算它的初始位置，则公式如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(initial.l - extreme.l) / (extreme.r - extreme.l) * width
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;同理，如果我们已知左滑块的位置，要计算左滑块的值，可以通过如下的公式：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;extreme.l + (leftPos / width) * (extreme.r - extreme.l)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在滑块滑动的过程中，我们会经常用到上述的两个公式，因此需要掌握其背后的原理（也是非常显而易见的）。&lt;/p&gt;
+
+&lt;h3 id=&quot;pagination&quot;&gt;Pagination&lt;/h3&gt;
+
+&lt;p&gt;在大学期间，我已经多次实现过分页器，但是都没有将其独立的作为一个模块拎出来。这一次用类来封装，也是希望能够测验一下自己对分页器的理解。&lt;/p&gt;
+
+&lt;p&gt;很久之前就聊过，分页器分为前端分页和后端分页。在本项目中，由于我们没有构建一个独立的服务端，因此这里实现的分页器采用的是前端分页。后端分页如果要实现的话，对数据层的控制力度可能就要小一些，因为所有的数据都是从后台传进去的，分页器只是做了一个显示的作用。而前端分页不仅仅是显示，真正的分页过程也在这里进行，因此对分页器的封装更加友好。需要使用的朋友可以&lt;a href=&quot;/js/pagination2.js&quot;&gt;点我下载pagination.js&lt;/a&gt;。&lt;/p&gt;
+
+&lt;p&gt;最终的设计图如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/WAP/pagination.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;所接受的参数如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config: {
+    name: string, // 分页器的名字
+    target: jQuery.Object, // 分页器要放置的jQuery对象
+    data: [], // 分页数据
+    maxNumberOfButton: int, // 分页器最多同时显示的页码数量
+    eachPageNumber: int, // 每个页面的条目数量
+    clickEvent: function // 点击分页器页码时触发的操作
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;实现的思路如下：
+- 初始化分页器，计算总共的页码数量，分页器同时显示的页码数量（小于或者等于&lt;code class=&quot;highlighter-rouge&quot;&gt;maxNumberOfButton&lt;/code&gt;）以及所要显示的页码。
+- 绘制分页器。如果是第一页，则向左按钮失效（添加类&lt;code class=&quot;highlighter-rouge&quot;&gt;disabled&lt;/code&gt;），如果是最后一页，则向右按钮失效
+- 点击事件，对传入的数据进行分页，并且重新绘制分页器。&lt;/p&gt;
+
+&lt;p&gt;相对来说，比较复杂的在于第三步点击事件，这里我们需要重新计算所要显示的页码。定义当前页码为&lt;code class=&quot;highlighter-rouge&quot;&gt;curr&lt;/code&gt;，所要显示的页码数量的一半为&lt;code class=&quot;highlighter-rouge&quot;&gt;mid&lt;/code&gt;，总页码数为&lt;code class=&quot;highlighter-rouge&quot;&gt;total&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;如果&lt;code class=&quot;highlighter-rouge&quot;&gt;maxNumberOfButton&lt;/code&gt;小于&lt;code class=&quot;highlighter-rouge&quot;&gt;total&lt;/code&gt;，那么我们可能会隐藏一部分页码不显示。例如，我们最大能够显示的页码量为5，但是这时候一共有7页，那么初始情况下需要显示的页码为1，2，3，4，5。第六页和第七页我们将其隐藏。如果我们单击页码4，那么需要显示的页码就变成了2，3，4，5，6。&lt;/p&gt;
+
+&lt;p&gt;大致上来看，我们可以将需要显示的页码分为三类，则：
+1. &lt;code class=&quot;highlighter-rouge&quot;&gt;curr &amp;gt;= 1 &amp;amp;&amp;amp; curr &amp;lt;= mid&lt;/code&gt;，则需要显示的页码为&lt;code class=&quot;highlighter-rouge&quot;&gt;1 ~ maxNumberOfButton&lt;/code&gt;。
+2. &lt;code class=&quot;highlighter-rouge&quot;&gt;curr &amp;lt;= total &amp;amp;&amp;amp; curr &amp;gt;= total - mid + 1&lt;/code&gt;，则需要显示的页码为&lt;code class=&quot;highlighter-rouge&quot;&gt;total - maxNumberOfButton + 1 ~ total&lt;/code&gt;
+3. 除此之外，需要显示的页码为，&lt;code class=&quot;highlighter-rouge&quot;&gt;curr - mid ~ curr + mid (- 1, 当maxNumberOfButton为偶数时)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;可以看到，在第三种情况中，当前的页码始终处于分页器的中间位置。&lt;/p&gt;
+
+&lt;p&gt;整个分页器的难点就在于理清楚这三种情况。对于后端分页，我们就不再需要传入data，也不需要实际的分页操作，仅仅绘制分页器即可。&lt;/p&gt;
+
+&lt;h3 id=&quot;chart&quot;&gt;Chart&lt;/h3&gt;
+
+&lt;p&gt;图表是最为难以实现的一个模块库。在本项目中，我一共实现了三种类型的图表，无论从种类上还是性能上，都无法与市面上目前已经成熟的图表类库进行比较（例如acharts）。因此，对于我个人而言，这是一个完成项目所必须完成的工作，也是锻炼我js能力的一次考验。&lt;/p&gt;
+
+&lt;p&gt;我将三种类型的图表写在了同一个文件中，&lt;a href=&quot;/js/chart.js&quot;&gt;点我下载chart.js&lt;/a&gt;，下面我将一个一个介绍。&lt;/p&gt;
+
+&lt;h4 id=&quot;histogram-bar-chart&quot;&gt;Histogram （这里译名有点奇怪，我的锅，其实就是bar chart）&lt;/h4&gt;
+
+&lt;p&gt;先来看一张效果图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/WAP/histogram.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;所接受的参数如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config: {
+	name: string, // 柱状图的名字
+	target: jQuery Object, // 柱状图所要放置的jQuery对象
+	height: int, // 柱状图的高度
+	width: int, // 柱状图的宽度
+	legend: string, // 图例
+	clickEvent: function, // 点击柱状图事件
+	color: string, // 柱状图的颜色
+	xAsix: Array, // 横坐标数据
+	yAsix: Array // 横坐标数据所对应的值
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;实现的思路如下：
+- 初始化坐标系，确定纵坐标的方向（正/负/双向）。
+- 绘制图例
+- 绘制纵坐标，根据&lt;code class=&quot;highlighter-rouge&quot;&gt;yAsix&lt;/code&gt;计算出纵坐标的最大值以及划分线的数量
+- 绘制横坐标，动态绘制柱状条，并且在柱状体条上方添加数值标签
+- 绑定鼠标覆盖事件以及点击事件&lt;/p&gt;
+
+&lt;p&gt;其中，最为复杂的应该是绘制纵坐标以及动态绘制柱状条这两步。&lt;/p&gt;
+
+&lt;p&gt;在绘制纵坐标中，我们需要先确定坐标轴的最大值。我们简单的通过yAsix中的最大值的最高位加一的方法来确定纵坐标端值。比如，如果&lt;code class=&quot;highlighter-rouge&quot;&gt;yAsix&lt;/code&gt;中最大值为75000，则坐标轴的最大值为80000；如果是98000，则最大值为100000。负数亦然，我们得到了&lt;code class=&quot;highlighter-rouge&quot;&gt;_yPositivePeak&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;_yNegativePeak&lt;/code&gt;。接着我们需要计算出纵坐标轴正负两端划分线的数量。对于正负两端最大值数位多的那一端（假设为正方向端，即 &lt;code class=&quot;highlighter-rouge&quot;&gt;_yPositivePeak.str().length &amp;gt; _yNegativePeak.str().length&lt;/code&gt;)，其划分线的数量就是最高位（例外是，如果最高位为1，则数量为10）；数位少的那一端，通常情况下划分线的数量就是1。举个例子， &lt;code class=&quot;highlighter-rouge&quot;&gt;_yPositivePeak&lt;/code&gt;为70000， &lt;code class=&quot;highlighter-rouge&quot;&gt;_yNegativePeak&lt;/code&gt;为-3000，则正方向的划分线数量为7，具体是10000，20000，30000，40000，50000，60000，70000；负方向的划分线数量为1，具体是-3000。&lt;/p&gt;
+
+&lt;p&gt;细心的读者可以发现，对于数位少的一端，我在划分线数量为1的前面加了一个定语“通常”，也就是说，有例外发生。这种情况出现在，两端最大值数位差为1，并且数位多的那一端的最高位为1（即 &lt;code class=&quot;highlighter-rouge&quot;&gt;_yPositivePeak.str().length - _yNegativePeak.str().length == 1 &amp;amp;&amp;amp; _yPositivePeak.str()[0] == &#39;1&#39;&lt;/code&gt;)。再这样的情况下，数位少的那一端划分线的数量也是其最高位。比如说， &lt;code class=&quot;highlighter-rouge&quot;&gt;_yPositivePeak&lt;/code&gt;为100000， &lt;code class=&quot;highlighter-rouge&quot;&gt;_yNegativePeak&lt;/code&gt;为-40000，则正方向的划分线数量为10，具体是10000，20000，30000，40000，50000，60000，70000，80000，90000，100000；负方向的划分线数量为4，即-10000，-20000，-30000，-40000。&lt;/p&gt;
+
+&lt;p&gt;这么设计看上去会有一些复杂，但是为了坐标轴更为美观，采用这样的方法我认为是很有必要的。他避免了两个问题：
+1. 两端端值数位相差过大时，数位小的那一端划分线过于紧凑
+2. 两端端值数位相差不大时，数位小的那一端划分线过于松散&lt;/p&gt;
+
+&lt;p&gt;一句话来概括的话，就是正负两端划分线的间距要尽量保持一样，如果正方向划分线的间距时10000，那么负方向也要保持10000，否则就不划分（划分线数量为1）。这是一种保证柱状图坐标轴不会太丑的方法。&lt;/p&gt;
+
+&lt;p&gt;第二个难点在于，如何动态绘制柱状条。这里我们用到了css3中的&lt;code class=&quot;highlighter-rouge&quot;&gt;-webkit-transition&lt;/code&gt;。我们对每一个柱状条进行如下的css设置：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.bar{
+    height: 0;
+    &#39;-webkit-transition&#39;: &#39;height 1s&#39;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在将其加入到dom树之后，修改他的height为实际的高度，就能触发动画效果。&lt;/p&gt;
+
+&lt;h4 id=&quot;pie-chart&quot;&gt;Pie chart&lt;/h4&gt;
+
+&lt;p&gt;现在我们将介绍饼图，老样子还是先看图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/WAP/piechart.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;所接受的参数如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config: {
+	name: string // 饼图的名字
+	target: jQuery Object, // 饼图所放置的jQuery对象
+	height: int, // 饼图的高度
+	width: int, // 饼图的宽度
+	legend: string, // 图例
+	clickEvent: function, // 点击事件 
+	data:[{ // 饼图的数据，包括文字描述，数据以及扇形的颜色
+		label: string,
+		value: int,
+		color: string
+	}]
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;实现的思路如下：
+- 初始化饼图，这里我们使用canvas来绘制
+- 绘制饼图。如果是第一次绘制，则使用动画效果
+- 绑定鼠标移动事件，在移动的过程中不停的重绘饼图，同时判断鼠标的位置是否在某一个扇形路径内，如果在，则可认为当前鼠标的位置覆盖了该扇形
+- 绑定鼠标点击事件&lt;/p&gt;
+
+&lt;p&gt;在饼图中，最为复杂的一点在于如何判断鼠标是覆盖了哪一块扇形。因为扇形是不规则的，我们不能像柱状图那样使用div来绘制，因此只能够使用canvas。而在canvas中，所有的图像都是一个整体，没有办法对每一个扇形进行单独的事件绑定，而需要通过&lt;code class=&quot;highlighter-rouge&quot;&gt;canvas.getContext(&#39;2d&#39;).isPointInPath(x, y)&lt;/code&gt;来判断一个坐标是否在canvas中的某一个路径内。在饼图中，我们按照顺时针的方向来绘制扇形，扇形路径绘制完毕后，我们马上进行&lt;code class=&quot;highlighter-rouge&quot;&gt;isPointInPath()&lt;/code&gt;的判定，就能够知道鼠标当前所覆盖的扇形是哪一个。这也就需要在mousemove事件中不停的重绘饼图，因为鼠标的坐标是不停的变化的。我原本以为这种方法的性能消耗会非常大，但事实上来看似乎并没有卡死的现象。如果有更好的方法也希望大家能够告知。&lt;/p&gt;
+
+&lt;p&gt;除了判断鼠标位置所在的扇形之外，另一个有点难度的地方在于如何动态绘制饼图。所谓动态绘制，就是一点一点的来画图。原本可能90°的扇形一次性画完，动态绘制就将其分成90份，每次只绘制1°的扇形，重复绘制90次。理所应当的我们需要使用&lt;code class=&quot;highlighter-rouge&quot;&gt;setInterval&lt;/code&gt;函数，来重复绘制操作。绘制之前，我们先顺时针扫一遍所有的扇形，然后将扇形的终弧度保存在一个数组&lt;code class=&quot;highlighter-rouge&quot;&gt;angles&lt;/code&gt;中，以备后用，同时记录下当前正在绘制的度数 _timerCurrDraw。在具体的小角度的绘制过程中，我们先判定当前绘制的是哪一个扇形（通过 &lt;code class=&quot;highlighter-rouge&quot;&gt;_timerCurrDraw&lt;/code&gt;与&lt;code class=&quot;highlighter-rouge&quot;&gt;angles&lt;/code&gt;中的元素进行比较），来决定绘制的颜色，然后进行path的绘制并且上色即可。如果 &lt;code class=&quot;highlighter-rouge&quot;&gt;_timerCurrDraw&lt;/code&gt;大于了最后一个扇形的终弧度（为2π），则动态绘制结束。&lt;/p&gt;
+
+&lt;h4 id=&quot;scatter-diagram&quot;&gt;Scatter diagram&lt;/h4&gt;
+&lt;p&gt;翻译上来看，就是所谓的散点图，但其实与我们常见的散点图还有一些区别。除了点的分布以外，我所设计的scatter diagram还将空间分成了四个部分，每个部分都有其实际意义。对于点的分布，我也添加了一些新的含义，不同的颜色表示点不同的种类，而点的颜色深浅与半径的大小也区分了其在该类型中的等级。&lt;/p&gt;
+
+&lt;p&gt;效果图如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/WAP/scatter.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;所接受的参数如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;config: {
+	name: string // 散点图的名字
+	target: jQuery Object, // 散点图所在的jQuery对象
+	height: int, // 散点图的高度
+	width: int, // 散点图的宽度
+	group: [{ // 散点图中的各个类型，并且赋予其坐标
+		x: float,
+		y: float,
+		label: string,
+		color: string
+	}]
+	clickEvent: function, // 点击事件
+	data:[{ // 各个点的坐标数值以及介绍
+		x: float,
+		y: float,
+		info: string
+	}],
+	meaning: { // 坐标的含义
+		x: string,
+		y: string,
+		xRate: bool,
+		yRate: bool
+	},
+	zones: { // 散点图的四个区域的名称以及含义
+		lt: string,
+		ltexp: string,
+		rt: string,
+		rtexp: string,
+		lb: string,
+		lbexp: string,
+		rb: string,
+		rbexp: string
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;实现的思路如下：
+- 初始化坐标轴，计算出&lt;code class=&quot;highlighter-rouge&quot;&gt;data&lt;/code&gt;中坐标进行平移的向量以及拉伸的系数，使之能够撑满&lt;code class=&quot;highlighter-rouge&quot;&gt;width&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;height&lt;/code&gt;
+- 绘制坐标轴，解释坐标的含义并且画上划分线
+- 绘制四个区域
+- 对所有的散点进行分类
+- 绘制坐标点，通过到类型坐标的距离来决定其颜色深浅和半径大小
+- 绘制图例
+- 绑定散点的覆盖和点击事件&lt;/p&gt;
+
+&lt;p&gt;其中，最为复杂的，之一在于坐标轴的平移与拉伸。在本项目中，我们散点的横坐标与纵坐标都是百分数，也就是-1 ~ 1的区间，没有办法直接在图中转换为像素值，进行绘制。因此我们最先要做的，是将这些百分数的值转换成实际所要绘制的坐标值。在转换之前，我们需要计算一些初始数据：散点横纵坐标各自的最大值与最小值&lt;code class=&quot;highlighter-rouge&quot;&gt;maxX&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;maxY&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;minX&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;minY&lt;/code&gt;；散点的中心位置坐标&lt;code class=&quot;highlighter-rouge&quot;&gt;_graphCenterX&lt;/code&gt;， &lt;code class=&quot;highlighter-rouge&quot;&gt;_graphCenterY&lt;/code&gt;；实际坐标系的中心位置 &lt;code class=&quot;highlighter-rouge&quot;&gt;_centerX&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;_centerY&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;通过这些值，我们需要算出如下信息：
+1. 每一个散点在实际坐标系的位置&lt;code class=&quot;highlighter-rouge&quot;&gt;(data[index].x - _graphCenterX, data[index].y - _graphCenterY)&lt;/code&gt;
+2. 拉伸系数。&lt;code class=&quot;highlighter-rouge&quot;&gt;_graphScaleX = width / (maxX - minX)&lt;/code&gt;; &lt;code class=&quot;highlighter-rouge&quot;&gt;_graphScaleY = height / (maxY - minY)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;然后在计算散点实际绘制的坐标过程中，我们只需要对每一个散点在实际坐标系的位置先进行拉伸（将其乘上 &lt;code class=&quot;highlighter-rouge&quot;&gt;_graphScaleX&lt;/code&gt;和 &lt;code class=&quot;highlighter-rouge&quot;&gt;_graphScaleY&lt;/code&gt;）,然后按照一个方向向量进行平移（加上 &lt;code class=&quot;highlighter-rouge&quot;&gt;_centerX&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;_centerY&lt;/code&gt;)即可。&lt;/p&gt;
+
+&lt;p&gt;之二在于散点的分类和绘制。对于点的分类，我采用的是类knn算法。每一种类型，我们都赋予其一个实际的坐标值&lt;code class=&quot;highlighter-rouge&quot;&gt;(group[index].x, group[index].y)&lt;/code&gt;，而对于每一个散点，我们计算出他到各个类型的坐标的距离，取其最短，将该散点归类到该类型中。在同一种类型中，我们计算出其中所有的散点到类型坐标的距离，根据距离的长短来决定其颜色深浅以及半径大小，完成最终的绘制。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;使用说明&lt;/h3&gt;
+
+&lt;p&gt;至此，在本项目中封装好的类都已经介绍完毕了。使用方法大同小异：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var a = new B({
+    ... // 根据每一个类传入所需要的参数值
+})
+a.render()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;执行上述代码后就能正常使用该类了。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;NONE&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 09 Oct 2017 16:17:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2017/10/09/Wap-STM%E4%B8%AD%E9%9A%8F%E6%89%8B%E5%86%99%E7%9A%84%E4%B8%80%E4%BA%9Bweb%E5%BA%93/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2017/10/09/Wap-STM%E4%B8%AD%E9%9A%8F%E6%89%8B%E5%86%99%E7%9A%84%E4%B8%80%E4%BA%9Bweb%E5%BA%93/</guid>
+        
+        <category>Works Applications</category>
+        
+        <category>Web</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Wap STM Web开发心得</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;这一周其实过的很不好，算是自己近两年来，心情最糟糕的一周。&lt;/p&gt;
+
+&lt;p&gt;我一直告诉自己，活到现在，其实是没有什么事情需要后悔的。如果有第二次机会的话，我想收回上周三晚上说的所有的话，对不起。&lt;/p&gt;
+
+&lt;p&gt;所谓冲昏了头脑，大抵如此。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
+
+&lt;p&gt;这一个月里，一直都在做一个Personal Information System。做的过程中因为是不允许上网的，所以还遇到了不少的问题要去解决。本文就具体介绍一下这些问题，以后遇到的时候也有一个解决方案。&lt;/p&gt;
+
+&lt;p&gt;当然，由于公司要求保密，因此相关的细节代码不会公开。&lt;/p&gt;
+
+&lt;h3 id=&quot;webkitrequestfilesystem&quot;&gt;使用webkitRequestFileSystem来导出文件&lt;/h3&gt;
+
+&lt;p&gt;这部分是HTML5的File API的部分。之前在我印象中，只有IE有相应开放的接口来操作本地文件的。HTML5出来之后，主流的浏览器都已经支持这样的操作了，像是webkit内核的chrome浏览器等。&lt;/p&gt;
+
+&lt;p&gt;由于该功能的代码与项目有密切联系，这里就不多介绍了。如果相关开发人员需要在本地导出文件，可以考虑使用该API来实现。&lt;/p&gt;
+
+&lt;h3 id=&quot;webkit-user-select&quot;&gt;-webkit-user-select&lt;/h3&gt;
+
+&lt;p&gt;我们知道，如果我们把鼠标放到浏览器的文字上面，那么鼠标的标志会变成编辑状态。如果我们按下并且拖动，那么这部分的文字将会被选中进行高亮显示。如果我们再按下鼠标，会发现这部分文字是可以被拖动的（在html中表现为draggable属性为true）。&lt;/p&gt;
+
+&lt;p&gt;在本项目中，这种行为是非常危险的。因为我们可以拖动整个table的column，来改变他们的顺序，因此每一个元素的draggable属性必须要个的由我们的代码来控制，一些浏览器默认的行为需要被禁止，包括我们上文提到的选中文字拖动操作。&lt;/p&gt;
+
+&lt;p&gt;具体的禁止方式，就是在css中，把-webkit-user-select属性进行修改：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;body{
+	-webkit-user-select: none;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;该属性设置成none之后就音质用户在页面上进行文字的选中。当然-webkit前缀规定了适用于chrome等浏览器，其他内核浏览器也有相应的修改方法，这里就不再阐述了。&lt;/p&gt;
+
+&lt;h3 id=&quot;table&quot;&gt;修改table的宽度。&lt;/h3&gt;
+
+&lt;p&gt;在本项目中，我们提供给用户一个功能，可以让他们随意来修改column的宽度。如果有很多column的话，用户可以将他们的宽度设置的小一点，这样就能看到更多了，提高用户体验。&lt;/p&gt;
+
+&lt;p&gt;但是在具体的实现过程中，由于table本身有自适应的功能，以及jQuery本身的函数实现不同，会有很多的问题所在，这里就简单阐述一下设置的几点规则。&lt;/p&gt;
+
+&lt;p&gt;一般而言，table的自适应是由于所有column宽度加起来不等于table的宽度而导致的。&lt;/p&gt;
+
+&lt;p&gt;在自适应的过程中，table会优先改变从来没有设置过宽度的column，而table整体的宽度是保持不变的。&lt;/p&gt;
+
+&lt;p&gt;如果所有的column的宽度都被制定过，那么我们在修改一个column的宽度时，其他所有column的宽度都会被改变。这种情况是非常糟糕的，一般都是不符合要求的。&lt;/p&gt;
+
+&lt;p&gt;因此，如果我们要定制每一个column的宽度，我们有如下两种相对理想的解决方案。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;设置每一个column的宽度，并且计算总宽，赋值给table。确保table的宽度等于所有column的总宽。&lt;/li&gt;
+  &lt;li&gt;保留一个column永远不设置宽度，做自适应项。（一般就是加一个空列）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;知道了规则，实现起来就方便很多了。然而，如果我们使用jQuery的$.fn.width()函数，我们会发现始终达不到我们的目标。原因是，$.fn.width()函数在box-sizing属性为border-box的元素中，不会计算其padding。而如果我们用bootstrap等常用的UI库做table时，通常都会有一个padding。因此在计算总宽时，除了对每一个column使用$.fn.width()函数外，也要加上padding值。&lt;/p&gt;
+
+&lt;p&gt;还有一个解决的方案是不使用$.fn.width()函数，而是用$.fn.css(‘width’)，这样的话我们得到的宽度是算上padding的。但是注意该函数返回的结果是一个string，并且包含px等后缀，需要自行处理。&lt;/p&gt;
+
+&lt;h3 id=&quot;ufeff&quot;&gt;神秘前缀\ufeff&lt;/h3&gt;
+
+&lt;p&gt;这其实是uft-8的一个bom头。所谓bom头，就是用来标识该文件属于utf-8编码。由于我们项目中导出txt，csv文件这个功能里可能会包含有中文的字符，因此我们需要使用uft-8编码。&lt;/p&gt;
+
+&lt;p&gt;这个bom头是微软自己规定的，他建议所有的 Unicode 文件应该以 ZERO WIDTH NOBREAK SPACE（U+FEFF）字符开头。这作为一个“特征符”来识别文件中使用的编码和字节顺序。但是目前，该bom头的兼容性并不好，只在windows操作系统相应的文件读取软件中使用，例如记事本等。如果我们用记事本打开一个文件，用uft-8格式保存之后，就会发现自动带上了这样一个bom头。&lt;/p&gt;
+
+&lt;p&gt;本项目中，我们默认文件下载之后是需要用记事本来打开的，并且需要支持非英文字符，因此我们加上一个前缀\ufeff来告诉它，这是uft-8编码的字符串，这样才能得到正确的显示结果。&lt;/p&gt;
+
+&lt;h3 id=&quot;roll-back&quot;&gt;roll back系统&lt;/h3&gt;
+
+&lt;p&gt;为了防止用户误操作或者一些恶意操作，我们系统增加了一个回滚功能。具体的功能和git reset比较类似。&lt;/p&gt;
+
+&lt;p&gt;我们记录用户所有的操作，包括对employee信息的修改以及对list的自定义。一条记录包括修改的时间，修改的用户，在什么上进行了修改，修改了什么，修改之前的数据和修改之后的数据等。用户随时都可以查看这些记录，如果点击了其中的一条记录，将会被roll back的所有记录都会被高亮显示，如下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/WAP/2.JPG&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这里需要注意，如果是set default操作，那么在该记录之前的所有set default操作都会被回滚。如果是其他操作，那么该记录之前的作用与同一目标的所有操作会被回滚。这两条是我根据用户可能希望的结果自己制定的规则，之后可能会有所更改。&lt;/p&gt;
+
+&lt;p&gt;实际的回滚操作还是比较简单的，我们已经有了所有要回滚的记录，根据第一条的记录的after以及最后一条记录的before来决定回滚所要执行的操作，然后将目标的值（assemble的column，employee的信息等）恢复为最后一条记录的before即可。&lt;/p&gt;
+
+&lt;h3 id=&quot;textpixel&quot;&gt;测得一个text所占用的pixel&lt;/h3&gt;
+
+&lt;p&gt;这部分其实是一个相对比较trick的实现。既然我们没有办法通过具体的某一个函数代码来计算出像素值，那么我们就将这部分文字放到dom中，看看实际占用多少就可以了。&lt;/p&gt;
+
+&lt;p&gt;因此，我们新建一个&amp;lt;div&amp;gt;元素，设置如下的css:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#columnLengthCount{
+	visibility: hidden;
+	float: left;
+	font-weight: bold;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;float属性可以让&amp;lt;div&amp;gt;的宽度根据text的长度来自适应。最后我们得到的该&amp;lt;div&amp;gt;的宽度就是一个text所占用的pixel了。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;双击和单击事件&lt;/h3&gt;
+
+&lt;p&gt;在js的实践中，同时存在单击和双击事件。如果我们就正常的添加这两个事件的话，想要执行一次双击事件会额外执行两次单击事件。&lt;/p&gt;
+
+&lt;p&gt;因此，在通常情况下，我们需要屏蔽掉这两次单击事件，仅仅执行双击。一般的解决方案是添加一个计时器，如果双击的时间间隔超过一个阈值，则看做是单击。如果时间间隔小于这个值（一般是0.3秒左右），则看做是双击。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$.fn.click(function(){
+	clearTimeout(timer);
+	timer = setTimeout(function(){
+		...
+	}, 300);
+})
+
+$.fn.dblclick(function(){
+	clearTimeout(timer);
+	...
+})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;点击空白处弹窗消失&lt;/h3&gt;
+
+&lt;p&gt;在本项目中，使用到了一部分的弹窗：搜索框和回滚系统数据查看框。这部分弹窗使用的是bootstrap中的popover组件。该组件默认情况下是点击按钮出现，再点击按钮则消失。但是有时候，我们需要实现的效果是，点击按钮出现，然后点击任意其他空白位置消失。这样做可以提高用户的使用效率而不需要再去点击按钮。&lt;/p&gt;
+
+&lt;p&gt;实现的思路很简单，在document绑定一个click时间，如果点击的位置不在弹窗内，则执行弹窗消失的操作：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$(document).click(function(e){
+	var _con = $(&#39;.popover&#39;);
+	if (!_con.is(e.target) &amp;amp;&amp;amp; _con.has(e.target).length === 0){
+		... //popover disappears
+	}
+})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这里_con就是我们显示的popover，如果点击事件的目标不是popover或者其子元素，则将其消失。&lt;/p&gt;
+
+&lt;p&gt;That’s all.&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;明天七夕节，欢迎来约。&lt;/p&gt;
+
+&lt;p&gt;干什么都可以，我奉陪到底，我买单到底。&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 27 Aug 2017 20:51:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2017/08/27/Wap-STM-Web%E5%BC%80%E5%8F%91%E5%BF%83%E5%BE%97/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2017/08/27/Wap-STM-Web%E5%BC%80%E5%8F%91%E5%BF%83%E5%BE%97/</guid>
+        
+        <category>Works Applications</category>
+        
+        <category>Web</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Wap入职第一周元气满满</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;毕业之后一直就无所事事，每天也就打打游戏偶尔出去聚会吃饭，晚上跑个步。所以整个七月过去的都非常的快，转眼间就要入职了。&lt;/p&gt;
+
+&lt;p&gt;可能是因为日子轻松惯了，我也没有感觉这一刻有多么的“神圣”，就像一首歌里说的那样：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;其实爱对了人，情人节每天都过。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;然而这实实在在的确实是我人生中新的篇章，因为16年的学生时代就此画上句号。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;入职仪式&lt;/h3&gt;
+
+&lt;p&gt;入职仪式在环球港的凯悦酒店进行。首先就是大BOSS们的讲话和欢迎仪式啦。有意思的是，我们有个HR大BOSS竟然连英文都不会说！真是难以想象霓虹国外语教学水平。他在演讲的时候，用的是日语，然后hr姐姐同声翻译（我想说的是这个HR姐姐长得超级超级超级可爱qwq）。我学过一点日语啦所以听懂还是问题不大的。&lt;/p&gt;
+
+&lt;p&gt;然后是介绍一下各种职场的危险情况，包括性骚扰和职权欺凌。性骚扰讲了很久啊，之前看日剧就对日本的职场性骚扰有过耳闻，是不是这样的情况在日本真的很多？所以需要特别强调一下？&lt;/p&gt;
+
+&lt;p&gt;然后就是大家进行一张合照啦！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/WAP/1.JPG&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;之后就去我们的办公桌了。不得不承认，环球港B座真的是非常的气派，特别是那个电梯，可能是我孤陋寡闻了，有低中高三层也就算了，还不能自由选择楼层。你能前往的楼层由你的工卡决定。。。安全性满分。&lt;/p&gt;
+
+&lt;p&gt;找到了自己的工位，拆电脑，装电脑，下软件，然后就开始干活啦！Fighting！！！&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;关于一天的生活&lt;/h3&gt;
+
+&lt;p&gt;工作的生活其实并没有我想象中的那么累，只不过有些地方需要自己去慢慢适应。不如扯扯我的一天是怎么度过的哈哈哈哈哈哈。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-4&quot;&gt;早上&lt;/h4&gt;
+
+&lt;p&gt;7:20 起床，洗漱，穿好&lt;em&gt;西装&lt;/em&gt;。如果想要稍微帅气一点，就带个小领带。说道领带，我买了一根细的，带上去就发现自己根本不像一个上班的人233学生气十足。&lt;/p&gt;
+
+&lt;p&gt;8:00 坐上陆安专线B线。由于我家的地(niao)理(bu)优(la)势(shi)，我上班只需要坐着一辆公交就可以，而且它会走高速公路，所以一般而言，9:15就能到公司。&lt;/p&gt;
+
+&lt;p&gt;9:10 下车，去全家买早饭，心情好就买一杯咖啡喝喝。&lt;/p&gt;
+
+&lt;p&gt;9:15 到公司，开始一天的工作。一般会先检查邮箱，git上进行代码的更新。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-5&quot;&gt;下午&lt;/h4&gt;
+
+&lt;p&gt;13:00 吃饭。不得不吐槽一下，在环球港吃饭！！！实在是！！！太贵了！！！每天只能去大食代吃，一般而言，30元RMB左右能够填饱肚子。虽然我知道日本更贵，但是让我一个刚从学校食堂10块吃饱的环境出来有点不太习惯呀。&lt;/p&gt;
+
+&lt;p&gt;14:00 开始了下午的coding。我属于那种不能专注很久的，所以我有时候回去吧台（公司的）找找杂志看，或者喝一杯牛奶，放松一下继续工作。&lt;/p&gt;
+
+&lt;p&gt;18:30 这是STM阶段理论上的下班时间，然而，然而！到了这个点，几乎是没有人走的，我的内心是崩溃的，大家要不要这么认真？？？？&lt;/p&gt;
+
+&lt;p&gt;19:00 差不多陆陆续续的走了，包括我。&lt;/p&gt;
+
+&lt;p&gt;19:40 坐上北安线，可能没有座位。听听歌，看看窗外两眼放空。这是我一天中最享受的时候。&lt;/p&gt;
+
+&lt;p&gt;20:30 到家，吃饭，洗澡，睡觉。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-6&quot;&gt;关于工作&lt;/h3&gt;
+
+&lt;p&gt;由于我们是刚入职的员工，所以需要经历为期两个月到三个月的STM(starter mission)。&lt;/p&gt;
+
+&lt;p&gt;STM由三个部分组成。&lt;/p&gt;
+
+&lt;p&gt;第一个部分是基础知识，就是简单培训一下需要用到的知识。&lt;/p&gt;
+
+&lt;p&gt;第二部分和第三部分都是相关的项目。项目包括Catalog和Implementation。具体的东西因为是公司机密所以我就不谈了哈，总之，我们的任务不仅仅是写代码，更多的是对产品的思考和定位，也就是，你是自己的产品经理和工程师。&lt;/p&gt;
+
+&lt;p&gt;项目的难度其实并不大，主要是能不能有创造力的挖掘出产品的价值。目前来看我的实现还算比较顺利，也可能是因为我之前有相关开发网页的经历。我现在就希望能够快点结束STM，因为我不想穿西装上班啊qwq。&lt;/p&gt;
+
+&lt;p&gt;在STM阶段，我们的网络访问也是有限制的，只能获取非常少的一部分英文资料，而且也没有wifi，手机上网全靠流量。值得一提的是，在网页白名单中，有requirejs和commonjs。这两个都是和js模块化有关的工具，后者我用的还是比较多的。但是，但是！commonjs仅仅定义了模块化的规则，并没有提供相关的编译方案（也就是没有webpack和browserify这样的工具）。所以实际上，如果要做模块化的话，还是要学习一下requirejs的使用。下一篇博客就来介绍一下这方面的东西吧！&lt;/p&gt;
+
+&lt;h2 id=&quot;section-7&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;上班怎么说，还是比较轻松愉快的吧。当然我明白在结束STM之后，真正的任务会接踵而至。&lt;/p&gt;
+
+&lt;p&gt;目前来看，我现在最期盼的日子，一个是8月12日，TI7决赛，另一个是8月25日，发薪水。&lt;/p&gt;
+
+&lt;p&gt;就是酱，喵！&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 06 Aug 2017 22:22:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2017/08/06/Wap%E5%85%A5%E8%81%8C%E7%AC%AC%E4%B8%80%E5%91%A8%E5%85%83%E6%B0%94%E6%BB%A1%E6%BB%A1/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2017/08/06/Wap%E5%85%A5%E8%81%8C%E7%AC%AC%E4%B8%80%E5%91%A8%E5%85%83%E6%B0%94%E6%BB%A1%E6%BB%A1/</guid>
+        
+        <category>Works Applications</category>
+        
+        <category>生活</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Acemap学术地图功能和性能的完善</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;说一点题外话，我最终还是决定去东京。不是为了生活的有多好，只是想出去走走多看看世界。如果东京也能够容下我，那我应该也会定居在那里吧。&lt;/p&gt;
+
+&lt;p&gt;其实是一个很艰难的决定，因为要顾忌到的东西有太多了。包括朋友，家人，还有东京那里的生活节奏，个人习惯等。我知道自己如果要考虑的话，还能纠结个几个月。但是纠结的日子是很痛苦的，想快点摆脱这种困扰，就狠下心来让自己做这个决定。嗯，他也是一个很草率的决定。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;功能&lt;/h3&gt;
+
+&lt;p&gt;上次在寒假那会儿已经把话题地图给完成了，而且将map和searchBar的公用部分代码都已经提取出来了。因此，剩下来功能上的部分就相对来说比较简单一些，只需要套用模板就行。&lt;/p&gt;
+
+&lt;p&gt;首先是机构地图。机构地图，顾名思义，就是以一个机构为中心，该机构中的作者为节点显示的一张图。&lt;/p&gt;
+
+&lt;p&gt;原先，我们地图中的所有线条都是直线的，这样并不美观。因此我们在这里将点与点之间的边用一根贝塞尔曲线来表示，具体绘制的函数如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function pathd(source,target,bezierCurveness){
+	var x1 = Number(source.x);
+	var y1 = Number(source.y);
+	var x2 = Number(target.x);
+	var y2 = Number(target.y);
+	var length = Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2));
+	var factor = bezierCurveness*length;
+	var v1_X = ((x2-x1+y2-y1)*factor+x1*length)/length;
+	var v1_Y = ((y2-y1+x1-x2)*factor+y1*length)/length;
+	var v2_X = ((x1-x2+y2-y1)*factor+x2*length)/length;
+	var v2_Y = ((y1-y2+x1-x2)*factor+y2*length)/length;
+	var result = &quot;M &quot;+String(x1.toFixed(6))+&quot;,&quot;+String(y1.toFixed(6))+&quot; C &quot;+String(v1_X.toFixed(6))+&quot;,&quot;+String(v1_Y.toFixed(6))+&quot; &quot;+String(v2_X.toFixed(6))+&quot;,&quot;+String(v2_Y.toFixed(6))+&quot; &quot;+String(x2.toFixed(6))+&quot;,&quot;+String(y2.toFixed(6));
+	return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;该函数能够根据两个节点的坐标以及贝塞尔曲线的弧度来返回svg的路径。事实证明在美观程度上有了很大的提高，现在的UI如下图所示。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Acemap/3.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;因为急着上线，因此没有截取之前UI的图片，大家脑补一下即可。&lt;/p&gt;
+
+&lt;p&gt;然后另外一张新地图是合作者地图，也就是以一个作者为中心，其他合作者为节点的地图。&lt;/p&gt;
+
+&lt;p&gt;这个地图其实要改的东西还是非常之多的。除了将svg从前端生成，把左边的侧栏实现之外，还需要将原先作者页面的所有信息都搬到地图中。这对信息的筛选和整合是一个非常大的挑战。&lt;/p&gt;
+
+&lt;p&gt;但是，这部分挑战仅仅是产品上的问题，只要我们知道要哪些东西，舍弃哪些东西，在技术上实现是没有难度的。唯一一个比较困难的问题是作者论文这一块。因为一个作者的论文数量有很多（最多的达8000+），因此我们需要添加一个分页的功能。那么究竟是前端分页还是后台分页呢？事实上，在目前绝大多数的上线产品中，分页都是使用后台分页的。如果我们数据量很大，大到需要分页的话，那么一次从后台传输这些数据的耗时是非常高的。我们将数据从数据库中取出来的时候就规定好一个start和一个offset，这样我们进行一次数据请求，返回的内容仅仅为一页所需要的内容。这么做虽然时间上有了节约，但是我们每一次分页都需要重新向后台请求数据。大部分情况下，后台分页比前段分页是有优势的。&lt;/p&gt;
+
+&lt;p&gt;除此之外，论文部分还添加了一个根据年份筛选的功能。该功能直接将参数传入后台，在SQL语句中添加WHERE即可，没有难度。&lt;/p&gt;
+
+&lt;p&gt;啊对了，这个分页器也是我自己写的，已经包装在一个文件中了。因为原先是想自己使用，因此也没有在接口和库文件规范上有下功夫，不过在这里我依然把代码公开一下，感兴趣的朋友可以自己用用看。&lt;a href=&quot;/js/pagination.js&quot;&gt;pagination.js&lt;/a&gt;，依赖于bootstrap和jquery。&lt;/p&gt;
+
+&lt;p&gt;使用方法很简单，在html中插入如下语句：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;ul class=&quot;pagination pagination-sm&quot;&amp;gt;&amp;lt;/ul&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;然后，在js中初始化该pagination，初始化函数如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;function initPagination(number, func)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;参数number是总共的页数，func是单击页码时执行的数据操作（一般也就是请求后台）。&lt;/p&gt;
+
+&lt;p&gt;下面放上一张合作者地图新的UI图吧！&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Acemap/4.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;之前已经完成的话题地图也做了一点改进，将年份选择做成了滑杆的形式，两个滑块之间的就是选择的年份区间。滑杆就没有自己写了，用的是nst-slider这个第三方库，还是比较方便的。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;性能&lt;/h3&gt;
+
+&lt;p&gt;前端性能上的提高就不提了，主要就是整理代码，减少重复的事件绑定和后台请求。这次主要是后台上的性能提高。&lt;/p&gt;
+
+&lt;p&gt;首先是SQL上的query cache。之前我们把query cache一直都是打开的，然后有时候请求返回的速度就很慢。查log之后发现SQL一直在输出waiting for query cache lock。查阅了一下网上的资料，发现该cache会缓存之前使用过的SQL查询语句以及查询结果。这对于一些我们经常查询一样的内容并且表内容不频繁变化的情况会比较有用。但是在acemap中，我们每一次查询的内容几乎都是不同的，像paperid，authorid都是想变就变的。因此我们每一次查询的时候，就会刷新这个cache，刷新这个cache又会上锁。因此在并发数达到一定的情况下，就会有明显的卡顿现象了。&lt;/p&gt;
+
+&lt;p&gt;然后是redis缓存。我们在话题地图的前50名作者功能中，使用了redis作为数据缓存。因为这个表的大小很大，如果每一次都从SQL中取出的话，会很占用时间。redis将数据缓存在内存之中，而且并不是使用表结构，而是我们代码中更为常见的字典结构，一个key对应一个value，因此使用上也非常的方便。在后台我们判断一下在redis中是否有数据缓存即可：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if ($redis -&amp;gt; hExists($topicID, &#39;famousAuthor&#39;)){
+	$authors = json_decode($redis -&amp;gt; hGet($topicID, &#39;famousAuthor&#39;), TRUE);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;大概就是这样。&lt;/p&gt;
+
+&lt;h3 id=&quot;section-4&quot;&gt;目标&lt;/h3&gt;
+
+&lt;p&gt;目前我们所有的地图上的功能都已经实现了，下一阶段会着重在搜索这一块。搜索组已经在后台开始使用了solr引擎，只不过目前还没有移植到前端。之后在了解了相应的使用方法之后，我会及时的在前端跟进的。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;看我这么认真的做毕设写博客的份上，求天赐我一个女朋友。&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 15 Apr 2017 12:45:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2017/04/15/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%8A%9F%E8%83%BD%E4%B8%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%AE%8C%E5%96%84/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2017/04/15/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%8A%9F%E8%83%BD%E4%B8%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%AE%8C%E5%96%84/</guid>
+        
+        <category>Acemap</category>
+        
+        <category>Javascript</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Acemap学术地图前端代码的重构</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;今天是个美好的日子，只可惜不属于我而已。虽然没有出去约女孩子，但一个人在宿舍学完一课日语，健身房里跑跑步，打打游戏晚上再写下这篇博文，也是非常惬意的。&lt;/p&gt;
+
+&lt;p&gt;这是一篇关于毕业设计的博文。之前在选择毕设的时候也是一波三折，因为老师名额不够，所以导致我需要去补录志愿。所幸最后老师帮我争取到了一个名额，能够让我成功获得毕业的机会。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
+
+&lt;h3 id=&quot;section-2&quot;&gt;毕设主要内容&lt;/h3&gt;
+
+&lt;p&gt;我的毕设是纯工程的，没有什么理论。也就是说，不需要看大量论文，大部分的工作还是写代码。要做的是一个学术地图，名字叫做&lt;a href=&quot;http://acemap.sjtu.edu.cn&quot;&gt;Acemap&lt;/a&gt;。在我加入项目组之前，已经完成了一部分工作了，但是代码质量参差不齐。最后的项目目标是，能够将所有的地图都统一起来，有统一的格式。具体的UI可以参考谷歌地图。我负责的部分是前端，总体来说，我要做的内容就是：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;设计合适的前端代码架构&lt;/li&gt;
+  &lt;li&gt;重构前端代码，理清结构&lt;/li&gt;
+  &lt;li&gt;设计UI&lt;/li&gt;
+  &lt;li&gt;功能实现&lt;/li&gt;
+  &lt;li&gt;完成文档和注释内容&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;section-3&quot;&gt;代码架构&lt;/h3&gt;
+
+&lt;p&gt;我们后台使用的是CodeIgniter框架。说实话，这个框架已经老的掉牙了，可能是之前几年的学长挑选的，现在要更换也已经几乎是不可能的了，因为代码数量已经非常庞大了。学习了一下CodeIgniter，个人感觉还是挺麻烦的。而且，在controller如何控制view的那段示例代码中，有类似如下的片段：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$this -&amp;gt; load -&amp;gt; view(&#39;header&#39;);
+$this -&amp;gt; load -&amp;gt; view(&#39;content&#39;);
+$this -&amp;gt; load -&amp;gt; view(&#39;footer&#39;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;最终我们显示的代码，是这三个文件中代码的顺序拼接。这样做其实我自己很不喜欢，原因有如下几点：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;每一个文件的代码都没有完整的html格式&lt;/li&gt;
+  &lt;li&gt;最终显示页面的html源代码不够直观，需要看多个文件&lt;/li&gt;
+  &lt;li&gt;模块化不够明显。虽然header也可以作为某一个单独的模块列出来，但是其必定会带有一些html标签，在使用的时候不够方便。而且他只支持顺序的模块，没有办法实现一个模块中嵌套另一个模块。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;原本我最理想的而前端架构是用ReactJS或者VueJS，因为最终页面的风格是要统一的，公共的部分包括&lt;em&gt;搜索栏&lt;/em&gt;， &lt;em&gt;svg地图&lt;/em&gt;，因此只要将这两者作为模块单独放在文件中，由外界向他们传数据就可以很好的进行复用。这么做的话，最理想的是在基础页面加载完毕后，再通过RESTFUL API向后台请求获得具体的数据。但是，目前我们后台是将页面需要的数据直接传递给页面的，这样做的话，我们的页面必须以php结尾，才能够使用那些传递过来的数据，但即使这么做了，JS代码里是不能够嵌入PHP代码的，因此我们没有办法让ReactJS/VueJS模块得到后台controller直接传过来的数据，这样的代码架构就不能实现。如果要做的话，后台的代码就要重构，前端的代码也要重构，工作量之大并不是目前能顾得上的。&lt;/p&gt;
+
+&lt;p&gt;因此，前端这一块，目前并没有使用任何的框架。只是用了jQuery以及相关的一些库。因为jQuery是没有模块化的，因此我们也没有办法使用npm来引入相关的jQuery第三方插件。项目整体还是比较原始的，目前来看的话，也只能这样子了。&lt;/p&gt;
+
+&lt;p&gt;最终我对这个项目的前端代码框架的构思是，将&lt;em&gt;搜索栏&lt;/em&gt;，&lt;em&gt;svg地图&lt;/em&gt;这两个可以复用的部分的js代码单独拿出来建一个文件，然后一个页面只使用一个.php文件，页面中需要用到的特定的js代码以内联的方式写在.php文件中。这样可以在保证代码清晰的前提下，能够最大程度的复用一些组件。&lt;/p&gt;
+
+&lt;h3 id=&quot;svg&quot;&gt;SVG地图生成&lt;/h3&gt;
+
+&lt;p&gt;在我加入项目组之前，SVG地图是已经在后台生成完毕，作为一个单独的文件，在controller中进行拼接的。这样做有好处也有坏处，好处是加载的速度比较快，坏处就是可拓展性不强，如果有新的地图，我们就需要在后台重新生成一边，相对而言也比较占用空间。&lt;/p&gt;
+
+&lt;p&gt;目前我们已经抛弃了这样的方式，取而代之的是，用js代码来生成相应的svg地图。我们在后台存储了相应的地图所需要的元素，并用如下的代码读取出来：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$sql = &quot;SELECT PaperID, Radius, X, Y, View1, View2, Year, JournalID, ConferenceID, LabelSize, LabelX, LabelY, Label FROM papermap_4_node WHERE FieldID = ?&quot;;
+$nodes = $this-&amp;gt;db_svg-&amp;gt;query($sql, array($topicID))-&amp;gt;result_array();
+//get edges
+$sql = &quot;SELECT SourceID, TargetID, Width, View1, View2 FROM papermap_4_edge WHERE FieldID = ?;&quot;;
+$edges = $this-&amp;gt;db_svg-&amp;gt;query($sql, array($topicID))-&amp;gt;result_array();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;得到相应的点和边的数据之后，将其传到前端，绘制成svg即可。&lt;/p&gt;
+
+&lt;h3 id=&quot;deferred&quot;&gt;Deferred对象&lt;/h3&gt;
+
+&lt;p&gt;defered对象是jQuery的回调函数解决方案。这次我们在项目中使用到了这个技术，有两个目的，一是为了让一些点击事件的绑定能够生效，二是将一些地图其他的数据的读取放在地图显示之后。这些数据本身是依赖于地图的，缺少地图的话他们将无法显示完全。&lt;/p&gt;
+
+&lt;p&gt;在使用上Deferred对象非常简单，如果要新建一个对象，执行下述代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var dtd = $.Deferred(); // 新建一个Deferred对象
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;jQuery规定，deferred对象有三种执行状态—-未完成，已完成和已失败。如果执行状态是”已完成”（resolved）,deferred对象立刻调用done()方法指定的回调函数；如果执行状态是”已失败”，调用fail()方法指定的回调函数；如果执行状态是”未完成”，则继续等待，或者调用progress()方法指定的回调函数。&lt;/p&gt;
+
+&lt;p&gt;一般来说，我们指定“已完成”的状态居多。设定这个状态的代码为：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dtd.resolve()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;ui&quot;&gt;UI界面&lt;/h3&gt;
+
+&lt;p&gt;UI方面的话，我引入了bootstrap-standstone。相对来说还是比较美观，又带有些许严谨的风格，和“学术地图”这样的主题很相称。除此之外，我将领域的一些介绍内容也搬到了地图中，包括领域的父话题，子话题和该领域内发表论文数前50的作者。这样原本是两个页面，现在就合成一个页面了，风格也得到了统一。具体的话，还是直接来看对比图吧。&lt;/p&gt;
+
+&lt;p&gt;之前的UI：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Acemap/1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;现在的UI：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/Acemap/2.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;虽然我也不是专业的设计师，但我觉得还是美观了不少的。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;后记&lt;/h2&gt;
+
+&lt;p&gt;做了其实也不少，剩下的开学之后再说吧！&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 14 Feb 2017 21:30:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2017/02/14/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2017/02/14/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84/</guid>
+        
+        <category>Acemap</category>
+        
+        <category>Javascript</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
     
       <item>
         <title>使用Processing制作交大饮食的可视化报告</title>
@@ -844,236 +1599,6 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
         <category>腾讯</category>
         
         <category>工作</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>告别浮夸，新版博客你好</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;“总觉得自己的审美提高了一大步。”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;section&quot;&gt;正文&lt;/h2&gt;
-
-&lt;p&gt;讲真，现在回过头看自己过去的那个个人主页，已经有点不堪入目了。bug相当多，而且操作也不友好，优化也做得很差。这次修改，不仅是想让自己网站变得更加干净，也希望自己能够更加简单一些吧。&lt;/p&gt;
-
-&lt;p&gt;我使用的是&lt;a href=&quot;http://huangxuan.me&quot;&gt;Hux&lt;/a&gt;的网页作为参考，有关于任何技术方面的细节，可以去他的网站看。如果你也想做一个类似的博客，可以去clone他在github上面挂的模板。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;后记&lt;/h2&gt;
-
-&lt;p&gt;关于我的博客，如果你有任何问题，请联系gougoumemeda@sjtu.edu.cn&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 24 Jul 2016 12:00:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/</guid>
-        
-        <category>Web</category>
-        
-        <category>技术</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>iOS应用逆向工程</title>
-        <description>&lt;p&gt;之前想深入理解一下iOS方面的知识，就看了《iOS应用逆向工程》这本书。不可否认，这本书是我目前为止看到过的有关iOS方面的最精彩的书籍之一了。&lt;/p&gt;
-
-&lt;p&gt;原先对于iOS的了解，无非就是一些苹果公开的Api，以及AppStore等非常官方的东西。这本书讲逆向工程，也就是从一个hacker的角度来看待iOS系统。当然，要越过苹果的重重障碍，必要的一点就是先越狱，为此我也在淘宝上买了一部二手的iPhone4S来作为我的测试机。&lt;/p&gt;
-
-&lt;p&gt;越狱后，突然间iOS系统就变得很透明了，原先不知道的文件结构现在都暴露在我们面前。其实和MacOS的文件结构还是比较类似的，自己随便看看就能大概知道什么文件夹下存放着什么信息。此外接触了一些新的工具，比如Theos，IDA，class-dump等。前者类似于Xcode，是一个开发工具，可以专门用来写Tweak，也就是我们常说的“插件”。后两者才是真正厉害的东西，IDA是一个反汇编工具，class-dump能分析出二进制文件中的头文件。有了这两个东西，理论上任何的二进制文件我们都能知道他的具体实现，就看我们读汇编的功力深不深了。&lt;/p&gt;
-
-&lt;p&gt;之前对于调试工具都不太重视，也不太愿意在程序中打断点。这恰恰是逆向工程的核心之一，打断点是在分析程序的过程中非常好的习惯，在多接触了LLDB之后，发现打断点真的能够带我们慢慢了解一个程序，而不仅仅是停留在UI层面。配合debugserver工具，任何的应用我们都能让他“随时停止”。&lt;/p&gt;
-
-&lt;p&gt;所以，在逆向工程中，流程大概是这样：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Reveal定位View&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;cycript测试这个View就是我们想要的&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;找到这个View的Controller。如果是Button，找到他的响应函数，进入5&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;IDA+LLDB中找到这个Controller中的数据源&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;修改数据源或者响应函数，实现自己的想法&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Theos写成Tweak&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;书上的案例我都跟着做了，挺有意思的。其中“将电子邮件自动标为已读”这个项目中，作者使用AlertView来选择一个电子邮件。我写的时候拓展成了UITableView，这样就可以选择多个电子邮件了。&lt;/p&gt;
-
-&lt;p&gt;可惜的是，除了工具和汇编方面的知识，其他方面的我以后使用的地方估计不多了。当然这本书带给我的乐趣是相当多的，第一次见识到逆向的威力，也看到了iOS不为人知的一面，实在是让人兴奋。&lt;/p&gt;
-</description>
-        <pubDate>Tue, 31 May 2016 12:00:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</guid>
-        
-        <category>iOS</category>
-        
-        <category>技术</category>
-        
-        <category>逆向</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>SJTULost的一些体会</title>
-        <description>&lt;p&gt;最近花了大约一个月的时间来开发这个SJTULost的项目，这个项目其实是我的数据库大作业，主要是一个交大学生使用的失物招领平台，从技术上介绍一下这个项目吧。&lt;/p&gt;
-
-&lt;p&gt;前端，因为之前使用过一次React但是时间比较仓促，没有仔细的去研究过这个框架具体的使用方法。这次使用了React之后也搭配了Flux作为前端的框架。确实，有了Flux之后数据在前端的传递更加清晰，将Action和Store分隔开来的做法也使得代码有更强的可读性和可拓展性。当然，前端数据和后台数据放在了Action中完成，使用Ajax来对后台进行请求，返回的数据都是Json格式的。得到返回数据后再通知Store去更新其前端数据，并且显示在用户面前。&lt;/p&gt;
-
-&lt;p&gt;Action里面主要分为两个部分，一个是UserAction，主要记录用户的操作，比如修改用户信息，登录等。还有一个叫InitializationAction，记录的是其他所有的操作，包括Finding和Found的读取，过滤，更新，查询等。&lt;/p&gt;
-
-&lt;p&gt;Store的东西相对会多一点，数据库中每一个关系对象都会有一个Store，比如Finding，Found，ItemType和Place。同时，针对一些特定的功能我们也提供了其Store，比如Rank，后台将排好序的名字返回给前端，保存在Store中并最后显示。&lt;/p&gt;
-
-&lt;p&gt;后台用的还是Django，一方面比较成熟，另一方面因为我之前也做过Django项目，所以学习成本会低很多。&lt;/p&gt;
-
-&lt;p&gt;数据库的话，我一共建了五个表（不包括多对多关系的第三张表）。分别是Finding，Found，User，ItemType和Place。各个表之间的关系还是比较明确的。将Finding和Found分开也是因为这两者虽然字段很接近，但是其功能是截然不同的。&lt;/p&gt;
-
-&lt;p&gt;接下来说说看这个项目中的一些难点。&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;登录。项目中我没有自己设立登录系统，在User表中也是没有username和password这样的字段的。我使用的是交大的&lt;a href=&quot;http://developer.sjtu.edu.cn/wiki/JAccount&quot;&gt;Jaccount&lt;/a&gt;登录系统来进行判断用户的身份，也就是说，这个网站只有交大的同学才能够使用。Jaccount授权系统使用的是OAuth2，因为之前没有熟悉过，所以在开发的时候还是遇到了一些问题的，比如authorization和access token的两个url的回调函数必须是一致的，否则没有权限获取access token。得到用户信息之后，判断用户是否存在于数据库，如果不存在就创建一个新的元组。同时将这个用户在User表中的id保存在session里，有效期为两周，因此在两周内用户是不需要登录的。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;搜索。问题在于用户输入多个关键字时，我们应该怎么看待这些关键字的关系，是同时满足还是至少满足一个。因此我将与运算和或运算都加入到搜索系统里面，方便用户的查询。在后台使用queryset的field_contain参数，就能够从数据库里获取想要的信息。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;分页。分页的问题在于，我们除了需要获取那些部分的数据之外，还要获得所有数据的总数，这样才能知道什么时候用户是没有办法点击下一页的。我现在的实现中还存在着一个问题，用户每一次点击一页，相当于是重新计算了一遍再把数据返回前台。我理想的结果是，用户进入第一页之后，后台先返回第一页，然后在将后面一部分的页面读取出来缓存起来，这样如果用户点击下一页就不需要重新计算了，可以直接将数据返回前端。如果用户点击到了没有缓存过的一页，则再计算一遍。这样我们实际是利用用户浏览的时间才读取后面的内容，减少网页响应时间。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;选取时间。在网上找过一些时间的插件，但是都是用jQuery实现的，React版本的时间插件并不流行。最后选择了&lt;a href=&quot;https://github.com/YouCanBookMe/react-datetime&quot;&gt;react-datetime&lt;/a&gt;这个插件，能够和我的项目兼容。其中有一些props可以传递，包括dateFormat，timeFormat之类，都是可以在moment.js的网站上找到相应的字符格式。&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;上传图片。抱歉，我实在没找到合适的React的上传文件的插件，因此还是用jQuery写成的&lt;a href=&quot;https://github.com/blueimp/jQuery-File-Upload&quot;&gt;jQuery-File-Upload&lt;/a&gt;插件。不过我将上传的动作放在了Action里，使得除了Action文件以外的地方都不会出现$这个符号。将图片传递给后台之后，使用qiniu的Python SDK将其上传到七牛云。最后把照片的url返回给前端，实时预览。&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;关于这个项目的大概就是这些，如果有问题的话可以联系我。&lt;/p&gt;
-
-&lt;p&gt;项目目前还没有服务器，有没有老司机推荐一个能跑python的，便宜的，免备案的服务器？&lt;/p&gt;
-</description>
-        <pubDate>Sat, 21 May 2016 12:00:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/</guid>
-        
-        <category>Javascript</category>
-        
-        <category>技术</category>
-        
-        <category>Python</category>
-        
-        <category>Web</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>关于Django, React和Flux的一些思考</title>
-        <description>&lt;p&gt;最近在用Django作为后端写一个SJTU Lost的Web应用，主要是一个失物招领的平台吧，交大学生如果丢了什么东西可以发布过去，如果捡到什么东西也可以在上面贴出来。&lt;/p&gt;
-
-&lt;p&gt;然而我在做的过程中遇到了不少的问题。&lt;/p&gt;
-
-&lt;p&gt;首先，Django这个后端框架我还是比较熟悉的，外接了MySQL数据库之后，后台并没有遇到太大的问题。然而在选择前端的框架是我纠结了很久：是使用比较传统简单的jQuery还是比较新但是上手比较困难的React？最终我还是选择了React，算是给自己的一个挑战，也是让我接触新知识的一个很好的机会。毕竟以后web component是一种趋势，而jQuery终究会过时。&lt;/p&gt;
-
-&lt;p&gt;实际上，ReactJS只是一个View的框架，他能很好的帮助我们创建组件视图，但是并不能够很优雅的保存一些状态与数据，在处理一些交互动作时也显得略微笨重。在React这个前端技术栈中，现在比较流行的是React+Flux+ReactRouter。&lt;/p&gt;
-
-&lt;p&gt;Flux实际上提供了单向数据流的传递方案，Action，Dispatcher和Store能够很好的解决React中没办法保存状态数据的问题。&lt;/p&gt;
-
-&lt;p&gt;大概流程是，用户在View上点击一个按钮，产生一个Action，Action会调动Dispatcher来分发相应的数据，Store中数据的改变又会让View进行更新，最终显示用户想要的内容在页面上。&lt;/p&gt;
-
-&lt;p&gt;ReactRouter我并没有使用，简单来说就是定义一些url和相应显示的component。因为Django自带有router功能，所以我直接把这部分抛弃了。&lt;/p&gt;
-
-&lt;p&gt;要安装Flux和ReactJS的话最好还是使用npm，所以引入了一部分nodejs的知识，其实也就是很简单的require一个模块方面的内容，但是作为一个从来没有用过nodejs的人，我发现浏览器没有办法识别出require函数。。。搜索资料过后，发现要先用browserify/webpack将其打包，并且用执行的工具将代码编译成浏览器能识别的js文件。前者是比较传统的工具，缺点是很多东西不支持，比如jsx。后者可以自己定制想要的效果，保存在webpack.config.js文件中，因此最终选择了后者。ES6语法转换成ES5语法直接用Babel就好了，jsx文件也有对应的jsx-loader！&lt;/p&gt;
-
-&lt;p&gt;好，介绍完了技术背景之后，我来说一下我遇到的问题和一些思考。&lt;/p&gt;
-
-&lt;p&gt;如何在整个浏览器生命周期中共享一份Store/Action/Dispatcher?&lt;/p&gt;
-
-&lt;p&gt;其实这个问题非常的普遍。我们第一次进入一个页面后，将一部分信息保存在Store里面。如果我们导航到这个页面的一个子页面，我们还是希望能够继续得到这部分信息的。如果重新跟后台请求，那会再一次产生网络负担，而如果这部分信息能一直保存在Store中的话，就节约了这部分开销，相当于缓存在浏览器中。&lt;/p&gt;
-
-&lt;p&gt;但是！我并没有找到合适的解决方案，目前进入不同的页面还是会产生一个新的Store实例，然后从后台得到相应的数据。我觉得Flux设计的理念是和我想的一样的，但是我没有办法在Django框架下解决这个问题（除非我们写单页应用，即只有一个url，那我们在一个js文件中只需要require一次，相应的Store/Action/Dispatcher肯定也只有一个了）。Django的路由决定了视图，因此切换到不同的url时，视图会被加载，视图中的js文件也会被加载（即使是相同的视图也会重新加载一次，导致了新的实例的产生）。当然我知道现在很多跨url保存一些数据（比如购物车里的东西）比较常见的做法是使用cookie，之后如果时间充足应该也会考虑这样的做法（其实可以用session来存放，但是那样我就感觉Flux没啥存在的价值。。。）&lt;/p&gt;
-
-&lt;p&gt;现在有一个导航栏，如何保证在所有页面中我们使用的是一个导航栏(减少加载)?&lt;/p&gt;
-
-&lt;p&gt;这个问题本质和问题1是一样的，每一次访问一个Django的新路由，都会加载或者重新加载一个视图，只要导航在这个视图中，就会重新加载。&lt;/p&gt;
-
-&lt;p&gt;如果要解决这个问题，第一是可以考虑用Ajax，但是这样的话就只能使用一个url了。&lt;/p&gt;
-
-&lt;p&gt;还有一种方法是使用Pjax，这是pushState+Ajax，可以在改变url的同时异步加载网页一部分内容。事实上在之前是有一个Django-Pjax的，但是作者已经很久没有更新了，似乎已经不支持现有的版本了。如果之后有时间的话也会去尝试一下这个库。&lt;/p&gt;
-
-&lt;p&gt;现在还没有解决这个问题，也希望大家能够帮我想想办法。&lt;/p&gt;
-
-&lt;p&gt;大概就是这样，明天继续填坑。&lt;/p&gt;
-</description>
-        <pubDate>Mon, 25 Apr 2016 12:00:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/25/%E5%85%B3%E4%BA%8EDjango,-React%E5%92%8CFlux%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</guid>
-        
-        <category>Javascript</category>
-        
-        <category>技术</category>
-        
-        <category>Python</category>
-        
-        <category>Web</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Objective-C中的系统框架</title>
-        <description>&lt;p&gt;iOS开发中有两个最重要的系统框架: Foundation和CoreFoundation，前者定义了OC对象，后者是C语言的API和数据结构。对于Foundation中的每一个OC对象，我们都有一个对应的CoreFoundation数据结构，使用__bridge可以进行无缝桥接：&lt;/p&gt;
-
-&lt;p&gt;__bridge: ARC仍然具备这个OC对象的所有权&lt;/p&gt;
-
-&lt;p&gt;__bridge_retained: ARC交出这个OC对象的所有权，我们需要手动Release&lt;/p&gt;
-
-&lt;p&gt;__bridge_transfer: ARC获得对象的所有权&lt;/p&gt;
-
-&lt;p&gt;在OC中，我们遍历一个Collection有以下几种方法：&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;常规的for循环，和C语言一样&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;NSEnumerator来遍历：nextObject方法来返回枚举里的下个对象，最后一个对象则返回nil&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;快速遍历：for…in&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;块遍历：enumerateObjectsUsingBlock, enumerateKeysAndObjectsUsingBlock&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;块遍历可以提供对象，下标和指向是否终止的布尔值的指针。&lt;/p&gt;
-
-&lt;p&gt;在进行网络请求下载资源的时候，我们通常会把内容缓存下来。这时候应该采用NSCache。NSCache会在系统资源将要耗尽的时候，自动删减缓存。我们可以设置NSCache的对象的上线和总成本，来定义缓存删减其中对象的时机。&lt;/p&gt;
-
-&lt;p&gt;initialize和load方法是OC对象两个比较特殊的初始化方法。前者在第一次使用对象的时候调用，后者在APP启动的时候调用。需要注意的是，这两个方法都是阻塞的，因此我们不能放太多的操作在这两个方法之中。在load方法中我们不能调用其他类中的方法，因为初始化的顺序和时机是程序员不能确定的。&lt;/p&gt;
-</description>
-        <pubDate>Wed, 13 Apr 2016 12:00:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2016/04/13/Objective-C%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/04/13/Objective-C%E4%B8%AD%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%A1%86%E6%9E%B6/</guid>
-        
-        <category>iOS</category>
-        
-        <category>技术</category>
-        
-        <category>Objective-C</category>
         
         
       </item>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="My personal webpage">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>Wap STM中随手写的一些web库 - 金嘉骏的博客 | GeorgeJin Blog</title>
+
+    <link rel="canonical" href="https://gougoumemeda.github.io/2017/10/09/Wap-STM%E4%B8%AD%E9%9A%8F%E6%89%8B%E5%86%99%E7%9A%84%E4%B8%80%E4%BA%9Bweb%E5%BA%93/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">GeorgeJin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-wap.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-wap.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Works Applications" title="Works Applications">Works Applications</a>
+                        
+                        <a class="tag" href="/tags/#Web" title="Web">Web</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                    </div>
+                    <h1>Wap STM中随手写的一些web库</h1>
+                    
+                    
+                    <h2 class="subheading">认真工作，养(xiao)家(sa)糊(ren)口(sheng)</h2>
+                    
+                    <span class="meta">Posted by George on October 9, 2017</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h2 id="section">前言</h2>
+
+<p>十一长假结束后，公司STM的第二个assignment也要进入尾声了。有了第一个assignment的经验，这次在具体开发的过程中遇到的问题就少了很多，我也把更多的重心放在了组件化上，尝试着去写一些公共的库文件来供他人使用。</p>
+
+<h2 id="section-1">正文</h2>
+
+<p>在这次的开发中，我一共提取出了三个公共库，分别与滑杆，分页器与图表有关。我将其相关的代码写在各自的文件中，使用一个类来封装，其他人使用时，只需要声明一个新的对象然后传入相应的参数即可，不需要关注其具体的实现。下面我将各自介绍这些库的实现细节与使用方法。</p>
+
+<h3 id="slider">Slider</h3>
+<p>这是一个滑杆库，<a href="/js/slider.js">点我下载slider.js</a>。目前该slider使用的是双向设计，即有两个滑块，他们中间的范围为最终我们需要的值，设计图如下所示。</p>
+
+<p><img src="/img/in-post/WAP/slider.png" alt="img" /></p>
+
+<p>所接受的参数如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>config: {
+    name: string, // 该slider的名字
+    target: jQuery Object, // 该slider所要放置的jQuery对象
+    width: float, // slider的宽度
+    height: float, // slider的高度
+    barHeight: float, // slider中滑杆的高度，该值需要小于height
+	extremum: { // slider的两个端值
+        l: float,
+        r: float
+    },
+    initial: { // slider的两个初始值
+        l: float, 
+        r: float
+    },
+    beginDrag: function, // 开始滑动滑块时触发的操作
+    endDrag: function // 结束滑动滑块时触发的操作
+}
+</code></pre>
+</div>
+
+<p>整体实现的思路非常清晰，大致如下：
+- 绘制滑杆，并且上色
+- 根据slider的宽度、端值以及初始值绘制左滑块与右滑块
+- 在左滑块与右滑块的中间添加一个<code class="highlighter-rouge">validZone</code>，表示当前有效的范围，高度为<code class="highlighter-rouge">barHeight</code>，并且进行上色（配色尽量与滑杆的颜色进行搭配）
+- 绘制滑块Label，显示当前的数值
+- 绑定事件</p>
+
+<p>在实现的过程中并没有太多困难的地方，唯一可能牵扯到一些数学知识的，应该就是计算滑块的位置。我们以左滑块为例，如果要计算它的初始位置，则公式如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(initial.l - extreme.l) / (extreme.r - extreme.l) * width
+</code></pre>
+</div>
+
+<p>同理，如果我们已知左滑块的位置，要计算左滑块的值，可以通过如下的公式：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>extreme.l + (leftPos / width) * (extreme.r - extreme.l)
+</code></pre>
+</div>
+
+<p>在滑块滑动的过程中，我们会经常用到上述的两个公式，因此需要掌握其背后的原理（也是非常显而易见的）。</p>
+
+<h3 id="pagination">Pagination</h3>
+
+<p>在大学期间，我已经多次实现过分页器，但是都没有将其独立的作为一个模块拎出来。这一次用类来封装，也是希望能够测验一下自己对分页器的理解。</p>
+
+<p>很久之前就聊过，分页器分为前端分页和后端分页。在本项目中，由于我们没有构建一个独立的服务端，因此这里实现的分页器采用的是前端分页。后端分页如果要实现的话，对数据层的控制力度可能就要小一些，因为所有的数据都是从后台传进去的，分页器只是做了一个显示的作用。而前端分页不仅仅是显示，真正的分页过程也在这里进行，因此对分页器的封装更加友好。需要使用的朋友可以<a href="/js/pagination2.js">点我下载pagination.js</a>。</p>
+
+<p>最终的设计图如下：</p>
+
+<p><img src="/img/in-post/WAP/pagination.png" alt="img" /></p>
+
+<p>所接受的参数如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>config: {
+    name: string, // 分页器的名字
+    target: jQuery.Object, // 分页器要放置的jQuery对象
+    data: [], // 分页数据
+    maxNumberOfButton: int, // 分页器最多同时显示的页码数量
+    eachPageNumber: int, // 每个页面的条目数量
+    clickEvent: function // 点击分页器页码时触发的操作
+}
+</code></pre>
+</div>
+
+<p>实现的思路如下：
+- 初始化分页器，计算总共的页码数量，分页器同时显示的页码数量（小于或者等于<code class="highlighter-rouge">maxNumberOfButton</code>）以及所要显示的页码。
+- 绘制分页器。如果是第一页，则向左按钮失效（添加类<code class="highlighter-rouge">disabled</code>），如果是最后一页，则向右按钮失效
+- 点击事件，对传入的数据进行分页，并且重新绘制分页器。</p>
+
+<p>相对来说，比较复杂的在于第三步点击事件，这里我们需要重新计算所要显示的页码。定义当前页码为<code class="highlighter-rouge">curr</code>，所要显示的页码数量的一半为<code class="highlighter-rouge">mid</code>，总页码数为<code class="highlighter-rouge">total</code>。</p>
+
+<p>如果<code class="highlighter-rouge">maxNumberOfButton</code>小于<code class="highlighter-rouge">total</code>，那么我们可能会隐藏一部分页码不显示。例如，我们最大能够显示的页码量为5，但是这时候一共有7页，那么初始情况下需要显示的页码为1，2，3，4，5。第六页和第七页我们将其隐藏。如果我们单击页码4，那么需要显示的页码就变成了2，3，4，5，6。</p>
+
+<p>大致上来看，我们可以将需要显示的页码分为三类，则：
+1. <code class="highlighter-rouge">curr &gt;= 1 &amp;&amp; curr &lt;= mid</code>，则需要显示的页码为<code class="highlighter-rouge">1 ~ maxNumberOfButton</code>。
+2. <code class="highlighter-rouge">curr &lt;= total &amp;&amp; curr &gt;= total - mid + 1</code>，则需要显示的页码为<code class="highlighter-rouge">total - maxNumberOfButton + 1 ~ total</code>
+3. 除此之外，需要显示的页码为，<code class="highlighter-rouge">curr - mid ~ curr + mid (- 1, 当maxNumberOfButton为偶数时)</code></p>
+
+<p>可以看到，在第三种情况中，当前的页码始终处于分页器的中间位置。</p>
+
+<p>整个分页器的难点就在于理清楚这三种情况。对于后端分页，我们就不再需要传入data，也不需要实际的分页操作，仅仅绘制分页器即可。</p>
+
+<h3 id="chart">Chart</h3>
+
+<p>图表是最为难以实现的一个模块库。在本项目中，我一共实现了三种类型的图表，无论从种类上还是性能上，都无法与市面上目前已经成熟的图表类库进行比较（例如acharts）。因此，对于我个人而言，这是一个完成项目所必须完成的工作，也是锻炼我js能力的一次考验。</p>
+
+<p>我将三种类型的图表写在了同一个文件中，<a href="/js/chart.js">点我下载chart.js</a>，下面我将一个一个介绍。</p>
+
+<h4 id="histogram-bar-chart">Histogram （这里译名有点奇怪，我的锅，其实就是bar chart）</h4>
+
+<p>先来看一张效果图：</p>
+
+<p><img src="/img/in-post/WAP/histogram.png" alt="img" /></p>
+
+<p>所接受的参数如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>config: {
+	name: string, // 柱状图的名字
+	target: jQuery Object, // 柱状图所要放置的jQuery对象
+	height: int, // 柱状图的高度
+	width: int, // 柱状图的宽度
+	legend: string, // 图例
+	clickEvent: function, // 点击柱状图事件
+	color: string, // 柱状图的颜色
+	xAsix: Array, // 横坐标数据
+	yAsix: Array // 横坐标数据所对应的值
+}
+</code></pre>
+</div>
+
+<p>实现的思路如下：
+- 初始化坐标系，确定纵坐标的方向（正/负/双向）。
+- 绘制图例
+- 绘制纵坐标，根据<code class="highlighter-rouge">yAsix</code>计算出纵坐标的最大值以及划分线的数量
+- 绘制横坐标，动态绘制柱状条，并且在柱状体条上方添加数值标签
+- 绑定鼠标覆盖事件以及点击事件</p>
+
+<p>其中，最为复杂的应该是绘制纵坐标以及动态绘制柱状条这两步。</p>
+
+<p>在绘制纵坐标中，我们需要先确定坐标轴的最大值。我们简单的通过yAsix中的最大值的最高位加一的方法来确定纵坐标端值。比如，如果<code class="highlighter-rouge">yAsix</code>中最大值为75000，则坐标轴的最大值为80000；如果是98000，则最大值为100000。负数亦然，我们得到了<code class="highlighter-rouge">_yPositivePeak</code> 和 <code class="highlighter-rouge">_yNegativePeak</code>。接着我们需要计算出纵坐标轴正负两端划分线的数量。对于正负两端最大值数位多的那一端（假设为正方向端，即 <code class="highlighter-rouge">_yPositivePeak.str().length &gt; _yNegativePeak.str().length</code>)，其划分线的数量就是最高位（例外是，如果最高位为1，则数量为10）；数位少的那一端，通常情况下划分线的数量就是1。举个例子， <code class="highlighter-rouge">_yPositivePeak</code>为70000， <code class="highlighter-rouge">_yNegativePeak</code>为-3000，则正方向的划分线数量为7，具体是10000，20000，30000，40000，50000，60000，70000；负方向的划分线数量为1，具体是-3000。</p>
+
+<p>细心的读者可以发现，对于数位少的一端，我在划分线数量为1的前面加了一个定语“通常”，也就是说，有例外发生。这种情况出现在，两端最大值数位差为1，并且数位多的那一端的最高位为1（即 <code class="highlighter-rouge">_yPositivePeak.str().length - _yNegativePeak.str().length == 1 &amp;&amp; _yPositivePeak.str()[0] == '1'</code>)。再这样的情况下，数位少的那一端划分线的数量也是其最高位。比如说， <code class="highlighter-rouge">_yPositivePeak</code>为100000， <code class="highlighter-rouge">_yNegativePeak</code>为-40000，则正方向的划分线数量为10，具体是10000，20000，30000，40000，50000，60000，70000，80000，90000，100000；负方向的划分线数量为4，即-10000，-20000，-30000，-40000。</p>
+
+<p>这么设计看上去会有一些复杂，但是为了坐标轴更为美观，采用这样的方法我认为是很有必要的。他避免了两个问题：
+1. 两端端值数位相差过大时，数位小的那一端划分线过于紧凑
+2. 两端端值数位相差不大时，数位小的那一端划分线过于松散</p>
+
+<p>一句话来概括的话，就是正负两端划分线的间距要尽量保持一样，如果正方向划分线的间距时10000，那么负方向也要保持10000，否则就不划分（划分线数量为1）。这是一种保证柱状图坐标轴不会太丑的方法。</p>
+
+<p>第二个难点在于，如何动态绘制柱状条。这里我们用到了css3中的<code class="highlighter-rouge">-webkit-transition</code>。我们对每一个柱状条进行如下的css设置：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>.bar{
+    height: 0;
+    '-webkit-transition': 'height 1s'
+}
+</code></pre>
+</div>
+
+<p>在将其加入到dom树之后，修改他的height为实际的高度，就能触发动画效果。</p>
+
+<h4 id="pie-chart">Pie chart</h4>
+
+<p>现在我们将介绍饼图，老样子还是先看图：</p>
+
+<p><img src="/img/in-post/WAP/piechart.png" alt="img" /></p>
+
+<p>所接受的参数如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>config: {
+	name: string // 饼图的名字
+	target: jQuery Object, // 饼图所放置的jQuery对象
+	height: int, // 饼图的高度
+	width: int, // 饼图的宽度
+	legend: string, // 图例
+	clickEvent: function, // 点击事件 
+	data:[{ // 饼图的数据，包括文字描述，数据以及扇形的颜色
+		label: string,
+		value: int,
+		color: string
+	}]
+}
+</code></pre>
+</div>
+
+<p>实现的思路如下：
+- 初始化饼图，这里我们使用canvas来绘制
+- 绘制饼图。如果是第一次绘制，则使用动画效果
+- 绑定鼠标移动事件，在移动的过程中不停的重绘饼图，同时判断鼠标的位置是否在某一个扇形路径内，如果在，则可认为当前鼠标的位置覆盖了该扇形
+- 绑定鼠标点击事件</p>
+
+<p>在饼图中，最为复杂的一点在于如何判断鼠标是覆盖了哪一块扇形。因为扇形是不规则的，我们不能像柱状图那样使用div来绘制，因此只能够使用canvas。而在canvas中，所有的图像都是一个整体，没有办法对每一个扇形进行单独的事件绑定，而需要通过<code class="highlighter-rouge">canvas.getContext('2d').isPointInPath(x, y)</code>来判断一个坐标是否在canvas中的某一个路径内。在饼图中，我们按照顺时针的方向来绘制扇形，扇形路径绘制完毕后，我们马上进行<code class="highlighter-rouge">isPointInPath()</code>的判定，就能够知道鼠标当前所覆盖的扇形是哪一个。这也就需要在mousemove事件中不停的重绘饼图，因为鼠标的坐标是不停的变化的。我原本以为这种方法的性能消耗会非常大，但事实上来看似乎并没有卡死的现象。如果有更好的方法也希望大家能够告知。</p>
+
+<p>除了判断鼠标位置所在的扇形之外，另一个有点难度的地方在于如何动态绘制饼图。所谓动态绘制，就是一点一点的来画图。原本可能90°的扇形一次性画完，动态绘制就将其分成90份，每次只绘制1°的扇形，重复绘制90次。理所应当的我们需要使用<code class="highlighter-rouge">setInterval</code>函数，来重复绘制操作。绘制之前，我们先顺时针扫一遍所有的扇形，然后将扇形的终弧度保存在一个数组<code class="highlighter-rouge">angles</code>中，以备后用，同时记录下当前正在绘制的度数 _timerCurrDraw。在具体的小角度的绘制过程中，我们先判定当前绘制的是哪一个扇形（通过 <code class="highlighter-rouge">_timerCurrDraw</code>与<code class="highlighter-rouge">angles</code>中的元素进行比较），来决定绘制的颜色，然后进行path的绘制并且上色即可。如果 <code class="highlighter-rouge">_timerCurrDraw</code>大于了最后一个扇形的终弧度（为2π），则动态绘制结束。</p>
+
+<h4 id="scatter-diagram">Scatter diagram</h4>
+<p>翻译上来看，就是所谓的散点图，但其实与我们常见的散点图还有一些区别。除了点的分布以外，我所设计的scatter diagram还将空间分成了四个部分，每个部分都有其实际意义。对于点的分布，我也添加了一些新的含义，不同的颜色表示点不同的种类，而点的颜色深浅与半径的大小也区分了其在该类型中的等级。</p>
+
+<p>效果图如下：</p>
+
+<p><img src="/img/in-post/WAP/scatter.png" alt="img" /></p>
+
+<p>所接受的参数如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>config: {
+	name: string // 散点图的名字
+	target: jQuery Object, // 散点图所在的jQuery对象
+	height: int, // 散点图的高度
+	width: int, // 散点图的宽度
+	group: [{ // 散点图中的各个类型，并且赋予其坐标
+		x: float,
+		y: float,
+		label: string,
+		color: string
+	}]
+	clickEvent: function, // 点击事件
+	data:[{ // 各个点的坐标数值以及介绍
+		x: float,
+		y: float,
+		info: string
+	}],
+	meaning: { // 坐标的含义
+		x: string,
+		y: string,
+		xRate: bool,
+		yRate: bool
+	},
+	zones: { // 散点图的四个区域的名称以及含义
+		lt: string,
+		ltexp: string,
+		rt: string,
+		rtexp: string,
+		lb: string,
+		lbexp: string,
+		rb: string,
+		rbexp: string
+	}
+}
+</code></pre>
+</div>
+
+<p>实现的思路如下：
+- 初始化坐标轴，计算出<code class="highlighter-rouge">data</code>中坐标进行平移的向量以及拉伸的系数，使之能够撑满<code class="highlighter-rouge">width</code>和<code class="highlighter-rouge">height</code>
+- 绘制坐标轴，解释坐标的含义并且画上划分线
+- 绘制四个区域
+- 对所有的散点进行分类
+- 绘制坐标点，通过到类型坐标的距离来决定其颜色深浅和半径大小
+- 绘制图例
+- 绑定散点的覆盖和点击事件</p>
+
+<p>其中，最为复杂的，之一在于坐标轴的平移与拉伸。在本项目中，我们散点的横坐标与纵坐标都是百分数，也就是-1 ~ 1的区间，没有办法直接在图中转换为像素值，进行绘制。因此我们最先要做的，是将这些百分数的值转换成实际所要绘制的坐标值。在转换之前，我们需要计算一些初始数据：散点横纵坐标各自的最大值与最小值<code class="highlighter-rouge">maxX</code>，<code class="highlighter-rouge">maxY</code>，<code class="highlighter-rouge">minX</code>，<code class="highlighter-rouge">minY</code>；散点的中心位置坐标<code class="highlighter-rouge">_graphCenterX</code>， <code class="highlighter-rouge">_graphCenterY</code>；实际坐标系的中心位置 <code class="highlighter-rouge">_centerX</code>, <code class="highlighter-rouge">_centerY</code>。</p>
+
+<p>通过这些值，我们需要算出如下信息：
+1. 每一个散点在实际坐标系的位置<code class="highlighter-rouge">(data[index].x - _graphCenterX, data[index].y - _graphCenterY)</code>
+2. 拉伸系数。<code class="highlighter-rouge">_graphScaleX = width / (maxX - minX)</code>; <code class="highlighter-rouge">_graphScaleY = height / (maxY - minY)</code></p>
+
+<p>然后在计算散点实际绘制的坐标过程中，我们只需要对每一个散点在实际坐标系的位置先进行拉伸（将其乘上 <code class="highlighter-rouge">_graphScaleX</code>和 <code class="highlighter-rouge">_graphScaleY</code>）,然后按照一个方向向量进行平移（加上 <code class="highlighter-rouge">_centerX</code>, <code class="highlighter-rouge">_centerY</code>)即可。</p>
+
+<p>之二在于散点的分类和绘制。对于点的分类，我采用的是类knn算法。每一种类型，我们都赋予其一个实际的坐标值<code class="highlighter-rouge">(group[index].x, group[index].y)</code>，而对于每一个散点，我们计算出他到各个类型的坐标的距离，取其最短，将该散点归类到该类型中。在同一种类型中，我们计算出其中所有的散点到类型坐标的距离，根据距离的长短来决定其颜色深浅以及半径大小，完成最终的绘制。</p>
+
+<h3 id="section-2">使用说明</h3>
+
+<p>至此，在本项目中封装好的类都已经介绍完毕了。使用方法大同小异：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var a = new B({
+    ... // 根据每一个类传入所需要的参数值
+})
+a.render()
+</code></pre>
+</div>
+
+<p>执行上述代码后就能正常使用该类了。</p>
+
+<h2 id="section-3">后记</h2>
+
+<p>NONE</p>
+
+
+
+                <hr>
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/08/27/Wap-STM-Web%E5%BC%80%E5%8F%91%E5%BF%83%E5%BE%97/" data-toggle="tooltip" data-placement="top" title="Wap STM Web开发心得">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+
+                
+                <div id="gitmentContainer"></div>
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Web" title="Web" rel="6">
+                                    Web
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="21">
+                                    技术
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="9">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="6">
+                                    Objective-C
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Javascript" title="Javascript" rel="4">
+                                    Javascript
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="2">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#生活" title="生活" rel="2">
+                                    生活
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#腾讯" title="腾讯" rel="4">
+                                    腾讯
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Unity" title="Unity" rel="3">
+                                    Unity
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Acemap" title="Acemap" rel="2">
+                                    Acemap
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Works Applications" title="Works Applications" rel="3">
+                                    Works Applications
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://qinacme.com">秦鹤</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- gitment 公共JS代码 start -->
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    id: window.location.href, // 可选。默认为 location.href
+    owner: 'gougoumemeda',
+    repo: 'gougoumemeda.github.io',
+    oauth: {
+        client_id: 'e6336e0f06cb96722f36',
+        client_secret: '6d0eed88b21afa52d827adbe6336e61ea4cb8fb8',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+<!-- gitment 公共JS代码 end -->
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/u/3033630677">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/金嘉骏">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/gougoumemeda">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-81336472-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '23710bb6f40c572032327a0420b5fd57';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

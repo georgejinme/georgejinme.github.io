@@ -167,7 +167,7 @@
     <blockquote>
         与其感慨路难行，不如马上出发。
     </blockquote>
-    你在看我。<br><br>目前在日企Works Applications工作，地点月星环球港，50%概率2018年去东京总部工作<br><br>喜欢打桌球，自学日语中。我也是个日剧粉，嘎（新垣结衣）癌已经晚期了。<br><br>Dota2是我最喜欢的游戏，Liquid是我最喜欢的战队，Miracle-是我最喜欢的选手。欢迎留下你们的ID，可以一起战斗。
+    你在看我。<br><br>上海交通大学计算机科学与技术毕业生。<br><br>目前在日企Works Applications工作，地点月星环球港，50%概率2018年去东京总部。<br><br>喜欢打桌球，自学日语中。我也是个日剧粉，嘎（新垣结衣）癌已经晚期了。<br><br>Dota2是我最喜欢的游戏，Liquid是我最喜欢的战队，Miracle-是我最喜欢的选手。欢迎留下你们的ID，可以一起战斗。
 
 </div>
 
@@ -176,13 +176,6 @@
     <blockquote>
         Take Action Right Now.
     </blockquote>
-
-    <p>
-        I am a student in SJTU who major in Computer Science. Now I am working in Tencent (Shenzhen) as an intern. 
-    </p>
-    <p>
-        I am fond of playing video games such as Dota2 and Overwatch. Of course you can leave your ID and we can play together.
-    </p>
 
 </div>
 
@@ -203,40 +196,31 @@
 </script>
 
 
+<div id="gitmentContainer"></div>
 
 
-<!-- 多说评论框 start -->
-<div class="comment">
-    <div class="ds-thread"
-    
-        data-thread-key="georgejin/about"
-    
 
-    data-title="About"
-    data-url="https://gougoumemeda.github.io/about/"></div>
-</div>
-<!-- 多说评论框 end -->
 
-<!-- Duoshuo hacking -->
-<input id="dsUser" type="hidden" value="georgejin"  />
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User hacking by Hux
-    var _user = document.getElementById('dsUser').value;
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
+
+
+
+<!-- gitment 公共JS代码 start -->
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    id: window.location.href, // 可选。默认为 location.href
+    owner: 'gougoumemeda',
+    repo: 'gougoumemeda.github.io',
+    oauth: {
+        client_id: 'e6336e0f06cb96722f36',
+        client_secret: '6d0eed88b21afa52d827adbe6336e61ea4cb8fb8',
+  },
+})
+gitment.render('gitmentContainer')
 </script>
-<!-- 多说公共JS代码 end -->
-
+<!-- gitment 公共JS代码 end -->
 
 
 
@@ -258,13 +242,13 @@
                     <div class="tags">
                         
                             
-                                <a href="/tags/#Web" title="Web" rel="4">
+                                <a href="/tags/#Web" title="Web" rel="6">
                                     Web
                                 </a>
                             
                         
                             
-                                <a href="/tags/#技术" title="技术" rel="17">
+                                <a href="/tags/#技术" title="技术" rel="21">
                                     技术
                                 </a>
                             
@@ -286,7 +270,7 @@
                             
                         
                             
-                                <a href="/tags/#Javascript" title="Javascript" rel="2">
+                                <a href="/tags/#Javascript" title="Javascript" rel="4">
                                     Javascript
                                 </a>
                             
@@ -299,6 +283,10 @@
                         
                             
                         
+                            
+                                <a href="/tags/#生活" title="生活" rel="2">
+                                    生活
+                                </a>
                             
                         
                             
@@ -317,6 +305,18 @@
                         
                             
                         
+                            
+                        
+                            
+                                <a href="/tags/#Acemap" title="Acemap" rel="2">
+                                    Acemap
+                                </a>
+                            
+                        
+                            
+                                <a href="/tags/#Works Applications" title="Works Applications" rel="3">
+                                    Works Applications
+                                </a>
                             
                         
                     </div>

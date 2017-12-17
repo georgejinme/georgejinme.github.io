@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS应用逆向工程 - 金嘉骏的博客 | GeorgeJin Blog</title>
+    <title>金嘉骏的博客 | GeorgeJin Blog</title>
 
-    <link rel="canonical" href="https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+    <link rel="canonical" href="https://gougoumemeda.github.io/page3/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -127,213 +127,282 @@
 </script>
 
 
-    <!-- Image to hack wechat -->
-<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-ios.jpg" width="0" height="0"> -->
-
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        background-image: url('/img/post-bg-ios.jpg')
-    }
-</style>
-<header class="intro-header" >
+    <!-- Page Header -->
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <div class="tags">
-                        
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
-                        
-                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
-                        
-                        <a class="tag" href="/tags/#逆向" title="逆向">逆向</a>
-                        
-                    </div>
-                    <h1>iOS应用逆向工程</h1>
-                    
-                    
-                    <h2 class="subheading">《iOS应用逆向工程》笔记</h2>
-                    
-                    <span class="meta">Posted by George on May 31, 2016</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading">
+                    <h1>GeorgeJin</h1>
+                    <!--<hr class="small">-->
+                    <span class="subheading">全(la)栈(ji)工程师。Dota2 单排2000分，卡尔20000分。</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
+<!-- Main Content -->
+<div class="container">
+	<div class="row">
+        
 
+<!-- USE SIDEBAR -->
     <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+    		<div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+    			
+<div class="post-preview">
+    <a href="/2016/02/28/Objective-C%E4%B8%AD%E7%9A%84Block/">
+        <h2 class="post-title">
+            Objective-C中的Block
+        </h2>
+        
+        <h3 class="post-subtitle">
+            《Objective-C高级编程 iOS与OS X多线程和内存管理》Block部分笔记
+        </h3>
+        
+        <div class="post-content-preview">
+            Block是什么呢？
 
-				<p>之前想深入理解一下iOS方面的知识，就看了《iOS应用逆向工程》这本书。不可否认，这本书是我目前为止看到过的有关iOS方面的最精彩的书籍之一了。</p>
+其实就是C++中的Lambda表达式，js中的匿名函数，swift中的闭包等。
 
-<p>原先对于iOS的了解，无非就是一些苹果公开的Api，以及AppStore等非常官方的东西。这本书讲逆向工程，也就是从一个hacker的角度来看待iOS系统。当然，要越过苹果的重重障碍，必要的一点就是先越狱，为此我也在淘宝上买了一部二手的iPhone4S来作为我的测试机。</p>
+Block能截取自动变量值，本质上来说，Block就是一个struct，我们截取到的变量值会存储在这个struct中，这个存储是拷贝存储，也就是说，值是不会随着之后的代码而改变的。更重要的一点是，我们无法对这样捕获到的值进行修改，除非我们增加block修饰符：
 
-<p>越狱后，突然间iOS系统就变得很透明了，原先不知道的文件结构现在都暴露在我们面前。其实和MacOS的文件结构还是比较类似的，自己随便看看就能大概知道什么文件夹下存放着什么信息。此外接触了一些新的工具，比如Theos，IDA，class-dump等。前者类似于Xcode，是一个开发工具，可以专门用来写Tweak，也就是我们常说的“插件”。后两者才是真正厉害的东西，IDA是一个反汇编工具，class-dump能分析出二进制文件中的头文件。有了这两个东西，理论上任何的二进制文件我们都能知道他的具体实现，就看我们读汇编的功力深不深了。</p>
+__block id t...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by George on February 28, 2016
+    </p>
+</div>
+<hr>
 
-<p>之前对于调试工具都不太重视，也不太愿意在程序中打断点。这恰恰是逆向工程的核心之一，打断点是在分析程序的过程中非常好的习惯，在多接触了LLDB之后，发现打断点真的能够带我们慢慢了解一个程序，而不仅仅是停留在UI层面。配合debugserver工具，任何的应用我们都能让他“随时停止”。</p>
+<div class="post-preview">
+    <a href="/2016/02/22/%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8EARC%E7%9A%84/">
+        <h2 class="post-title">
+            一些关于ARC的
+        </h2>
+        
+        <h3 class="post-subtitle">
+            《Objective-C高级编程 iOS与OS X多线程和内存管理》ARC部分笔记
+        </h3>
+        
+        <div class="post-content-preview">
+            刚看了《Objective-C高级编程 iOS与OS X多线程和内存管理》的第一章，非常有意思，主要讲的是iOS中新引进的ARC系统。
 
-<p>所以，在逆向工程中，流程大概是这样：</p>
+相信大部分人都很熟悉ARC系统了，其实本质上来说就是增加一个retainCount引用计数，来表示当前有多少变量在使用一个对象。如果计数为0，则销毁这个对象，因此大部分的销毁变量的代码都省去了，因为编译器会自动帮我们搞定这些。这是ARC的思想，c++中sh...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by George on February 22, 2016
+    </p>
+</div>
+<hr>
 
-<ol>
-  <li>
-    <p>Reveal定位View</p>
-  </li>
-  <li>
-    <p>cycript测试这个View就是我们想要的</p>
-  </li>
-  <li>
-    <p>找到这个View的Controller。如果是Button，找到他的响应函数，进入5</p>
-  </li>
-  <li>
-    <p>IDA+LLDB中找到这个Controller中的数据源</p>
-  </li>
-  <li>
-    <p>修改数据源或者响应函数，实现自己的想法</p>
-  </li>
-  <li>
-    <p>Theos写成Tweak</p>
-  </li>
-</ol>
-
-<p>书上的案例我都跟着做了，挺有意思的。其中“将电子邮件自动标为已读”这个项目中，作者使用AlertView来选择一个电子邮件。我写的时候拓展成了UITableView，这样就可以选择多个电子邮件了。</p>
-
-<p>可惜的是，除了工具和汇编方面的知识，其他方面的我以后使用的地方估计不多了。当然这本书带给我的乐趣是相当多的，第一次见识到逆向的威力，也看到了iOS不为人知的一面，实在是让人兴奋。</p>
-
-
-                <hr>
-
-                
-
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/" data-toggle="tooltip" data-placement="top" title="SJTULost的一些体会">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/" data-toggle="tooltip" data-placement="top" title="告别浮夸，新版博客你好">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
+<div class="post-preview">
+    <a href="/2016/02/15/%E5%85%B3%E4%BA%8E%E6%97%A7%E7%89%88%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/">
+        <h2 class="post-title">
+            关于旧版个人主页
+        </h2>
+        
+        <h3 class="post-subtitle">
+            一些技术细节，包括pjax，low-poly picture等。
+        </h3>
+        
+        <div class="post-content-preview">
+            
+  “需要说明一下，这只是我之前个人主页的一些说明。现在你看到的是新版，部分博客会直接从旧版网页拷贝到新版。关于新版网页的说明请看后续博文。旧版现已下线，如果想看代码实现，请点击我。背景是旧版博客使用的Low-Poly图像。”
 
 
-                
+前言
 
-                
+跳过废话，直接看技术实现 
 
-                
-                <div id="gitmentContainer"></div>
-                
+春节不上班，闲来无事就在家里写了一个个人网页。
 
-            </div>
+其实本意是想介绍一下自己，算是一份小小的简历，但在是否将博客功能嵌入这个...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by George on February 15, 2016
+    </p>
+</div>
+<hr>
 
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/page2">&larr; Newer Posts</a>
+    </li>
+    
+    
+</ul>
+
+
+    		</div>
     <!-- Sidebar Container -->
             <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-        				
+                        
                             
-                				<a href="/tags/#Web" title="Web" rel="6">
+                                <a href="/tags/#Web" title="Web" rel="6">
                                     Web
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#技术" title="技术" rel="21">
+                                <a href="/tags/#技术" title="技术" rel="21">
                                     技术
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#iOS" title="iOS" rel="9">
+                                <a href="/tags/#iOS" title="iOS" rel="9">
                                     iOS
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#Objective-C" title="Objective-C" rel="6">
+                                <a href="/tags/#Objective-C" title="Objective-C" rel="6">
                                     Objective-C
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#Javascript" title="Javascript" rel="4">
+                                <a href="/tags/#Javascript" title="Javascript" rel="4">
                                     Javascript
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#Python" title="Python" rel="2">
+                                <a href="/tags/#Python" title="Python" rel="2">
                                     Python
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#生活" title="生活" rel="2">
+                                <a href="/tags/#生活" title="生活" rel="2">
                                     生活
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#腾讯" title="腾讯" rel="4">
+                                <a href="/tags/#腾讯" title="腾讯" rel="4">
                                     腾讯
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#Unity" title="Unity" rel="3">
+                                <a href="/tags/#Unity" title="Unity" rel="3">
                                     Unity
                                 </a>
                             
-        				
+                        
                             
-        				
+                        
                             
-        				
+                        
                             
-                				<a href="/tags/#Acemap" title="Acemap" rel="2">
+                                <a href="/tags/#Acemap" title="Acemap" rel="2">
                                     Acemap
                                 </a>
                             
-        				
+                        
                             
-                				<a href="/tags/#Works Applications" title="Works Applications" rel="3">
+                                <a href="/tags/#Works Applications" title="Works Applications" rel="3">
                                     Works Applications
                                 </a>
                             
-        				
-        			</div>
+                        
+                    </div>
                 </section>
                 
 
+                <!-- Short About -->
+                <section class="visible-md visible-lg">
+                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
+                    <div class="short-about">
+                        
+                            <img src="/img/avatar-george.jpg" />
+                        
+                        
+                            <p>与其感慨路难行，不如马上出发。</p>
+                        
+                        <!-- SNS Link -->
+                        <ul class="list-inline">
+                            
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            <li>
+                                <a target="_blank" href="http://weibo.com/u/3033630677">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://www.facebook.com/金嘉骏">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                            
+                            <li>
+                                <a target="_blank" href="https://github.com/gougoumemeda">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
@@ -344,71 +413,10 @@
                     
                 </ul>
                 
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-
-
-
-
-<!-- gitment 公共JS代码 start -->
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-    id: window.location.href, // 可选。默认为 location.href
-    owner: 'gougoumemeda',
-    repo: 'gougoumemeda.github.io',
-    oauth: {
-        client_id: 'e6336e0f06cb96722f36',
-        client_secret: '6d0eed88b21afa52d827adbe6336e61ea4cb8fb8',
-  },
-})
-gitment.render('gitmentContainer')
-</script>
-<!-- gitment 公共JS代码 end -->
-
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'always',
-          placement: 'right',
-          icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
+    		</div>
+        
+	</div>
+</div>
 
 
     <!-- Footer -->

@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS应用逆向工程 - 金嘉骏的博客 | GeorgeJin Blog</title>
+    <title>Wap入职第一周元气满满 - 金嘉骏的博客 | GeorgeJin Blog</title>
 
-    <link rel="canonical" href="https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+    <link rel="canonical" href="https://gougoumemeda.github.io/2017/08/06/Wap%E5%85%A5%E8%81%8C%E7%AC%AC%E4%B8%80%E5%91%A8%E5%85%83%E6%B0%94%E6%BB%A1%E6%BB%A1/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -129,12 +129,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-ios.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-wap.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-ios.jpg')
+        background-image: url('/img/post-bg-wap.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -144,19 +144,17 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#Works Applications" title="Works Applications">Works Applications</a>
                         
-                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
-                        
-                        <a class="tag" href="/tags/#逆向" title="逆向">逆向</a>
+                        <a class="tag" href="/tags/#生活" title="生活">生活</a>
                         
                     </div>
-                    <h1>iOS应用逆向工程</h1>
+                    <h1>Wap入职第一周元气满满</h1>
                     
                     
-                    <h2 class="subheading">《iOS应用逆向工程》笔记</h2>
+                    <h2 class="subheading">认真工作，养(xiao)家(sa)糊(ren)口(sheng)</h2>
                     
-                    <span class="meta">Posted by George on May 31, 2016</span>
+                    <span class="meta">Posted by George on August 6, 2017</span>
                 </div>
             </div>
         </div>
@@ -174,40 +172,84 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>之前想深入理解一下iOS方面的知识，就看了《iOS应用逆向工程》这本书。不可否认，这本书是我目前为止看到过的有关iOS方面的最精彩的书籍之一了。</p>
+				<h2 id="section">前言</h2>
 
-<p>原先对于iOS的了解，无非就是一些苹果公开的Api，以及AppStore等非常官方的东西。这本书讲逆向工程，也就是从一个hacker的角度来看待iOS系统。当然，要越过苹果的重重障碍，必要的一点就是先越狱，为此我也在淘宝上买了一部二手的iPhone4S来作为我的测试机。</p>
+<p>毕业之后一直就无所事事，每天也就打打游戏偶尔出去聚会吃饭，晚上跑个步。所以整个七月过去的都非常的快，转眼间就要入职了。</p>
 
-<p>越狱后，突然间iOS系统就变得很透明了，原先不知道的文件结构现在都暴露在我们面前。其实和MacOS的文件结构还是比较类似的，自己随便看看就能大概知道什么文件夹下存放着什么信息。此外接触了一些新的工具，比如Theos，IDA，class-dump等。前者类似于Xcode，是一个开发工具，可以专门用来写Tweak，也就是我们常说的“插件”。后两者才是真正厉害的东西，IDA是一个反汇编工具，class-dump能分析出二进制文件中的头文件。有了这两个东西，理论上任何的二进制文件我们都能知道他的具体实现，就看我们读汇编的功力深不深了。</p>
+<p>可能是因为日子轻松惯了，我也没有感觉这一刻有多么的“神圣”，就像一首歌里说的那样：</p>
 
-<p>之前对于调试工具都不太重视，也不太愿意在程序中打断点。这恰恰是逆向工程的核心之一，打断点是在分析程序的过程中非常好的习惯，在多接触了LLDB之后，发现打断点真的能够带我们慢慢了解一个程序，而不仅仅是停留在UI层面。配合debugserver工具，任何的应用我们都能让他“随时停止”。</p>
+<blockquote>
+  <p>其实爱对了人，情人节每天都过。</p>
+</blockquote>
 
-<p>所以，在逆向工程中，流程大概是这样：</p>
+<p>然而这实实在在的确实是我人生中新的篇章，因为16年的学生时代就此画上句号。</p>
 
-<ol>
-  <li>
-    <p>Reveal定位View</p>
-  </li>
-  <li>
-    <p>cycript测试这个View就是我们想要的</p>
-  </li>
-  <li>
-    <p>找到这个View的Controller。如果是Button，找到他的响应函数，进入5</p>
-  </li>
-  <li>
-    <p>IDA+LLDB中找到这个Controller中的数据源</p>
-  </li>
-  <li>
-    <p>修改数据源或者响应函数，实现自己的想法</p>
-  </li>
-  <li>
-    <p>Theos写成Tweak</p>
-  </li>
-</ol>
+<h2 id="section-1">正文</h2>
 
-<p>书上的案例我都跟着做了，挺有意思的。其中“将电子邮件自动标为已读”这个项目中，作者使用AlertView来选择一个电子邮件。我写的时候拓展成了UITableView，这样就可以选择多个电子邮件了。</p>
+<h3 id="section-2">入职仪式</h3>
 
-<p>可惜的是，除了工具和汇编方面的知识，其他方面的我以后使用的地方估计不多了。当然这本书带给我的乐趣是相当多的，第一次见识到逆向的威力，也看到了iOS不为人知的一面，实在是让人兴奋。</p>
+<p>入职仪式在环球港的凯悦酒店进行。首先就是大BOSS们的讲话和欢迎仪式啦。有意思的是，我们有个HR大BOSS竟然连英文都不会说！真是难以想象霓虹国外语教学水平。他在演讲的时候，用的是日语，然后hr姐姐同声翻译（我想说的是这个HR姐姐长得超级超级超级可爱qwq）。我学过一点日语啦所以听懂还是问题不大的。</p>
+
+<p>然后是介绍一下各种职场的危险情况，包括性骚扰和职权欺凌。性骚扰讲了很久啊，之前看日剧就对日本的职场性骚扰有过耳闻，是不是这样的情况在日本真的很多？所以需要特别强调一下？</p>
+
+<p>然后就是大家进行一张合照啦！</p>
+
+<p><img src="/img/in-post/WAP/1.JPG" alt="img" /></p>
+
+<p>之后就去我们的办公桌了。不得不承认，环球港B座真的是非常的气派，特别是那个电梯，可能是我孤陋寡闻了，有低中高三层也就算了，还不能自由选择楼层。你能前往的楼层由你的工卡决定。。。安全性满分。</p>
+
+<p>找到了自己的工位，拆电脑，装电脑，下软件，然后就开始干活啦！Fighting！！！</p>
+
+<h3 id="section-3">关于一天的生活</h3>
+
+<p>工作的生活其实并没有我想象中的那么累，只不过有些地方需要自己去慢慢适应。不如扯扯我的一天是怎么度过的哈哈哈哈哈哈。</p>
+
+<h4 id="section-4">早上</h4>
+
+<p>7:20 起床，洗漱，穿好<em>西装</em>。如果想要稍微帅气一点，就带个小领带。说道领带，我买了一根细的，带上去就发现自己根本不像一个上班的人233学生气十足。</p>
+
+<p>8:00 坐上陆安专线B线。由于我家的地(niao)理(bu)优(la)势(shi)，我上班只需要坐着一辆公交就可以，而且它会走高速公路，所以一般而言，9:15就能到公司。</p>
+
+<p>9:10 下车，去全家买早饭，心情好就买一杯咖啡喝喝。</p>
+
+<p>9:15 到公司，开始一天的工作。一般会先检查邮箱，git上进行代码的更新。</p>
+
+<h4 id="section-5">下午</h4>
+
+<p>13:00 吃饭。不得不吐槽一下，在环球港吃饭！！！实在是！！！太贵了！！！每天只能去大食代吃，一般而言，30元RMB左右能够填饱肚子。虽然我知道日本更贵，但是让我一个刚从学校食堂10块吃饱的环境出来有点不太习惯呀。</p>
+
+<p>14:00 开始了下午的coding。我属于那种不能专注很久的，所以我有时候回去吧台（公司的）找找杂志看，或者喝一杯牛奶，放松一下继续工作。</p>
+
+<p>18:30 这是STM阶段理论上的下班时间，然而，然而！到了这个点，几乎是没有人走的，我的内心是崩溃的，大家要不要这么认真？？？？</p>
+
+<p>19:00 差不多陆陆续续的走了，包括我。</p>
+
+<p>19:40 坐上北安线，可能没有座位。听听歌，看看窗外两眼放空。这是我一天中最享受的时候。</p>
+
+<p>20:30 到家，吃饭，洗澡，睡觉。</p>
+
+<h3 id="section-6">关于工作</h3>
+
+<p>由于我们是刚入职的员工，所以需要经历为期两个月到三个月的STM(starter mission)。</p>
+
+<p>STM由三个部分组成。</p>
+
+<p>第一个部分是基础知识，就是简单培训一下需要用到的知识。</p>
+
+<p>第二部分和第三部分都是相关的项目。项目包括Catalog和Implementation。具体的东西因为是公司机密所以我就不谈了哈，总之，我们的任务不仅仅是写代码，更多的是对产品的思考和定位，也就是，你是自己的产品经理和工程师。</p>
+
+<p>项目的难度其实并不大，主要是能不能有创造力的挖掘出产品的价值。目前来看我的实现还算比较顺利，也可能是因为我之前有相关开发网页的经历。我现在就希望能够快点结束STM，因为我不想穿西装上班啊qwq。</p>
+
+<p>在STM阶段，我们的网络访问也是有限制的，只能获取非常少的一部分英文资料，而且也没有wifi，手机上网全靠流量。值得一提的是，在网页白名单中，有requirejs和commonjs。这两个都是和js模块化有关的工具，后者我用的还是比较多的。但是，但是！commonjs仅仅定义了模块化的规则，并没有提供相关的编译方案（也就是没有webpack和browserify这样的工具）。所以实际上，如果要做模块化的话，还是要学习一下requirejs的使用。下一篇博客就来介绍一下这方面的东西吧！</p>
+
+<h2 id="section-7">后记</h2>
+
+<p>上班怎么说，还是比较轻松愉快的吧。当然我明白在结束STM之后，真正的任务会接踵而至。</p>
+
+<p>目前来看，我现在最期盼的日子，一个是8月12日，TI7决赛，另一个是8月25日，发薪水。</p>
+
+<p>就是酱，喵！</p>
+
 
 
                 <hr>
@@ -218,12 +260,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/" data-toggle="tooltip" data-placement="top" title="SJTULost的一些体会">&larr; Previous Post</a>
+                        <a href="/2017/04/15/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%8A%9F%E8%83%BD%E4%B8%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%AE%8C%E5%96%84/" data-toggle="tooltip" data-placement="top" title="Acemap学术地图功能和性能的完善">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/" data-toggle="tooltip" data-placement="top" title="告别浮夸，新版博客你好">Next Post &rarr;</a>
+                        <a href="/2017/08/27/Wap-STM-Web%E5%BC%80%E5%8F%91%E5%BF%83%E5%BE%97/" data-toggle="tooltip" data-placement="top" title="Wap STM Web开发心得">Next Post &rarr;</a>
                     </li>
                     
                 </ul>

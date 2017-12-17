@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>iOS应用逆向工程 - 金嘉骏的博客 | GeorgeJin Blog</title>
+    <title>Acemap学术地图前端代码的重构 - 金嘉骏的博客 | GeorgeJin Blog</title>
 
-    <link rel="canonical" href="https://gougoumemeda.github.io/2016/05/31/iOS%E5%BA%94%E7%94%A8%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/">
+    <link rel="canonical" href="https://gougoumemeda.github.io/2017/02/14/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -129,12 +129,12 @@
 
     <!-- Image to hack wechat -->
 <!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
-<!-- <img src="/img/post-bg-ios.jpg" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-acemap.jpg" width="0" height="0"> -->
 
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('/img/post-bg-ios.jpg')
+        background-image: url('/img/post-bg-acemap.jpg')
     }
 </style>
 <header class="intro-header" >
@@ -144,19 +144,19 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#iOS" title="iOS">iOS</a>
+                        <a class="tag" href="/tags/#Acemap" title="Acemap">Acemap</a>
+                        
+                        <a class="tag" href="/tags/#Javascript" title="Javascript">Javascript</a>
                         
                         <a class="tag" href="/tags/#技术" title="技术">技术</a>
                         
-                        <a class="tag" href="/tags/#逆向" title="逆向">逆向</a>
-                        
                     </div>
-                    <h1>iOS应用逆向工程</h1>
+                    <h1>Acemap学术地图前端代码的重构</h1>
                     
                     
-                    <h2 class="subheading">《iOS应用逆向工程》笔记</h2>
+                    <h2 class="subheading">我要毕业，我要认真做毕设</h2>
                     
-                    <span class="meta">Posted by George on May 31, 2016</span>
+                    <span class="meta">Posted by George on February 14, 2017</span>
                 </div>
             </div>
         </div>
@@ -174,40 +174,102 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-				<p>之前想深入理解一下iOS方面的知识，就看了《iOS应用逆向工程》这本书。不可否认，这本书是我目前为止看到过的有关iOS方面的最精彩的书籍之一了。</p>
+				<h2 id="section">前言</h2>
 
-<p>原先对于iOS的了解，无非就是一些苹果公开的Api，以及AppStore等非常官方的东西。这本书讲逆向工程，也就是从一个hacker的角度来看待iOS系统。当然，要越过苹果的重重障碍，必要的一点就是先越狱，为此我也在淘宝上买了一部二手的iPhone4S来作为我的测试机。</p>
+<p>今天是个美好的日子，只可惜不属于我而已。虽然没有出去约女孩子，但一个人在宿舍学完一课日语，健身房里跑跑步，打打游戏晚上再写下这篇博文，也是非常惬意的。</p>
 
-<p>越狱后，突然间iOS系统就变得很透明了，原先不知道的文件结构现在都暴露在我们面前。其实和MacOS的文件结构还是比较类似的，自己随便看看就能大概知道什么文件夹下存放着什么信息。此外接触了一些新的工具，比如Theos，IDA，class-dump等。前者类似于Xcode，是一个开发工具，可以专门用来写Tweak，也就是我们常说的“插件”。后两者才是真正厉害的东西，IDA是一个反汇编工具，class-dump能分析出二进制文件中的头文件。有了这两个东西，理论上任何的二进制文件我们都能知道他的具体实现，就看我们读汇编的功力深不深了。</p>
+<p>这是一篇关于毕业设计的博文。之前在选择毕设的时候也是一波三折，因为老师名额不够，所以导致我需要去补录志愿。所幸最后老师帮我争取到了一个名额，能够让我成功获得毕业的机会。</p>
 
-<p>之前对于调试工具都不太重视，也不太愿意在程序中打断点。这恰恰是逆向工程的核心之一，打断点是在分析程序的过程中非常好的习惯，在多接触了LLDB之后，发现打断点真的能够带我们慢慢了解一个程序，而不仅仅是停留在UI层面。配合debugserver工具，任何的应用我们都能让他“随时停止”。</p>
+<h2 id="section-1">正文</h2>
 
-<p>所以，在逆向工程中，流程大概是这样：</p>
+<h3 id="section-2">毕设主要内容</h3>
 
-<ol>
-  <li>
-    <p>Reveal定位View</p>
-  </li>
-  <li>
-    <p>cycript测试这个View就是我们想要的</p>
-  </li>
-  <li>
-    <p>找到这个View的Controller。如果是Button，找到他的响应函数，进入5</p>
-  </li>
-  <li>
-    <p>IDA+LLDB中找到这个Controller中的数据源</p>
-  </li>
-  <li>
-    <p>修改数据源或者响应函数，实现自己的想法</p>
-  </li>
-  <li>
-    <p>Theos写成Tweak</p>
-  </li>
-</ol>
+<p>我的毕设是纯工程的，没有什么理论。也就是说，不需要看大量论文，大部分的工作还是写代码。要做的是一个学术地图，名字叫做<a href="http://acemap.sjtu.edu.cn">Acemap</a>。在我加入项目组之前，已经完成了一部分工作了，但是代码质量参差不齐。最后的项目目标是，能够将所有的地图都统一起来，有统一的格式。具体的UI可以参考谷歌地图。我负责的部分是前端，总体来说，我要做的内容就是：</p>
 
-<p>书上的案例我都跟着做了，挺有意思的。其中“将电子邮件自动标为已读”这个项目中，作者使用AlertView来选择一个电子邮件。我写的时候拓展成了UITableView，这样就可以选择多个电子邮件了。</p>
+<ul>
+  <li>设计合适的前端代码架构</li>
+  <li>重构前端代码，理清结构</li>
+  <li>设计UI</li>
+  <li>功能实现</li>
+  <li>完成文档和注释内容</li>
+</ul>
 
-<p>可惜的是，除了工具和汇编方面的知识，其他方面的我以后使用的地方估计不多了。当然这本书带给我的乐趣是相当多的，第一次见识到逆向的威力，也看到了iOS不为人知的一面，实在是让人兴奋。</p>
+<h3 id="section-3">代码架构</h3>
+
+<p>我们后台使用的是CodeIgniter框架。说实话，这个框架已经老的掉牙了，可能是之前几年的学长挑选的，现在要更换也已经几乎是不可能的了，因为代码数量已经非常庞大了。学习了一下CodeIgniter，个人感觉还是挺麻烦的。而且，在controller如何控制view的那段示例代码中，有类似如下的片段：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$this -&gt; load -&gt; view('header');
+$this -&gt; load -&gt; view('content');
+$this -&gt; load -&gt; view('footer');
+</code></pre>
+</div>
+
+<p>最终我们显示的代码，是这三个文件中代码的顺序拼接。这样做其实我自己很不喜欢，原因有如下几点：</p>
+
+<ul>
+  <li>每一个文件的代码都没有完整的html格式</li>
+  <li>最终显示页面的html源代码不够直观，需要看多个文件</li>
+  <li>模块化不够明显。虽然header也可以作为某一个单独的模块列出来，但是其必定会带有一些html标签，在使用的时候不够方便。而且他只支持顺序的模块，没有办法实现一个模块中嵌套另一个模块。</li>
+</ul>
+
+<p>原本我最理想的而前端架构是用ReactJS或者VueJS，因为最终页面的风格是要统一的，公共的部分包括<em>搜索栏</em>， <em>svg地图</em>，因此只要将这两者作为模块单独放在文件中，由外界向他们传数据就可以很好的进行复用。这么做的话，最理想的是在基础页面加载完毕后，再通过RESTFUL API向后台请求获得具体的数据。但是，目前我们后台是将页面需要的数据直接传递给页面的，这样做的话，我们的页面必须以php结尾，才能够使用那些传递过来的数据，但即使这么做了，JS代码里是不能够嵌入PHP代码的，因此我们没有办法让ReactJS/VueJS模块得到后台controller直接传过来的数据，这样的代码架构就不能实现。如果要做的话，后台的代码就要重构，前端的代码也要重构，工作量之大并不是目前能顾得上的。</p>
+
+<p>因此，前端这一块，目前并没有使用任何的框架。只是用了jQuery以及相关的一些库。因为jQuery是没有模块化的，因此我们也没有办法使用npm来引入相关的jQuery第三方插件。项目整体还是比较原始的，目前来看的话，也只能这样子了。</p>
+
+<p>最终我对这个项目的前端代码框架的构思是，将<em>搜索栏</em>，<em>svg地图</em>这两个可以复用的部分的js代码单独拿出来建一个文件，然后一个页面只使用一个.php文件，页面中需要用到的特定的js代码以内联的方式写在.php文件中。这样可以在保证代码清晰的前提下，能够最大程度的复用一些组件。</p>
+
+<h3 id="svg">SVG地图生成</h3>
+
+<p>在我加入项目组之前，SVG地图是已经在后台生成完毕，作为一个单独的文件，在controller中进行拼接的。这样做有好处也有坏处，好处是加载的速度比较快，坏处就是可拓展性不强，如果有新的地图，我们就需要在后台重新生成一边，相对而言也比较占用空间。</p>
+
+<p>目前我们已经抛弃了这样的方式，取而代之的是，用js代码来生成相应的svg地图。我们在后台存储了相应的地图所需要的元素，并用如下的代码读取出来：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$sql = "SELECT PaperID, Radius, X, Y, View1, View2, Year, JournalID, ConferenceID, LabelSize, LabelX, LabelY, Label FROM papermap_4_node WHERE FieldID = ?";
+$nodes = $this-&gt;db_svg-&gt;query($sql, array($topicID))-&gt;result_array();
+//get edges
+$sql = "SELECT SourceID, TargetID, Width, View1, View2 FROM papermap_4_edge WHERE FieldID = ?;";
+$edges = $this-&gt;db_svg-&gt;query($sql, array($topicID))-&gt;result_array();
+</code></pre>
+</div>
+
+<p>得到相应的点和边的数据之后，将其传到前端，绘制成svg即可。</p>
+
+<h3 id="deferred">Deferred对象</h3>
+
+<p>defered对象是jQuery的回调函数解决方案。这次我们在项目中使用到了这个技术，有两个目的，一是为了让一些点击事件的绑定能够生效，二是将一些地图其他的数据的读取放在地图显示之后。这些数据本身是依赖于地图的，缺少地图的话他们将无法显示完全。</p>
+
+<p>在使用上Deferred对象非常简单，如果要新建一个对象，执行下述代码：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var dtd = $.Deferred(); // 新建一个Deferred对象
+</code></pre>
+</div>
+
+<p>jQuery规定，deferred对象有三种执行状态—-未完成，已完成和已失败。如果执行状态是”已完成”（resolved）,deferred对象立刻调用done()方法指定的回调函数；如果执行状态是”已失败”，调用fail()方法指定的回调函数；如果执行状态是”未完成”，则继续等待，或者调用progress()方法指定的回调函数。</p>
+
+<p>一般来说，我们指定“已完成”的状态居多。设定这个状态的代码为：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>dtd.resolve()
+</code></pre>
+</div>
+
+<h3 id="ui">UI界面</h3>
+
+<p>UI方面的话，我引入了bootstrap-standstone。相对来说还是比较美观，又带有些许严谨的风格，和“学术地图”这样的主题很相称。除此之外，我将领域的一些介绍内容也搬到了地图中，包括领域的父话题，子话题和该领域内发表论文数前50的作者。这样原本是两个页面，现在就合成一个页面了，风格也得到了统一。具体的话，还是直接来看对比图吧。</p>
+
+<p>之前的UI：</p>
+
+<p><img src="/img/in-post/Acemap/1.png" alt="img" /></p>
+
+<p>现在的UI：</p>
+
+<p><img src="/img/in-post/Acemap/2.png" alt="img" /></p>
+
+<p>虽然我也不是专业的设计师，但我觉得还是美观了不少的。</p>
+
+<h2 id="section-4">后记</h2>
+
+<p>做了其实也不少，剩下的开学之后再说吧！</p>
+
 
 
                 <hr>
@@ -218,12 +280,12 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/05/21/SJTULost%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%93%E4%BC%9A/" data-toggle="tooltip" data-placement="top" title="SJTULost的一些体会">&larr; Previous Post</a>
+                        <a href="/2017/01/13/%E4%BD%BF%E7%94%A8Processing%E5%88%B6%E4%BD%9C%E4%BA%A4%E5%A4%A7%E9%A5%AE%E9%A3%9F%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96%E6%8A%A5%E5%91%8A/" data-toggle="tooltip" data-placement="top" title="使用Processing制作交大饮食的可视化报告">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2016/07/24/%E5%91%8A%E5%88%AB%E6%B5%AE%E5%A4%B8-%E6%96%B0%E7%89%88%E5%8D%9A%E5%AE%A2%E4%BD%A0%E5%A5%BD/" data-toggle="tooltip" data-placement="top" title="告别浮夸，新版博客你好">Next Post &rarr;</a>
+                        <a href="/2017/04/15/Acemap%E5%AD%A6%E6%9C%AF%E5%9C%B0%E5%9B%BE%E5%8A%9F%E8%83%BD%E4%B8%8E%E6%80%A7%E8%83%BD%E7%9A%84%E5%AE%8C%E5%96%84/" data-toggle="tooltip" data-placement="top" title="Acemap学术地图功能和性能的完善">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
