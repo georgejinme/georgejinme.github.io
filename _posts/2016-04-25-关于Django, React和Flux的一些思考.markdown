@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "关于Django, React和Flux的一些思考"
+title:      "关于Django+React+Flux的一些思考"
 subtitle:   "数据库课程设计大作业的准备工作"
 date:       2016-04-25 12:00:00
 author:     "George"
