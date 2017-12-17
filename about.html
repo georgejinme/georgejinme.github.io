@@ -44,7 +44,9 @@ header-img: "img/about-bg.jpg"
     onLanChange(0);
 </script>
 
-
+{% if site.gitment_clientId %}
+<div id="gitmentContainer"></div>
+{% endif %}
 
 {% if site.duoshuo_username %}
 <!-- 多说评论框 start -->
@@ -60,10 +62,6 @@ header-img: "img/about-bg.jpg"
     data-url="{{site.url}}/about/"></div>
 </div>
 <!-- 多说评论框 end -->
-
-{% if site.gitment_clientId %}
-<div id="gitmentContainer"></div>
-{% endif %}
 
 <!-- Duoshuo hacking -->
 <input id="dsUser" type="hidden" value="{{site.duoshuo_username}}"  />
