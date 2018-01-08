@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "2018-01-09-使用GoogleClosureLibrary来制作MessageIndicator"
+title:      "使用GoogleClosureLibrary来制作MessageIndicator"
 subtitle:   "认真工作，养(xiao)家(sa)糊(ren)口(sheng)"
 date:       2018-01-09 00:55:00
 author:     "George"
@@ -19,7 +19,7 @@ tags:
 
 用文字说明很难解释清楚，直接放一张Slack的图吧，看了就能理解了。
 
-![img](slack.png)
+![img](/img/in-post/WAP/slack.png)
 
 当然最终的实现和Slack不完全一样。由于是机密信息所以就不放图了，下面的代码也是经过一些处理的。知道方法后自己实现一个还是非常简单的。
 
