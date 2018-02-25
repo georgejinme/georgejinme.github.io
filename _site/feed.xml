@@ -5,9 +5,203 @@
     <description>My personal webpage</description>
     <link>https://gougoumemeda.github.io/</link>
     <atom:link href="https://gougoumemeda.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 17 Dec 2017 16:02:31 +0000</pubDate>
-    <lastBuildDate>Sun, 17 Dec 2017 16:02:31 +0000</lastBuildDate>
+    <pubDate>Sun, 25 Feb 2018 09:40:28 +0000</pubDate>
+    <lastBuildDate>Sun, 25 Feb 2018 09:40:28 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>使用GoogleClosureLibrary来制作MessageIndicator</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;概述&lt;/h2&gt;
+
+&lt;p&gt;在做项目的时候遇到了一个需求，大概是这样的：&lt;/p&gt;
+
+&lt;p&gt;在Sidemenu中，如果有太多用户未读的信息不能显示在页面中，就添加两个indicator，来提示用户。同时如果点击indicator，能够直接scroll到相应的未读信息。&lt;/p&gt;
+
+&lt;p&gt;用文字说明很难解释清楚，直接放一张Slack的图吧，看了就能理解了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/in-post/WAP/slack.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;当然最终的实现和Slack不完全一样。由于是机密信息所以就不放图了，下面的代码也是经过一些处理的。知道方法后自己实现一个还是非常简单的。&lt;/p&gt;
+
+&lt;h2 id=&quot;html&quot;&gt;HTML&lt;/h2&gt;
+
+&lt;p&gt;首先在HTML中添加相关的代码&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// 上方有未读消息的indicator
+&amp;lt;div class=&quot;indicator indicator-top&quot; id=&quot;top-indicator&quot;&amp;gt;
+    &amp;lt;span class=&quot;indicator-name&quot; th:text=&quot;More unread&quot; /&amp;gt;
+    &amp;lt;span class=&quot;indicator-icon icon-arrow-up &quot; /&amp;gt;
+&amp;lt;/div&amp;gt;
+//下方有未读消息的indicator
+&amp;lt;div class=&quot;indicator indicator-bottom&quot; id=&quot;bottom-indicator&quot;&amp;gt;
+    &amp;lt;span class=&quot;indicator-name&quot; th:text=&quot;More unread&quot; /&amp;gt;
+    &amp;lt;span class=&quot;indicator-icon icon-arrow-down&quot; /&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;代码很好理解，不做过多解释了。接下去我们需要修改相应的样式。&lt;/p&gt;
+
+&lt;h2 id=&quot;less&quot;&gt;LESS&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;indicator {
+    position:absolute;
+    left: 4px;
+    right: 4px;
+    text-align: center;
+    background-color: blue;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    color: white;
+    padding: 4px;
+    height: 26px;
+
+    &amp;amp;-top {
+        top: -26px;
+        border-radius: 0 0 3px 3px;
+    }
+
+    &amp;amp;-bottom {
+        bottom: -26px;
+        border-radius: 3px 3px 0 0;
+    }
+
+    &amp;amp;-name {
+        padding-right: 8px;
+    }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;需要注意的地方是，我们需要判断是否有未读的信息没有显示在window内，再来决定要不要显示indicator。因此，在scroll的过程中，indicator的状态可能会发生改变（显示-&amp;gt;隐藏或者隐藏-&amp;gt;显示）。状态的改变需要平滑的过度，这里就使用CSS3的transition属性来实现，通过移动indicator的位置，来隐藏或者显示它。&lt;/p&gt;
+
+&lt;h2 id=&quot;javascript&quot;&gt;Javascript&lt;/h2&gt;
+
+&lt;p&gt;下面是核心部分。我们需要用JS在做几件事情：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;scroll的过程中判断是否要显示indicator&lt;/li&gt;
+  &lt;li&gt;点击indicator跳转&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;首先是第一点。我们需要先找到第一个和最后一个未读的信息，代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var findFirstNewItem = function() {
+    return goog.array.find(this.children_, function(child) {
+      if (child.isNew()) {
+          return child;
+      }
+    });
+};
+
+var findLastNewItem = function() {
+    return goog.array.findRight(this.children_, function(child) {
+      if (child.isNew()) {
+          return child;
+      }
+    });
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;两个函数比较类似，一个是从数组头开始找，一个是从数组尾开始找。&lt;/p&gt;
+
+&lt;p&gt;找到以后，我们判断他们的位置，并且设置indicator的状态：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var renderNewIndicator = function() {
+    var container = getItemsContainer();
+    var currentScrollTop = container.scrollTop;
+
+    var firstItem = findFirstNewItem();
+    if (goog.isDefAndNotNull(firstItem)) {
+      var pos = goog.style.getPosition(firstItem);
+      var size = goog.style.getSize(firstItem);
+      if (pos.y + size.height &amp;lt;= currentScrollTop) {
+        goog.style.setStyle(topIndicator, &#39;top&#39;, &#39;0px&#39;);
+      } else {
+        goog.style.setStyle(topIndicator, &#39;top&#39;, &#39;-26px&#39;);
+      }
+    } else {
+      goog.style.setStyle(topIndicator, &#39;top&#39;, &#39;-26px&#39;);
+    }
+
+    var lastItem = findLastNewItem();
+    if (goog.isDefAndNotNull(lastItem)) {
+      var pos = goog.style.getPosition(lastItem);
+      var containerSize = goog.style.getSize(container);
+      if (pos.y &amp;gt; currentScrollTop + containerSize.height) {
+        goog.style.setStyle(bottomIndicator, &#39;bottom&#39;, &#39;0px&#39;);
+      } else {
+        goog.style.setStyle(bottomIndicator, &#39;bottom&#39;, &#39;-26px&#39;);
+      }
+    } else {
+      goog.style.setStyle(bottomIndicator, &#39;bottom&#39;, &#39;-26px&#39;);
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;上述代码大致就是在计算第一个和最后一个item是否出现在window之中，并且改变indicator的状态。&lt;/p&gt;
+
+&lt;p&gt;有几点需要注意，&lt;code class=&quot;highlighter-rouge&quot;&gt;scrollTop&lt;/code&gt;是指某元素垂直方向scroll的距离，&lt;code class=&quot;highlighter-rouge&quot;&gt;getPosition&lt;/code&gt;得到的位置是相对于其父元素的。简单的计算就能得到正确的判断结果了。&lt;/p&gt;
+
+&lt;p&gt;现在如何显示indicator已经实现，接下去我们要思考一下点击之后如何让页面scroll到相应的位置。&lt;/p&gt;
+
+&lt;p&gt;首先我们绑定点击事件：
+&lt;code class=&quot;highlighter-rouge&quot;&gt;
+handler.listen(topIndicator, goog.events.EventType.CLICK, function() {
+    var firstItem = findFirstNewItem;
+    scrollToNode(firstItem, &#39;top&#39;);
+});
+handler.listen(bottomIndicator, goog.events.EventType.CLICK, function() {
+    var lastItem = findLastNewItem;
+    scrollToNode(lastItem, &#39;bottom&#39;);
+});
+&lt;/code&gt;
+可以看到，我们在点击indicator之后，会直接scroll到相应方向最靠外侧的item。比如说如果我们点击了topIndicator，那么页面就会scroll到第一个未读消息的上方。反之如果点击bottomIndicator，就会scroll到最后一个。这样在点击某一方向的indicator之后，该方向上就不会再有屏幕外的未读消息了。&lt;/p&gt;
+
+&lt;p&gt;具体scroll的代码如下：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var scrollToNode = function(node, direction) {
+    var container = getItemsContainer();
+    var containerSize = goog.style.getSize(container);
+    var nodePos = goog.style.getPosition(node);
+    var nodeSize = goog.style.getSize(node);
+
+    var oldPosY = container.scrollTop;
+    var newPosY = oldPosY;
+    if (direction === &#39;top&#39;) {
+        newPosY = nodePos.y;
+    } else if (direction === &#39;bottom&#39;) {
+        newPosY = nodePos.y - containerSize.height + nodeSize.height;
+    }
+    var fxScroll = new goog.fx.dom.Scroll(container, [
+        0, oldPosY
+    ], [
+        0, newPosY
+    ], 500);
+
+    fxScroll.play();
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;其中，&lt;code class=&quot;highlighter-rouge&quot;&gt;getPosition&lt;/code&gt;等方法已经解释过了，做一些数学的计算就可以。&lt;/p&gt;
+
+&lt;p&gt;值得一提的是， &lt;a href=&quot;https://google.github.io/closure-library/api/goog.fx.dom.Scroll.html&quot;&gt;goog.fx.dom.Scroll&lt;/a&gt;是Google为我们封装好的，自动scroll到某位置的库。给定要scroll的容器，初始位置末位置，以及scroll的时间，就能够自动实现相应的功能。&lt;/p&gt;
+
+&lt;p&gt;现在，MessageIndicator的功能已经大致实现了。之后考虑将其封装成一个js库，以便之后使用吧。&lt;/p&gt;
+</description>
+        <pubDate>Tue, 09 Jan 2018 00:55:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2018/01/09/%E4%BD%BF%E7%94%A8GoogleClosureLibrary%E6%9D%A5%E5%88%B6%E4%BD%9CMessageIndicator/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2018/01/09/%E4%BD%BF%E7%94%A8GoogleClosureLibrary%E6%9D%A5%E5%88%B6%E4%BD%9CMessageIndicator/</guid>
+        
+        <category>Works Applications</category>
+        
+        <category>Web</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
     
       <item>
         <title>Wap STM中随手写的一些web库</title>
@@ -1549,56 +1743,6 @@ m_Vertices[3] = HeadPosition + direction * halfHeadWidth;
         <category>技术</category>
         
         <category>腾讯</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>鹅厂是个好地方</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;“来腾讯实习快两周了，感触颇深。”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;section&quot;&gt;放假之前&lt;/h2&gt;
-
-&lt;p&gt;其实给我Offer的也只有两个公司。一个是携程，还有一个就是腾讯了。虽然腾讯把我安排到了深圳，但毕竟是大厂，能进去总觉得有一种自豪感。所以两者之中，我还是毫不犹豫的选择了腾讯。&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;放假中&lt;/h2&gt;
-
-&lt;p&gt;在去腾讯之前，去了一次欧洲。游玩了德国和荷兰，为时九天。荷兰的夜生活相当丰富，荷兰的法律相当开明，可能这也是uber遵循荷兰法律的原因之一吧。40欧就能看到真人AV秀，你值得拥有。&lt;/p&gt;
-
-&lt;p&gt;应该算是第二次来深圳，上次来的时候还是大一暑假，也是南山，也是腾讯。两年之后故地重游，也就有了一丝亲切感。到住的地方是凌晨两点，因为深圳的暴雨，飞机延误了四个小时。住的地方很简陋，一张桌，一个衣柜，没了。第二天赶紧购置了一批生活用品，买了一张床上桌子，否则真的没有办法写代码。&lt;/p&gt;
-
-&lt;p&gt;13号，周三，正式入职的一天。早上就一直在忙碌着各种手续，在腾大和科兴之间来回穿梭。在科兴吃了一顿午饭，竟然要30元，这让月薪不足3000的我怎么活下去？见到导师大约是下午两点半，高高瘦瘦，非常干净，说话声音很轻，一眼就可以看出来是一个二次元，有着二次元男性透露出的那种宅属性。公司配置的电脑相当给力，i7，960，16G，这个配置完全可以特效全开的玩守望先锋。想到这里，我不禁心里暗喜。&lt;/p&gt;
-
-&lt;p&gt;你以为我就这样可以玩游戏了？公司的网络是不能访问外网的，需要配置各种代理。于是我的守望先锋计划整整延后了两周，终于在公司KM平台上找到了运行的方法。每天中午的午休时间就变成了我的战斗时间。&lt;/p&gt;
-
-&lt;p&gt;导师人相当不错，培养思路非常清晰，第一周我熟悉一下Unity这个平台，然后开发一款游戏出来。我选择的是我大一做过的游戏是男人就坚持二十秒。其实游戏思路很简单，只是我要去慢慢熟悉这个平台。完成之后还没结束，我需要将其优化，通用化，增加他的鲁棒性和可拓展性。&lt;/p&gt;
-
-&lt;p&gt;比如说，生成岩石的过程中，RockController来控制每一个独立的岩石，Pool控制所有岩石的初始化，销毁与复用，RockGenerator来设置每一波岩石的各个参数，比如速度，数量等，而SpawnManager就是真正让一波岩石移动的类。这样的结构用在这个项目上看上去有一点大材小用，但是当项目规模大了，这样的架构就非常有必要。&lt;/p&gt;
-
-&lt;p&gt;腾讯的食堂味道也非常不错，每顿还会有免费的水果。除了价格比较贵，其他真的挑不出什么毛病。如果你加班到晚上八点之后，还会获得一张夜宵券，虽然叫夜宵券，但他是可以用来刷晚饭的，也就是说，免费请你吃一顿第二天的晚餐。&lt;/p&gt;
-
-&lt;p&gt;之前在知乎上看到，如何评价2016年的腾讯。在回答中，大家基本上都是在表扬腾讯。BAT三家中，似乎腾讯已经成为了最出色的一家。来到腾讯之后，深觉腾讯的确是这样一家公司。有时候会抱怨他的收费贵，但是他是一家做实事的公司。你以为只有你们吐槽腾讯吗！每次在KM平台上都会看到腾讯自己人对自己产品的各种抱怨，当然也会有相关的负责人员及时反馈与修复，所以腾讯才能越来越壮大。&lt;/p&gt;
-
-&lt;p&gt;我所在的部门是IEG，互动娱乐事业群，也就是做游戏，娱乐相关的。说来有点惭愧，我现在没有在玩任何一款腾讯系的游戏。有时候会想，腾讯在世界上游戏行业收入第一，那么为什么没有独立研发出现象级的游戏产品呢？我们耳熟能详的英雄联盟，CF都是其他公司开发，腾讯代理或者收购的。近来腾讯也收购了前段时间风靡全球的部落冲突的开发商supercell，但是在收购之后，又出来了Pokemon Go。大家总说腾讯喜欢抄，没错，可能就是因为这样的抄，让腾讯没有办法在游戏行业成为像暴雪那样的信仰公司。腾讯总是会去收购，代理一些成熟的，已经风靡的游戏，而不敢去接触一些未知的领域和挑战（比如AR技术Pokemon Go），可能这就是原因吧。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;放假之后&lt;/h2&gt;
-
-&lt;p&gt;虽然两周时间已经很喜欢腾讯了，但是我还是想回上海，想和大伙儿们一起去网吧开黑，一起吃火锅，一起洗澡。在深圳觉得自己就是一个废人，除了上班就是看剧，除了看剧就是写博文，除了写博文就是打游戏，活生生的变成了葛优。&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 25 Jul 2016 12:00:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2016/07/25/%E9%B9%85%E5%8E%82%E6%98%AF%E4%B8%AA%E5%A5%BD%E5%9C%B0%E6%96%B9/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/07/25/%E9%B9%85%E5%8E%82%E6%98%AF%E4%B8%AA%E5%A5%BD%E5%9C%B0%E6%96%B9/</guid>
-        
-        <category>生活</category>
-        
-        <category>腾讯</category>
-        
-        <category>工作</category>
         
         
       </item>

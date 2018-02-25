@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="My personal webpage">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>使用GoogleClosureLibrary来制作MessageIndicator - 金嘉骏的博客 | GeorgeJin Blog</title>
+
+    <link rel="canonical" href="https://gougoumemeda.github.io/2018/01/09/%E4%BD%BF%E7%94%A8GoogleClosureLibrary%E6%9D%A5%E5%88%B6%E4%BD%9CMessageIndicator/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="secret/index.html">GeorgeJin</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/portfolio/">Portfolio</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/tags/">Tags</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-wap.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-wap.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Works Applications" title="Works Applications">Works Applications</a>
+                        
+                        <a class="tag" href="/tags/#Web" title="Web">Web</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                    </div>
+                    <h1>使用GoogleClosureLibrary来制作MessageIndicator</h1>
+                    
+                    
+                    <h2 class="subheading">认真工作，养(xiao)家(sa)糊(ren)口(sheng)</h2>
+                    
+                    <span class="meta">Posted by George on January 9, 2018</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+				<h2 id="section">概述</h2>
+
+<p>在做项目的时候遇到了一个需求，大概是这样的：</p>
+
+<p>在Sidemenu中，如果有太多用户未读的信息不能显示在页面中，就添加两个indicator，来提示用户。同时如果点击indicator，能够直接scroll到相应的未读信息。</p>
+
+<p>用文字说明很难解释清楚，直接放一张Slack的图吧，看了就能理解了。</p>
+
+<p><img src="/img/in-post/WAP/slack.png" alt="img" /></p>
+
+<p>当然最终的实现和Slack不完全一样。由于是机密信息所以就不放图了，下面的代码也是经过一些处理的。知道方法后自己实现一个还是非常简单的。</p>
+
+<h2 id="html">HTML</h2>
+
+<p>首先在HTML中添加相关的代码</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// 上方有未读消息的indicator
+&lt;div class="indicator indicator-top" id="top-indicator"&gt;
+    &lt;span class="indicator-name" th:text="More unread" /&gt;
+    &lt;span class="indicator-icon icon-arrow-up " /&gt;
+&lt;/div&gt;
+//下方有未读消息的indicator
+&lt;div class="indicator indicator-bottom" id="bottom-indicator"&gt;
+    &lt;span class="indicator-name" th:text="More unread" /&gt;
+    &lt;span class="indicator-icon icon-arrow-down" /&gt;
+&lt;/div&gt;
+</code></pre>
+</div>
+
+<p>代码很好理解，不做过多解释了。接下去我们需要修改相应的样式。</p>
+
+<h2 id="less">LESS</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>indicator {
+    position:absolute;
+    left: 4px;
+    right: 4px;
+    text-align: center;
+    background-color: blue;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    color: white;
+    padding: 4px;
+    height: 26px;
+
+    &amp;-top {
+        top: -26px;
+        border-radius: 0 0 3px 3px;
+    }
+
+    &amp;-bottom {
+        bottom: -26px;
+        border-radius: 3px 3px 0 0;
+    }
+
+    &amp;-name {
+        padding-right: 8px;
+    }
+</code></pre>
+</div>
+
+<p>需要注意的地方是，我们需要判断是否有未读的信息没有显示在window内，再来决定要不要显示indicator。因此，在scroll的过程中，indicator的状态可能会发生改变（显示-&gt;隐藏或者隐藏-&gt;显示）。状态的改变需要平滑的过度，这里就使用CSS3的transition属性来实现，通过移动indicator的位置，来隐藏或者显示它。</p>
+
+<h2 id="javascript">Javascript</h2>
+
+<p>下面是核心部分。我们需要用JS在做几件事情：</p>
+
+<ol>
+  <li>scroll的过程中判断是否要显示indicator</li>
+  <li>点击indicator跳转</li>
+</ol>
+
+<p>首先是第一点。我们需要先找到第一个和最后一个未读的信息，代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var findFirstNewItem = function() {
+    return goog.array.find(this.children_, function(child) {
+      if (child.isNew()) {
+          return child;
+      }
+    });
+};
+
+var findLastNewItem = function() {
+    return goog.array.findRight(this.children_, function(child) {
+      if (child.isNew()) {
+          return child;
+      }
+    });
+};
+</code></pre>
+</div>
+
+<p>两个函数比较类似，一个是从数组头开始找，一个是从数组尾开始找。</p>
+
+<p>找到以后，我们判断他们的位置，并且设置indicator的状态：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var renderNewIndicator = function() {
+    var container = getItemsContainer();
+    var currentScrollTop = container.scrollTop;
+
+    var firstItem = findFirstNewItem();
+    if (goog.isDefAndNotNull(firstItem)) {
+      var pos = goog.style.getPosition(firstItem);
+      var size = goog.style.getSize(firstItem);
+      if (pos.y + size.height &lt;= currentScrollTop) {
+        goog.style.setStyle(topIndicator, 'top', '0px');
+      } else {
+        goog.style.setStyle(topIndicator, 'top', '-26px');
+      }
+    } else {
+      goog.style.setStyle(topIndicator, 'top', '-26px');
+    }
+
+    var lastItem = findLastNewItem();
+    if (goog.isDefAndNotNull(lastItem)) {
+      var pos = goog.style.getPosition(lastItem);
+      var containerSize = goog.style.getSize(container);
+      if (pos.y &gt; currentScrollTop + containerSize.height) {
+        goog.style.setStyle(bottomIndicator, 'bottom', '0px');
+      } else {
+        goog.style.setStyle(bottomIndicator, 'bottom', '-26px');
+      }
+    } else {
+      goog.style.setStyle(bottomIndicator, 'bottom', '-26px');
+    }
+};
+</code></pre>
+</div>
+
+<p>上述代码大致就是在计算第一个和最后一个item是否出现在window之中，并且改变indicator的状态。</p>
+
+<p>有几点需要注意，<code class="highlighter-rouge">scrollTop</code>是指某元素垂直方向scroll的距离，<code class="highlighter-rouge">getPosition</code>得到的位置是相对于其父元素的。简单的计算就能得到正确的判断结果了。</p>
+
+<p>现在如何显示indicator已经实现，接下去我们要思考一下点击之后如何让页面scroll到相应的位置。</p>
+
+<p>首先我们绑定点击事件：
+<code class="highlighter-rouge">
+handler.listen(topIndicator, goog.events.EventType.CLICK, function() {
+    var firstItem = findFirstNewItem;
+    scrollToNode(firstItem, 'top');
+});
+handler.listen(bottomIndicator, goog.events.EventType.CLICK, function() {
+    var lastItem = findLastNewItem;
+    scrollToNode(lastItem, 'bottom');
+});
+</code>
+可以看到，我们在点击indicator之后，会直接scroll到相应方向最靠外侧的item。比如说如果我们点击了topIndicator，那么页面就会scroll到第一个未读消息的上方。反之如果点击bottomIndicator，就会scroll到最后一个。这样在点击某一方向的indicator之后，该方向上就不会再有屏幕外的未读消息了。</p>
+
+<p>具体scroll的代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>var scrollToNode = function(node, direction) {
+    var container = getItemsContainer();
+    var containerSize = goog.style.getSize(container);
+    var nodePos = goog.style.getPosition(node);
+    var nodeSize = goog.style.getSize(node);
+
+    var oldPosY = container.scrollTop;
+    var newPosY = oldPosY;
+    if (direction === 'top') {
+        newPosY = nodePos.y;
+    } else if (direction === 'bottom') {
+        newPosY = nodePos.y - containerSize.height + nodeSize.height;
+    }
+    var fxScroll = new goog.fx.dom.Scroll(container, [
+        0, oldPosY
+    ], [
+        0, newPosY
+    ], 500);
+
+    fxScroll.play();
+};
+</code></pre>
+</div>
+<p>其中，<code class="highlighter-rouge">getPosition</code>等方法已经解释过了，做一些数学的计算就可以。</p>
+
+<p>值得一提的是， <a href="https://google.github.io/closure-library/api/goog.fx.dom.Scroll.html">goog.fx.dom.Scroll</a>是Google为我们封装好的，自动scroll到某位置的库。给定要scroll的容器，初始位置末位置，以及scroll的时间，就能够自动实现相应的功能。</p>
+
+<p>现在，MessageIndicator的功能已经大致实现了。之后考虑将其封装成一个js库，以便之后使用吧。</p>
+
+
+                <hr>
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/10/09/Wap-STM%E4%B8%AD%E9%9A%8F%E6%89%8B%E5%86%99%E7%9A%84%E4%B8%80%E4%BA%9Bweb%E5%BA%93/" data-toggle="tooltip" data-placement="top" title="Wap STM中随手写的一些web库">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+
+                
+                <div id="gitmentContainer"></div>
+                
+
+            </div>
+
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				
+                            
+                				<a href="/tags/#Web" title="Web" rel="7">
+                                    Web
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#技术" title="技术" rel="22">
+                                    技术
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#iOS" title="iOS" rel="9">
+                                    iOS
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="6">
+                                    Objective-C
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Javascript" title="Javascript" rel="4">
+                                    Javascript
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Python" title="Python" rel="2">
+                                    Python
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#生活" title="生活" rel="2">
+                                    生活
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#腾讯" title="腾讯" rel="4">
+                                    腾讯
+                                </a>
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Unity" title="Unity" rel="3">
+                                    Unity
+                                </a>
+                            
+        				
+                            
+        				
+                            
+        				
+                            
+                				<a href="/tags/#Acemap" title="Acemap" rel="2">
+                                    Acemap
+                                </a>
+                            
+        				
+                            
+                				<a href="/tags/#Works Applications" title="Works Applications" rel="4">
+                                    Works Applications
+                                </a>
+                            
+        				
+        			</div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    
+                        <li><a href="http://qinacme.com">秦鹤</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- gitment 公共JS代码 start -->
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    id: window.location.href, // 可选。默认为 location.href
+    owner: 'gougoumemeda',
+    repo: 'gougoumemeda.github.io',
+    oauth: {
+        client_id: 'e6336e0f06cb96722f36',
+        client_secret: '6d0eed88b21afa52d827adbe6336e61ea4cb8fb8',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+<!-- gitment 公共JS代码 end -->
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+                    
+
+                    <!-- add Weibo, Zhihu by Hux, add target = "_blank" to <a> by Hux -->
+                    
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="http://weibo.com/u/3033630677">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+
+
+                    
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/金嘉骏">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a target="_blank" href="https://github.com/gougoumemeda">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js "></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-81336472-1';
+    var _gaDomain = 'auto';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '23710bb6f40c572032327a0420b5fd57';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
