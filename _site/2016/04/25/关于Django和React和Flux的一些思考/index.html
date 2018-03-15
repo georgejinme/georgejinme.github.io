@@ -62,7 +62,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="secret/index.html">GeorgeJin</a>
+            <a class="navbar-brand" style="cursor: pointer">GeorgeJin</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -105,6 +105,7 @@
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
+    var $brand = document.querySelector('.navbar-brand');
 
     $toggle.addEventListener('click', handleMagic)
     function handleMagic(e){
@@ -124,6 +125,12 @@
             $navbar.className += " in";
         }
     }
+    $brand.addEventListener('click', function() {
+        var password = prompt("Who is her favourite man?");
+        if (password == "Domoto Tsuyoshi") {
+            window.location.href = '/secret/index.html';
+        }
+    })
 </script>
 
 
