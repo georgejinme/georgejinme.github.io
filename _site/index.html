@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/hux-blog.min.css">
+    <link rel="stylesheet" href="/css/jin-blog.min.css">
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
@@ -127,8 +127,8 @@
     }
     $brand.addEventListener('click', function() {
         var password = prompt("Who is her favourite man?");
-        if (password == "Domoto Tsuyoshi") {
-            window.location.href = '/secret/index.html';
+        if (password == "nrghndfhgndfghmdghmtyhdsfhgesrg") {
+            window.location.href = '/afsdfawwedfewgebwvsafgsdfgsdfg/index.html';
         }
     })
 </script>
@@ -142,7 +142,7 @@
                 <div class="site-heading">
                     <h1>GeorgeJin</h1>
                     <!--<hr class="small">-->
-                    <span class="subheading">全(la)栈(ji)工程师。Dota2 单排2000分，卡尔20000分。</span>
+                    <span class="subheading">我们上海见。</span>
                 </div>
             </div>
         </div>
@@ -165,90 +165,55 @@
             ">
     			
 <div class="post-preview">
-    <a href="/2018/03/17/%E6%9C%89%E4%B8%80%E7%89%87%E7%A5%9E%E7%A7%98%E7%9A%84%E5%9C%B0%E6%96%B9/">
+    <a href="/2018/05/17/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A8%A1%E6%8B%9FCalendar/">
         <h2 class="post-title">
-            这个网站有一个秘密
+            移动端模拟Calendar
         </h2>
         
         <h3 class="post-subtitle">
-            秘密存在在我的名字里
+            认真工作，养(xiao)家(sa)糊(ren)口(sheng)
         </h3>
         
         <div class="post-content-preview">
-            胡言乱语
+            前言
 
-秘密由vuejs组成，也是第一次用他来写东西。
+最近在公司因为主要是做mobile的开发工作，而公司本身mobile的组件又非常的匮乏，所以自己制作的组件就数量慢慢多起来了。上次是介绍了一个data-picker，来模拟iOS端UIDataPickerView的行为。这里是实现了一个calendar，这个在iOS或者安卓系统本身的控件中是没有的，所以也没有什么模仿的一说，就是项目需要所以就做了。
 
-没有难度，没有细节。只不过是position: absolute的堆砌，是二维坐标系的大量计算。
+正文
 
-可能这是所有文章中最短的一篇博文了。完结。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-—————————————————惊喜线————————————...
+现在就来介绍一下这个ca...
         </div>
     </a>
     <p class="post-meta">
-        Posted by George on March 17, 2018
+        Posted by George on May 17, 2018
+    </p>
+</div>
+<hr>
+
+<div class="post-preview">
+    <a href="/2018/05/05/%E7%94%A8JS%E8%87%AA%E5%88%B6UIPickerView/">
+        <h2 class="post-title">
+            用JS自制UIPickerView
+        </h2>
+        
+        <h3 class="post-subtitle">
+            认真工作，养(xiao)家(sa)糊(ren)口(sheng)
+        </h3>
+        
+        <div class="post-content-preview">
+            前言
+
+这个UIPickerView其实制作的难度还是相当之大的，主要是利用到了一些数学方面的知识和需要考虑性能方面的问题。下面我们就一步一步来讲我的思路和如何去实现的。
+
+正文
+
+整体结构
+
+首先我们要划分清楚，这个data-picker是一个单独的组件还是由几个小组件构成。这里因为在手机上可能会有几个不同的独立的滚轮，所以我们把一个data-picker拆分成多个不同的data-pick...
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by George on May 5, 2018
     </p>
 </div>
 <hr>
@@ -476,32 +441,6 @@
 </div>
 <hr>
 
-<div class="post-preview">
-    <a href="/2016/08/04/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/">
-        <h2 class="post-title">
-            使用Shader实现任意曲线的颜色渐变和纹理移动
-        </h2>
-        
-        <h3 class="post-subtitle">
-            腾讯实习技术第二炮
-        </h3>
-        
-        <div class="post-content-preview">
-            扯蛋时间
-
-上次做了一个LineRender，手动Batch，对于我一个新手而言，这无疑是黑科技。
-
-但是我想错了。
-
-这次导师给我布置的任务才是真正的黑科技，我们需要在Material Inspector中绘制任意的曲线，来控制材质的颜色渐变和纹理的平移。我们都知道，shader中支持的类型都是非常基本的，float啊，int啊，稍微复杂一点的比如float4这样的，但是并没有一个类型能表...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by George on August 4, 2016
-    </p>
-</div>
-<hr>
-
 
 <!-- Pager -->
 
@@ -532,13 +471,13 @@
                     <div class="tags">
                         
                             
-                                <a href="/tags/#Web" title="Web" rel="7">
+                                <a href="/tags/#Web" title="Web" rel="9">
                                     Web
                                 </a>
                             
                         
                             
-                                <a href="/tags/#技术" title="技术" rel="22">
+                                <a href="/tags/#技术" title="技术" rel="24">
                                     技术
                                 </a>
                             
@@ -604,11 +543,9 @@
                             
                         
                             
-                                <a href="/tags/#Works Applications" title="Works Applications" rel="4">
+                                <a href="/tags/#Works Applications" title="Works Applications" rel="6">
                                     Works Applications
                                 </a>
-                            
-                        
                             
                         
                     </div>

@@ -3,7 +3,9 @@
 @import "sidebar.less";
 
 // Global Components
-
+html{
+	height: 100%;
+}
 body {
 	.sans-serif;
 	font-size: 16px;
@@ -11,6 +13,7 @@ body {
 	color: @gray-dark;
 	//-webkit-user-select:text; //对于 Blog 还是先不开启这句。
 	overflow-x : hidden;
+	height: 100%
 }
 
 // -- Typography
@@ -354,7 +357,7 @@ pre code{
 .intro-header {
 	background: no-repeat center center;
 	background-color: @gray;
-	background-attachment: scroll;
+	background-attachment: fixed;
 	.background-cover;
 	// NOTE: Background images are set within the HTML using inline CSS!
 	margin-bottom: 0px;  /* 0 on mobile, modify by Hux */
@@ -739,13 +742,6 @@ body {
 	}
 }
 
-#tag-heading{
-	padding: 70px 0 60px;
-	@media only screen and (min-width: 768px) {
-		padding:55px 0;
-	}
-
-}
 // tag_cloud
 #tag_cloud{
 	margin:20px 0 15px 0;

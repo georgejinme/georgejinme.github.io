@@ -10,14 +10,14 @@ module.exports = function(grunt) {
             }
         },
         less: {
-            // expanded: {
-            //     options: {
-            //         paths: ["css"]
-            //     },
-            //     files: {
-            //         "css/<%= pkg.name %>.css": "less/<%= pkg.name %>.less"
-            //     }
-            // },
+            expanded: {
+                options: {
+                    paths: ["css"]
+                },
+                files: {
+                    "css/<%= pkg.name %>.css": "less/<%= pkg.name %>.less"
+                }
+            },
             minified: {
                 options: {
                     paths: ["css"],

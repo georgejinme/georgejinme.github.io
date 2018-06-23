@@ -5,98 +5,391 @@
     <description>My personal webpage</description>
     <link>https://gougoumemeda.github.io/</link>
     <atom:link href="https://gougoumemeda.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 17 Mar 2018 14:34:04 +0000</pubDate>
-    <lastBuildDate>Sat, 17 Mar 2018 14:34:04 +0000</lastBuildDate>
+    <pubDate>Sat, 23 Jun 2018 09:17:53 +0000</pubDate>
+    <lastBuildDate>Sat, 23 Jun 2018 09:17:53 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
-        <title>这个网站有一个秘密</title>
-        <description>&lt;h2 id=&quot;section&quot;&gt;胡言乱语&lt;/h2&gt;
+        <title>移动端模拟Calendar</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
 
-&lt;p&gt;秘密由vuejs组成，也是第一次用他来写东西。&lt;/p&gt;
+&lt;p&gt;最近在公司因为主要是做mobile的开发工作，而公司本身mobile的组件又非常的匮乏，所以自己制作的组件就数量慢慢多起来了。上次是介绍了一个data-picker，来模拟iOS端UIDataPickerView的行为。这里是实现了一个calendar，这个在iOS或者安卓系统本身的控件中是没有的，所以也没有什么模仿的一说，就是项目需要所以就做了。&lt;/p&gt;
 
-&lt;p&gt;没有难度，没有细节。只不过是&lt;code class=&quot;highlighter-rouge&quot;&gt;position: absolute&lt;/code&gt;的堆砌，是二维坐标系的大量计算。&lt;/p&gt;
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
 
-&lt;p&gt;可能这是所有文章中最短的一篇博文了。完结。&lt;/p&gt;
+&lt;p&gt;现在就来介绍一下这个calendar的实现步骤。其实还是比较简单的相对于上一篇data-picker来说。具体的实现一共分成三步：&lt;/p&gt;
 
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;绘制日历&lt;/li&gt;
+  &lt;li&gt;滑动操作&lt;/li&gt;
+  &lt;li&gt;点击事件&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;—————————————————惊喜线—————————————————&lt;/p&gt;
+&lt;p&gt;我们一步一步介绍具体的操作。&lt;/p&gt;
 
-&lt;p&gt;对了，秘密的钥匙忘了给你。&lt;/p&gt;
+&lt;h4 id=&quot;section-2&quot;&gt;绘制日历&lt;/h4&gt;
 
-&lt;p&gt;堂吉诃德。&lt;/p&gt;
+&lt;p&gt;这部分其实没有什么难度，就是几个循环遍历一下就可以。不过有几个变量值得注意一下：&lt;/p&gt;
 
-&lt;p&gt;哥本哈根。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var numberOfDays = this.getNumberOfDaysOfMonth_(year, month);
+var firstDayOfMonth = this.getFirstDayOfMonth_(year, month);
+var numberOfWeeks = this.getNumberOfWeeksOfMonth_(year, month);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-&lt;p&gt;沉潜刚克。&lt;/p&gt;
+&lt;p&gt;第一个表示这个月有多少天，实现如下&lt;/p&gt;
 
-&lt;p&gt;123。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+ * @private
+ * @param {number} year
+ * @param {number} month
+ * @return {number}
+ */
+Calendar.prototype.getNumberOfDaysOfMonth_ = function(year, month) {
+  return new goog.date.Date(year, month, 1).getNumberOfDaysInMonth();
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;这个函数没有什么要自己计算的部分，调用Google Closure本身的API就可以啦。&lt;/p&gt;
+
+&lt;p&gt;第二个变量表示这个月的第一天是星期几，实现如下&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+ * @private
+ * @param {number} year
+ * @param {number} month
+ * @return {number}
+ */
+Calendar.prototype.getFirstDayOfMonth_ = function(year, month) {
+  return new goog.date.Date(year, month, 1).getDay();
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其实也非常好理解，构造一个这个月第一天的Date变量，获取星期几就可以啦。&lt;/p&gt;
+
+&lt;p&gt;最后一个变量表示这个月有几周，实现如下&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+ * @private
+ * @param {number} year
+ * @param {number} month
+ * @return {number}
+ */
+Calendar.prototype.getNumberOfWeeksOfMonth_ = function(year, month) {
+  var numberOfDays = this.getNumberOfDaysOfMonth_(year, month);
+  var firstDayOfMonth = this.getFirstDayOfMonth_(year, month);
+  var totalDays = numberOfDays + firstDayOfMonth;
+  if (totalDays % 7 === 0) return totalDays / 7;
+  else return Math.floor((numberOfDays + firstDayOfMonth) / 7) + 1;
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;我们最终绘制日历的时候，会先从周开始遍历，第三个变量就是控制周遍历的次数。在每一个周遍历中，进行日期的遍历。第一个变量来决定最后一周的日期到哪里结束，而第二个变量来决定第一周的日期从周几开始。所以说这三个变量非常的关键了。其他的绘制过程应该没有什么难度，只要注意如果是当天的话要增加一些样式；如果是选中的日期的话样式要变成什么样就可以了。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-3&quot;&gt;滑动操作&lt;/h4&gt;
+
+&lt;p&gt;这里的滑动操作我们使用了framework7框架中的&lt;a href=&quot;https://framework7.io/docs/swiper.html&quot;&gt;swiper&lt;/a&gt;。首先需要在xml里面添加相应的元素，这里就不多介绍了，主要解释一下js中的操作。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var swiperParams = {
+  width: goog.style.getSize(this.getCalendarSwiperWrapper_()).width,
+  autoHeight: true
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;需要注意的是，在初始化的时候，我们制定了width值。这是因为，一开始的时候这个swiper是隐藏的，在doc中说到，如果默认隐藏的话，我们需要手动指定width，并且不会有自适应。既然要手动指定width，那么我们就要通过js来获取包它的wrapper的宽度。那么问题又来了，这个初始化的过程我们没有办法确定是在CSS被应用之前还是应用之后。经过测试我们也发现，大多数情况下直接得到wrapper的宽度是0。所以我们需要等这个wrapper的CSS宽度被引用到了元素上之后，在去获取它的宽度。这里就需要Google Closure提供的&lt;code class=&quot;highlighter-rouge&quot;&gt;ConditionalDelay&lt;/code&gt;了。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var getCalendarWidthDelay = new goog.async.ConditionalDelay(this.checkCalendarStyleAvailable_, this);
+getCalendarWidthDelay.onSuccess = function() {};
+getCalendarWidthDelay.start(Calendar.CONST_.TEST_INTERVAL, Calendar.CONST_.TEST_TIMEOUT);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;简单来说，就是每隔一段时间去执行一个函数，这个函数会返回一个boolean。如果true则执行onSuccess。同时会有一个timeout，经过多久之后都不为true的话就放弃。&lt;/p&gt;
+
+&lt;p&gt;初始化swiper结束之后，我们把当前月份，当前月份前后的两个月份同时作为slide加入到这个swiper中。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;this.swiper_.appendSlide([lastMonthData, currentMonthData, nextMonthData]);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;同时，在滑动结束后触发的回调事件中，我们需要规定，如果当前slide是最后一张slide，我们就去load下一月的数据并加入到swiper中。如果是第一张则load再上一个月的数据加进去。这样做用户就不会察觉到实际上我们月份是动态添加进去的，看上去就像是一个能无限滑动的calendar。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (this.swiper_.activeIndex === 0) {
+  this.swiper_.prependSlide(this.getMonthDataElement_(this.getLastMonth_().year, this.getLastMonth_().month));
+} else if (this.swiper_.activeIndex === this.swiper_.slides.length - 1) {
+  this.swiper_.appendSlide(this.getMonthDataElement_(this.getNextMonth_().year, this.getNextMonth_().month));
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;section-4&quot;&gt;点击事件&lt;/h4&gt;
+
+&lt;p&gt;这个没有什么难度的，点下后获取年月日，同时把这个日期加上选中的样式，清除其他日期上的样式即可。&lt;/p&gt;
+
+&lt;p&gt;有一点需要说的是，我们增加了一个&lt;code class=&quot;highlighter-rouge&quot;&gt;selectableDateRange_&lt;/code&gt;来表示可以选择的日期范围。如果超出了这个范围，那么点上去也不会有什么反应。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;后文&lt;/h2&gt;
+
+&lt;p&gt;没什么想说的谢谢。&lt;/p&gt;
+
 </description>
-        <pubDate>Sat, 17 Mar 2018 11:22:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2018/03/17/%E6%9C%89%E4%B8%80%E7%89%87%E7%A5%9E%E7%A7%98%E7%9A%84%E5%9C%B0%E6%96%B9/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2018/03/17/%E6%9C%89%E4%B8%80%E7%89%87%E7%A5%9E%E7%A7%98%E7%9A%84%E5%9C%B0%E6%96%B9/</guid>
+        <pubDate>Thu, 17 May 2018 23:55:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2018/05/17/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A8%A1%E6%8B%9FCalendar/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2018/05/17/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A8%A1%E6%8B%9FCalendar/</guid>
         
-        <category>？</category>
+        <category>Works Applications</category>
+        
+        <category>Web</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>用JS自制UIPickerView</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;这个UIPickerView其实制作的难度还是相当之大的，主要是利用到了一些数学方面的知识和需要考虑性能方面的问题。下面我们就一步一步来讲我的思路和如何去实现的。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;整体结构&lt;/h4&gt;
+
+&lt;p&gt;首先我们要划分清楚，这个data-picker是一个单独的组件还是由几个小组件构成。这里因为在手机上可能会有几个不同的独立的滚轮，所以我们把一个data-picker拆分成多个不同的data-picker-column。那么所有的滚动实现的细节都在data-picker-column中实现，我们现在来具体思考一下这个column需要哪些操作。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;建模，把3D模型投射到2D平面中&lt;/li&gt;
+  &lt;li&gt;滑动时的行为&lt;/li&gt;
+  &lt;li&gt;滑动结束后惯性行为&lt;/li&gt;
+  &lt;li&gt;滑动速度小于某值时自动滚动到最近的item&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;大概正常的column实现的步骤就是上述几个。这个其实也很好想，实际在手机上使用时看看干了哪些事就知道了。但是这里我们多增加一个“规范化”的步骤。什么意思呢，实际上我们左右的数学计算都是使用double类型的，而double类型在计算机中会有一部分的精度损失，最终导致在界面上会有微小的位置偏移。所以我们在滚动完之后重新计算一次所有item应该在的位置，然后直接将他们移动过去。这部分时候也会解释。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-3&quot;&gt;建模&lt;/h4&gt;
+&lt;p&gt;建模过程并不难，首先我们要确定在组件中需要哪些成员变量。实际上我们所看到的column是由“可见item”组成的，仅仅是180°的视角。而那些不可见的item，会被隐藏起来，具体怎么隐藏可以根据不同的开发者自己设定，但是这部分不可见的，应当在某些条件下（滚动的时候）能够出现在屏幕中，而那些可见的item也能够隐藏起来。&lt;/p&gt;
+
+&lt;p&gt;现在我们来想一下item应该有哪些要素，首先是dom元素，然后是当前item位置的角度，这里我们规定y负方向为0°，z正方向为90°。此外还需要给每一个item增加一个id和这个item的值。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;this.shownItems_.push({
+    &#39;id&#39;: index,
+    &#39;currentDegree&#39;: itemDegree,
+    &#39;item&#39;: $item,
+    &#39;value&#39;: v
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在实际滚动的过程中，真正改变的只有每一个item的&lt;code class=&quot;highlighter-rouge&quot;&gt;currentDegree&lt;/code&gt;。这里我们规定，如果一个item是不可见的，那么他的&lt;code class=&quot;highlighter-rouge&quot;&gt;currentDegree&lt;/code&gt;就是0。也就是在滚轮的最上面。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;this.hiddenItems_.push({
+    &#39;id&#39;: index,
+    &#39;currentDegree&#39;: 0,
+    &#39;item&#39;: $item,
+    &#39;value&#39;: v
+});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;如果我们知道了item当前的&lt;code class=&quot;highlighter-rouge&quot;&gt;currentDegree&lt;/code&gt;，规定了整个column的半径大小，就能够通过数学三角公式计算出这个item的位置。同时补充一点，为了计算方便，这里我们规定相邻的item的间隔为30°。除了位置以外，本身item也需要绕着屏幕x轴进行一定的旋转，这样做的话会使得文字看上去是贴在这个column上面的，目前手机实现的picker也都是如此。最后，我们需要给所有的item规定opacity。当前选中的item的opacity为1，隐藏的为0，然后其他的根据&lt;code class=&quot;highlighter-rouge&quot;&gt;currentDegree&lt;/code&gt;依次计算得到。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+* @private
+* @param {Element} item
+* @param {Number} degree
+*/
+Column.prototype.setShownItemStyle_ = function(item, degree) {
+    var newPosY = Column.Const_.COLUMN_HEIGHT / 2 - Column.Const_.RADIUS * Math.cos(goog.math.toRadians(degree)) -
+        Column.Const_.ITEM_HEIGHT / 2;
+    var opacity = this.getOpacityByDegree_(degree);
+    var rotate = Column.Const_.DEGREE_90 - degree;
+    goog.style.setStyle(item, {
+        &#39;top&#39;: newPosY + &#39;px&#39;,
+        &#39;opacity&#39;: opacity,
+        &#39;transform&#39;: &#39;rotateX(&#39; + rotate + &#39;deg) translateX(-50%)&#39;,
+        &#39;-ms-transform&#39;: &#39;rotateX(&#39; + rotate + &#39;deg) translateX(-50%)&#39;,
+        &#39;-moz-transform&#39;: &#39;rotateX(&#39; + rotate + &#39;deg) translateX(-50%)&#39;,
+        &#39;-webkit-transform&#39;: &#39;rotateX(&#39; + rotate + &#39;deg) translateX(-50%)&#39;,
+        &#39;-o-transform&#39;: &#39;rotateX(&#39; + rotate + &#39;deg) translateX(-50%)&#39;
+    });
+};
+
+/**
+* @private
+* @param {Number} degree
+* @return {Number}
+*/
+Column.prototype.getOpacityByDegree_ = function(degree) {
+    var opacity = 1;
+    if (degree &amp;lt;= Column.Const_.DEGREE_90) {
+        opacity = 1 - 1 / Column.Const_.DEGREE_90 * (Column.Const_.DEGREE_90 - degree);
+    } else if (degree &amp;gt; Column.Const_.DEGREE_90 &amp;amp;&amp;amp; degree &amp;lt; Column.Const_.DEGREE_180) {
+        opacity = 1 - 1 / Column.Const_.DEGREE_90 * (degree - Column.Const_.DEGREE_90);
+    } else {
+        opacity = 0;
+    }
+    return opacity;
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;到这里我们就已经可以把模型建立起来了，可以在屏幕上画出一个静止的column来。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-4&quot;&gt;滑动时的行为&lt;/h4&gt;
+
+&lt;p&gt;我们把整个滑动时的行为分解成三个部分，分别对应浏览器的 &lt;code class=&quot;highlighter-rouge&quot;&gt;touchstart&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;touchmove&lt;/code&gt; 和 &lt;code class=&quot;highlighter-rouge&quot;&gt;touchend&lt;/code&gt; 事件。&lt;/p&gt;
+
+&lt;p&gt;首先是&lt;code class=&quot;highlighter-rouge&quot;&gt;touchstart&lt;/code&gt;，这个事件被触发时，表示准备开始滑动了。这里不需要什么特别做的操作，只是对一些变量进行初始化，得到用户手指滑动的初始位置。这里我们设置了几个相对比较奇怪的变量。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var speedCalculator = new goog.structs.Queue();
+speedCalculator.clear();
+currentTouchMoveTime = this.getCurrentTime_();
+lastTouchMoveTime = currentTouchMoveTime;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;在 &lt;code class=&quot;highlighter-rouge&quot;&gt;speedCalculator&lt;/code&gt; 中，我们规定只能存储五个队列元素。每一个元素中包含一个&lt;code class=&quot;highlighter-rouge&quot;&gt;distance&lt;/code&gt;和一个&lt;code class=&quot;highlighter-rouge&quot;&gt;time&lt;/code&gt;，&lt;code class=&quot;highlighter-rouge&quot;&gt;distance&lt;/code&gt;是两次&lt;code class=&quot;highlighter-rouge&quot;&gt;touchmove&lt;/code&gt;被触发时所滑动的距离，&lt;code class=&quot;highlighter-rouge&quot;&gt;time&lt;/code&gt;就是这两次触发所间隔的时间。这些变量都是为之后模拟惯性行为所服务的。因为队列中的最后五个元素是手指触碰滑动的最后五个元素，是即将开始惯性运动前的五个元素，所以能够通过该变量计算出匀变速运动开始的初速度。&lt;/p&gt;
+
+&lt;p&gt;接下来就是非常关键的函数之一 &lt;code class=&quot;highlighter-rouge&quot;&gt;touchmove&lt;/code&gt;。该方法被触发时，我们需要计算出手指滑动的距离，这个距离也就是column的边所滑动的距离（一段弧长）。需要注意的是，有些情况下手指滑动的距离并不是实际column需要滚动的距离。我们暂时先不考虑这种情况，之后会慢慢解释。&lt;/p&gt;
+
+&lt;p&gt;现在得到了column需要滚动的距离之后，我们就可以计算出每一个item的新的&lt;code class=&quot;highlighter-rouge&quot;&gt;currentDegree&lt;/code&gt;，然后更新他们的style，并且显示在屏幕上。有一点需要注意，因为我们一共维护了&lt;code class=&quot;highlighter-rouge&quot;&gt;shownItems&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;hiddenItems&lt;/code&gt;两个变量，所以我们每一次滑动之后，都需要更新这两个变量中的元素。如果一个元素的&lt;code class=&quot;highlighter-rouge&quot;&gt;currentDegree&lt;/code&gt;超出了一定的范围，就要把他放到&lt;code class=&quot;highlighter-rouge&quot;&gt;hiddenItems&lt;/code&gt;中，并且设置&lt;code class=&quot;highlighter-rouge&quot;&gt;currentDegree&lt;/code&gt;为0。如果有一个item需要显示在屏幕上，那就把他从&lt;code class=&quot;highlighter-rouge&quot;&gt;hiddenItems&lt;/code&gt;中取出，放进&lt;code class=&quot;highlighter-rouge&quot;&gt;shownItems&lt;/code&gt;中。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-5&quot;&gt;滑动结束后的惯性行为&lt;/h4&gt;
+
+&lt;p&gt;触碰结束后，系统会自动触发&lt;code class=&quot;highlighter-rouge&quot;&gt;touchend&lt;/code&gt;方法。在该方法中主要就是来模拟一下惯性行为（需要牵涉到一部分的物理知识）。为了方便，我们暂时只考虑匀减速运动，匀减速运动的公式为&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;S = Vt - at ^ 2 / 2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;计算出S后，就知道了column需要滚动的距离，之后的操作和&lt;code class=&quot;highlighter-rouge&quot;&gt;touchmove&lt;/code&gt;中的类似。为了得到S，我们需要知道V（初速度），a（加速度）和t（时间间隔）。V和t都能够通过&lt;code class=&quot;highlighter-rouge&quot;&gt;speedCalculator&lt;/code&gt;得到，a我们自己规定一下，就能够计算出一段时间间隔中column所滚动的距离了。&lt;/p&gt;
+
+&lt;h4 id=&quot;item&quot;&gt;滑动速度小于某值时自动滚动到最近的item&lt;/h4&gt;
+
+&lt;p&gt;当匀减速运动的速度小于某一个值时，column会自动滑动到最近的一个item。这也是非常合理的，总不能在两个item之间停下对吧。&lt;/p&gt;
+
+&lt;p&gt;判断方法也非常简单，遍历所有的&lt;code class=&quot;highlighter-rouge&quot;&gt;shownItems&lt;/code&gt;，然后选择其中离column中间最短的一个，计算出它到column中间位置的弧长，这部分就是最后需要自动滚动的长度。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+* @private
+*/
+Column.prototype.updateSelected_ = function() {
+    var minDistance = goog.math.toRadians(Column.Const_.DEGREE_360) * Column.Const_.RADIUS;
+    var minIndex = -1;
+    goog.array.forEach(this.shownItems_, function(v, index) {
+        var itemDegree = v[&#39;currentDegree&#39;];
+        var distance = goog.math.toRadians(Column.Const_.DEGREE_90 - itemDegree) * Column.Const_.RADIUS;
+        if (Math.abs(distance) &amp;lt; Math.abs(minDistance)) {
+            minDistance = distance;
+            minIndex = index;
+        }
+    }, this);
+    this.selectedId_ = this.shownItems_[minIndex][&#39;id&#39;];
+    this.dispatchColumnEvent_(Column.EventType.VALUE_CHANGE, null);
+    this.autoScrollToSelectedItem_(minDistance);
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;其中，&lt;code class=&quot;highlighter-rouge&quot;&gt;this.autoScrollToSelectedItem_(minDistance);&lt;/code&gt;就是我们真正自动滚动的函数。这个函数中，由于我们知道总距离，规定了自动滑动的时间，因此我们能够算出其加速度。再根据初速度，加速度和时间间隔，来计算出每一个时间片所滑动的距离即可。也没有什么难度。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-6&quot;&gt;规范化&lt;/h4&gt;
+
+&lt;p&gt;什么是规范化呢？我们在实际计算滑动距离时间的时候，使用的都是double变量。这些变量在计算机中进行计算是有精度的损失的，因为计算机是没有分数的概念，所有的分数都会被转换成小数。例如，如果从数学理论上计算出的结果是150°，那么可能计算机给我们的结果就是149.99993°。这样的精度损失是会累加的，当我们进行数以千次的计算之后，可能最后的结果就变成了149°。1°的差距在屏幕上是很容易被发现的，尤其是这样的具有强烈对称性的滚轮组件。因此，每一次滑动结束后，我们都需要重新计算一下每一个item的位置，并且将他们移动到相应的位置上去。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+* @private
+*/
+Column.prototype.itemPositionNormalization_ = function() {
+    var selectedIndex = this.getSelectedIndexInShownItems_();
+    goog.array.forEach(this.shownItems_, function(v, index) {
+        var $item = v[&#39;item&#39;];
+        var normalizedDegree = Column.Const_.DEGREE_90 - (selectedIndex - index) * Column.Const_.PER_DEGREE;
+        v[&#39;currentDegree&#39;] = normalizedDegree;
+        this.setShownItemStyle_($item, normalizedDegree);
+    }, this);
+    goog.array.forEach(this.hiddenItems_, function(v) {
+        var $item = v[&#39;item&#39;];
+        v[&#39;currentDegree&#39;] = 0;
+        this.setShownItemStyle_($item, 0);
+    }, this);
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;section-7&quot;&gt;真的随时都能滚动吗？&lt;/h4&gt;
+
+&lt;p&gt;我们需要思考一点：如果相邻的item的距离是30°，那么column上最多同时显示的item数量是5个。如果本身item就少于5个怎么办？&lt;/p&gt;
+
+&lt;p&gt;实际上现在手机的实现是这样的：如果item的数量过少，那么这个column是无法旋转到360°的。旋转到最上面或者最下面的时候，就不能在继续转下去了，同时松手就直接自动滚动到最近的那一个item。&lt;/p&gt;
+
+&lt;p&gt;我们在代码中模拟的方法是，column实际滚动的距离是手指滚动的距离乘上一个系数。如果column可以360°滚动，那么这个系数就是1。反之，当用户滚动到最上面或者最下面的item的时候，系数会逐渐减小最终趋近于0.01。这样从效果上来看，就是column无法被滑动了。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/**
+* @private
+* @param {Number} exceed
+* @return {Number}
+*/
+Column.prototype.itemExceedMoveCoefficient_ = function(exceed) {
+    var coefficient = 1;
+    var exceedLimit = Column.Const_.RADIUS * goog.math.toRadians(Column.Const_.PER_DEGREE);
+    if (exceed &amp;gt;= exceedLimit) {
+        coefficient = 0.01;
+    } else {
+        coefficient = 1 - ((1 - 0.01) / exceedLimit * exceed);
+    }
+    return coefficient;
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;section-8&quot;&gt;公共接口&lt;/h4&gt;
+
+&lt;p&gt;文章一开始提到过，data-picker是和其他component沟通的接口，在里面控制着data-picker-column的行为。column开放的接口大部分都是比较基础简单的，这里我就介绍一个可能会有一些实现难度的接口&lt;code class=&quot;highlighter-rouge&quot;&gt;setSelectedIndex&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;该接口在实现时，需要做几点：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;根据传入的index，重新计算&lt;code class=&quot;highlighter-rouge&quot;&gt;shownItems&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;hiddenItems&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;根据&lt;code class=&quot;highlighter-rouge&quot;&gt;shownItems&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;hiddenItems&lt;/code&gt;来重新绘制column&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;需要注意的是，该函数并不会有动画发生，而是直接重新绘制整个column。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-9&quot;&gt;性能&lt;/h4&gt;
+
+&lt;p&gt;性能是data-picker一个非常重要的指标。针对性能已经做的优化有：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;设置item的style： &lt;code class=&quot;highlighter-rouge&quot;&gt;display: absolute&lt;/code&gt;。这样在repaint和reflow的时候仅仅影响其column本身。&lt;/li&gt;
+  &lt;li&gt;对于&lt;code class=&quot;highlighter-rouge&quot;&gt;hiddenItems&lt;/code&gt;中的元素，我们在滑动时不改变他们的style。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;但是我个人认为还有一些其他的地方可以改进：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;滑动时一次性修改&lt;code class=&quot;highlighter-rouge&quot;&gt;shownItems&lt;/code&gt;中所有元素的style。现在我们会遍历其中的元素，然后一个一个调用&lt;code class=&quot;highlighter-rouge&quot;&gt;setStyle&lt;/code&gt;方法，这个方法会导致repaint和reflow。实际上可以在遍历完之后，讲相应的计算得到的数据存储起来，然后进行一次性的绘制。&lt;/li&gt;
+  &lt;li&gt;能否更好的建模。这个可能需要重构大部分的代码，但是我并不确定目前的实现是否是最合理的。把3D的模型转换成2D来处理需要大量的数学计算，能否直接建立成3D模型呢？&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-10&quot;&gt;后文&lt;/h2&gt;
+
+&lt;p&gt;这个data-picker应该是我加入WAP之后做的最有挑战性的工作了。并没有谁让我去做这个东西，只是觉得现在mobile的组件还是比较匮乏的，如果能够实现出来，应该对其他产品也能有所帮助。当然，对我自己的提升也是巨大的。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 05 May 2018 23:55:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2018/05/05/%E7%94%A8JS%E8%87%AA%E5%88%B6UIPickerView/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2018/05/05/%E7%94%A8JS%E8%87%AA%E5%88%B6UIPickerView/</guid>
+        
+        <category>Works Applications</category>
+        
+        <category>Web</category>
+        
+        <category>技术</category>
         
         
       </item>
@@ -1494,194 +1787,6 @@ AnimatorCompiler.State dstStateInTransitions_110193682;
         <pubDate>Fri, 09 Sep 2016 13:00:00 +0000</pubDate>
         <link>https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/</link>
         <guid isPermaLink="true">https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/</guid>
-        
-        <category>Unity</category>
-        
-        <category>技术</category>
-        
-        <category>腾讯</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>使用Shader实现任意曲线的颜色渐变和纹理移动</title>
-        <description>&lt;h2 id=&quot;section&quot;&gt;扯蛋时间&lt;/h2&gt;
-
-&lt;p&gt;上次做了一个LineRender，手动Batch，对于我一个新手而言，这无疑是黑科技。&lt;/p&gt;
-
-&lt;p&gt;但是我想错了。&lt;/p&gt;
-
-&lt;p&gt;这次导师给我布置的任务才是真正的黑科技，我们需要在Material Inspector中绘制任意的曲线，来控制材质的颜色渐变和纹理的平移。我们都知道，shader中支持的类型都是非常基本的，float啊，int啊，稍微复杂一点的比如float4这样的，但是并没有一个类型能表示一条曲线。所以这次对我而言看上去是一个不小的挑战，但是既然来了腾讯，就要有面对挑战的决心和觉悟。当然，我也是完成了这项任务之后才来写这篇Blog的。我的导师非常善良，没有让我直接去画不规则曲线，而是先做了一个Sin函数变化曲线，然后通过设置参数的方式来调整一个他的图像，并且在Material Inspector中直观的显示出来。&lt;/p&gt;
-
-&lt;p&gt;感兴趣的话，可以继续看下去。如果想直接看任意曲线部分，&lt;a href=&quot;#curve&quot;&gt;请猛戳我!&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;sin&quot;&gt;Sin函数图像&lt;/h2&gt;
-
-&lt;p&gt;我们先来看看结果是怎么样的。&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Curve/inspector.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;介绍一下各个参数吧：
-- Time：动画的周期
-- Speed：Sin函数在y轴上的拉伸
-- OffsetY：Sin函数在y轴上的平移
-- OffsetX：Sin函数在x轴上的平移
-- 颜色选择框：Sin函数在两个极值时的颜色
-- OffsetMax：纹理平移的最大位置
-- OffsetMin：纹理平移的最小位置
-- OffsetSpeedX：纹理在X轴平移的速度
-- OffsetSpeedY：纹理在Y轴平移的速度&lt;/p&gt;
-
-&lt;p&gt;我们可以看到，虽然说可以显示Sin函数的图像，但是其局限性还是相当大的。首先他本质上就是一个Sin函数，然后我们只是通过修改参数，看到Sin函数的变化，而不能在图像上直接增减Keyframe。但这个做法为我们之后任意曲线提供了思路。&lt;/p&gt;
-
-&lt;p&gt;我们先定位到Shader文件中。在Shader中，我们实现了具体的算法，也就是说，给定上述提到的各个参数，怎么把颜色或者纹理的变化画出来。我们在绘制两种颜色之间的渐变时，使用的是插值的技术，也就是将两部分颜色按照一定的比例混合起来，如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;o.color = v.color * (_TintColor * t + (1 - t) * _TintColorMin);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;两个变量的含义从名字就可以看出来。现在我们要思考如何把t算出来，这个t事实上就是Sin函数的y值。有过高中数学知识的朋友都知道，Sin函数的一般形式为&lt;code class=&quot;highlighter-rouge&quot;&gt;y=Asin(w(x + t)) + b&lt;/code&gt;。其中周期为2pi / w。我们将上述的参数都带入，得到：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;float t = saturate(sin((time + _SpeedColorOffsetX) / _Interval * 6.283185307) * _SpeedColorCutoff + _SpeedColorOffset);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这样，我们就把颜色渐变的部分完成了，最外面的saturate函数是保证t的值始终在0-1之间，因为插值技术只支持t的范围为0-1。&lt;/p&gt;
-
-&lt;p&gt;现在我们来看看纹理的平移要如何达到。其实纹理的平移更加简单，速度乘以时间就是平移的距离，但是要注意我们有一个最大最小值，要保证平移的距离在这个范围之内：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;currentUV += clamp(time * float2(_SpeedX, _SpeedY), _MinX, _MaxX);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;有一点需要提到，因为我们的动画是可以循环的，所以time的值为真实的时间对周期取模：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;float time = fmod(_Time.y, _Interval);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;上面就是Shader的主要思路，现在我们回到Editor，看看如何把这个Sin函数曲线画出来。其实非常简单，因为我们已经知道怎么算Sin函数了，所以我们只要在Editor中再算一边即可。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for (float x = 0; x &amp;lt; interval; x = x + interval / 100)
-{
-	float value = Mathf.Sin((x + speedColorOffsetX) / interval * 6.283185307f) * speedColorCutoff + speedColorOffset;
-	value = Mathf.Clamp(value, 0, 1);
-	colorCurve.AddKey(new Keyframe(x, value));
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;我们在Sin函数上取100个点进行采样，计算出这一百个点的值，然后把他封装成一个Keyframe，添加到AnimationCurve的Key中。注意一点，Keyframe是需要添加入切线和出切线的，但是我们并没有添加，所以在点少的情况下看上去并不像一个Sin函数，因此我们选择100个采样点，让两个点更加靠近，看上去就更像是一根平滑的曲线。至此，我们的Sin函数图像的绘制的就全部结束了，剩下的一下EditorGUILayout的调用查阅API手册即可。&lt;/p&gt;
-
-&lt;p id=&quot;curve&quot;&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;任意曲线绘制&lt;/h2&gt;
-&lt;p&gt;简单来说，我们接下去要做的事，就是能够直接在图像上增减Keyframe，不用手动输入参数，然后能够在Shader中计算出对应的值，通过插值的方法达到颜色渐变和纹理平移的效果。我们这里只说颜色渐变的方法，因为纹理平移和颜色渐变的思路是一模一样的，复制两次代码即可。&lt;/p&gt;
-
-&lt;p&gt;老规矩，先看一张成品图：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Curve/curveinspector.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;这里我们的参数就少了很多，唯一有的是：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Loop：是否循环播放&lt;/li&gt;
-  &lt;li&gt;Duration：周期&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;我们这次先来讲讲大致的思路是怎么样的。我遇到的第一个疑问是，对于任意一根曲线，怎么计算出在某一个x上的y的值？unity自带有一个方法叫做AnimationCurve.Evaluate(time)，我们传进去一个time，也就是x，就能帮我们计算出y的值。但是这个方法只能在C#中使用，如果要像Sin函数那样在Shader中计算一遍，那该怎么做呢？有同学可能会说，在C#中计算好再传进去，那样我们每一帧都要传递一个值，开销会很大，所以建议还是在Shader中做计算。事实上，我们只需要知道Evaluate函数具体的算法，在Shader中实现一遍就好了，于是我谷歌到了下面的东西：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;float evaluate(float time, float4 keyframe1, float4 keyframe0)
-{
-	float t = (time  - keyframe0.x) / (keyframe1.x - keyframe0.x);
-	float dt = keyframe1.x - keyframe0.x;
-	float m0 = keyframe0.w * dt;
-	float m1 = keyframe1.z * dt;
-	float t2 = t * t;
-	float t3 = t2 * t;
-	float a = 2 * t3 - 3 * t2 + 1;
-	float b = t3 - 2 * t2 + t;
-	float c = t3 - t2;
-	float d = -2 * t3 + 3 * t2;
-	float value = a * keyframe0.y + b * m0 + c * m1 + d * keyframe1.y;
-	return saturate(value);
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Nice！这就是Unity的Evaluate函数的具体实现。我们只要把这个函数搬到Shader的CGPROGRAM代码块中就好啦！&lt;/p&gt;
-
-&lt;p&gt;但是新的问题又来了，这个函数需要两个keyframe参数（相邻的两个keyframe），这两个keyframe肯定是要从material editor中传进去的，如果我们只传这两个参数，那和用C#计算完把结果穿进去有什么区别呢，还是需要每一帧（可能多个帧）传递数据一次，毕竟时间在x轴上跑，相邻的两个keyframe会变。我们最理想的情况是，不会因为时间的缘故而传递数据。因此，我们需要在曲线绘制完毕后，就将所有的keyframe传进去，然后在Shader中计算此时相邻的keyframe是哪两个，这样开销会小很多。所以现在的关键点是，如何传递所有的keyframe到Shader中，以及如何计算出当前时间相邻的两个Keyframe？&lt;/p&gt;
-
-&lt;p&gt;我们先来回答第一个问题。回到Editor，我们绘制曲线在OnInpectorGUI()这个函数中，有一点需要注意，我们必须将绘制完的曲线赋给原来的变量，否则曲线是不会变化的！&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;colorCurve = EditorGUILayout.CurveField(colorCurve, Color.green, new Rect(0, 0, 1.0f, 1.0f), GUILayout.Height(150));
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;然后，&lt;code class=&quot;highlighter-rouge&quot;&gt;colorCurve&lt;/code&gt;就是我们最终得到的动画曲线。我们只要取colorCurve.keys就能够得到他所有的Keyframe了。这里有一点需要注意，我们在Editor中设置的曲线范围都是0-1之间的，而且keyFrame必须至少有2个，否则曲线就失去了意义，这点在代码中需要判断一下。另外，我们有一个Duration变量来控制周期，所以我们需要保证最后一个keyframe的x坐标必须为1，表示1秒，在最终绘制曲线的时候，会将时间放慢Duration倍，达到周期为Duration的效果，例如如果想在3.5秒完成一次动画，就把Duration设置成3.5即可。总而言之，Curve的绘制只是告诉我们变化的曲线，具体变化需要多久，由Duration来控制，这样做会使得美术更加容易理解，代码的实现也会更加简单。这部分代码在Shader中实现，Editor中只需要保证x的坐标为1即可：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;if (number &amp;gt;= 2)
-{
-	keys[number - 1].time = 1.0f;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;然后我们遍历每一个KeyFrame，传递到Shader中就好。&lt;/p&gt;
-
-&lt;p&gt;现在回答第二个问题，如何知道离时间最近的两个Keyframe。最简单的方法就是在Shader中遍历所有的Keyframe，判断时间的关系。这么做可以，但是非常耗时，每一帧都需要遍历，而且每一个顶点都要遍历一遍。所以我没有采用这样的方法，而是做了一个Hash Table，在Editor中计算完之后传递给Shader，把变量命名为TimeTable，其中他的下标是时间（取整），值就是在下标表示的时间时下一个Keyframe的序号（Index）。这里需要插一句话，Keyframe在Shader中需要float4来存储，我们规定一根曲线上不能超过10个keyframe，所以三根曲线就有30个float4。而CG最多支持128个float4，因此我们大约只能再用90个float4。所以TimeTable的类型为float4，其中x，y，z分别为三根曲线所用。这里我们只介绍颜色，所以用x分量就可以。&lt;/p&gt;
-
-&lt;p&gt;可能会有同学好奇，时间取整作为下标，那3.2秒和3.6秒时对应的Keyframe是同一个咯？如果在3.5秒和3.7秒有一个Keyframe的话，计算出的结果就是错误的！我们现在换个思路，TimeTable的大小为90，也就是说动画周期最长可以是90，但实际上我们根本不需要这么久的时间，动画周期在Editor里就已经确定了，而Editor中Keyframe的time最大就是1.0，所以我们可以将时间“拉长”90倍，也就是说，在每一个Keyframe的time上乘以90作为一个界限。这么说有点抽象，我们举个例子：假设在0.5秒和0.6秒有两个keyframe，如果直接取整，那么0.6秒这个keyframe会直接被无视掉。现在我们乘以90，得到45和54，也就是说，当真正的时间乘上90小于45的话，会取前面的keyframe，在45-54之间的话，就会取后面的keyframe，这样就把两个keyframe“区分”开来了，更直观一点，就是把他们的距离拉长了90倍，时间可以放进去了！&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for (; currentTime &amp;lt;= (int)(keys[i + 1].time * 90); ++currentTime)
-{
-	timeTable[currentTime][type] = i + 1;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;代码就是这样，type就是x，y，z分量，最终我们在Shader中使用时，只要把真实的时间乘以90作为下标，就能得到正确的下一个keyframe了！&lt;/p&gt;
-
-&lt;p&gt;现在我们两个问题都解决了！去Shader中看看具体剩下的部分吧！&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;float beginTime = _Time.y - v.time.x;
-beginTime = max(0, beginTime);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;这一部分是控制一个GameObject什么时候开始动画，如果没有这一块，那所有的GameObject都是同步动画的，因为他们共享的是同一个Material（为了Batch）。我们需要区分他们动画开始的时间，就需要在Mesh中把开始时间传递进去，如果没到那个时间，那当前动画运行的时间就始终是0，如果到了，那就是真实的动画运行时间了。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;float time = ((1 - _Loop) * clamp(beginTime, 0, _Duration) + _Loop * fmod(beginTime, _Duration)) / _Duration;
-float4 currentVector = _TimeTable[floor(time * 90)];
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;time控制是否需要循环播放动画，而且范围始终在0-1之间，与Editor相匹配。由于我们除以了一个Duration，所以时间被放慢了Duration倍！达到了Duration控制周期的效果！后面一行的time*90就是之前所说过的部分。&lt;/p&gt;
-
-&lt;p&gt;剩下的部分，就是找到keyframe，传到evaluate函数计算出结果，与颜色做插值，这些在Sin函数部分都已经讲过了，就不再重复了。&lt;/p&gt;
-
-&lt;p&gt;到此为止，我们的代码就彻底完成啦！&lt;/p&gt;
-
-&lt;h2 id=&quot;section-2&quot;&gt;性能测试&lt;/h2&gt;
-
-&lt;p&gt;又到了喜闻乐见的性能测试环节了，先来看看用Animation做颜色渐变和纹理平移的效果。创建500个GameObject，挂载Animation，运行在安卓手机上：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Curve/animation.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;关注Camera.Render，时间大约为38ms。现在来看看我们自己写的Shader执行颜色渐变和纹理平移的效率：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Curve/shader.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;发现Camera.Render的时间只要15ms左右。虽然没有Line Renderer那么惊艳，但是还是节约了一半多的时间，原因还是在Batch上面，因为我们是在Material和Shader中做这些事情，而同一个Material是自动会被Batch的，所以节约了一部分Draw Call的开销。此外，用Animation做还特别麻烦，需要每一种渐变效果都做一个Animation。而用Material，只要拖拖曲线，画画keyframe就好，美术会更加喜欢的！&lt;/p&gt;
-
-&lt;h2 id=&quot;section-3&quot;&gt;后记&lt;/h2&gt;
-&lt;p&gt;当然，如果你有什么问题的话，请在评论中告诉我~&lt;/p&gt;
-</description>
-        <pubDate>Thu, 04 Aug 2016 16:00:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2016/08/04/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/08/04/%E4%BD%BF%E7%94%A8Shader%E5%AE%9E%E7%8E%B0%E4%BB%BB%E6%84%8F%E6%9B%B2%E7%BA%BF%E7%9A%84%E9%A2%9C%E8%89%B2%E6%B8%90%E5%8F%98%E5%92%8C%E7%BA%B9%E7%90%86%E7%A7%BB%E5%8A%A8/</guid>
         
         <category>Unity</category>
         

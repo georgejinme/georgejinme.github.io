@@ -1,132 +1,36 @@
 ---
-layout: page
+layout: default
 title: "About"
 description: "Hey, this is George."
 header-img: "img/about-bg.jpg"
 ---
 
-<!-- Language Selector -->
-<select onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> 中文 Chinese </option>
-    <option value="1"> 英语 English </option>
-</select>
+<!-- Page Header -->
+<header class="intro-header full-screen" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h1>
+                    <span class="subheading">{{ page.description }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
 
 <!-- Chinese Version -->
-<div class="zh post-container">
-    <blockquote>
-        与其感慨路难行，不如马上出发。
-    </blockquote>
-    你在看我。<br><br>上海交通大学计算机科学与技术毕业生。<br><br>目前在日企Works Applications工作，地点月星环球港，50%概率2018年去东京总部。<br><br>喜欢打桌球，自学日语中。我也是个日剧粉，嘎（新垣结衣）癌已经晚期了。<br><br>Dota2是我最喜欢的游戏，Liquid是我最喜欢的战队，Miracle-是我最喜欢的选手。欢迎留下你们的ID，可以一起战斗。
-
-</div>
-
-<!-- English Version -->
-<div class="en post-container">
-    <blockquote>
-        Take Action Right Now.
-    </blockquote>
-
-</div>
-
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    function onLanChange(index){
-        if(index == 0){
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }else{
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        }
-    }
-    onLanChange(0);
-</script>
-
-{% if site.gitment_clientId %}
-<div id="gitmentContainer"></div>
-{% endif %}
-
-{% if site.duoshuo_username %}
-<!-- 多说评论框 start -->
-<div class="comment">
-    <div class="ds-thread"
-    {% if site.duoshuo_username == "huxblog" %}
-        data-thread-id="1187623191091085319"
-    {% else %}
-        data-thread-key="{{site.duoshuo_username}}/about"
-    {% endif %}
-
-    data-title="{{page.title}}"
-    data-url="{{site.url}}/about/"></div>
-</div>
-<!-- 多说评论框 end -->
-
-<!-- Duoshuo hacking -->
-<input id="dsUser" type="hidden" value="{{site.duoshuo_username}}"  />
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User hacking by Hux
-    var _user = document.getElementById('dsUser').value;
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user };
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
-{% endif %}
-
-
-{% if site.disqus_username %}
-<!-- disqus 评论框 start -->
-<div class="comment">
-    <div id="disqus_thread" class="disqus-thread">
-
+<div class="container about">
+    <div class="zh about-container">
+        <h3>无趣的人</h3>
+        <hr/>
+        <p>Works Applications前端工程师</p>
+        <p class="detail">有点污辱工程师了</p>
+        <p>在东京苟活</p>
+        <p class="detail">想回国</p>
+        <p>重度Dota2、PS4玩家</p>
+        <p class="detail">卡尔王</p>
     </div>
 </div>
-<!-- disqus 评论框 end -->
-
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "{{site.disqus_username}}";
-    var disqus_identifier = "{{site.disqus_username}}/{{page.url}}";
-    var disqus_url = "{{site.url}}{{page.url}}";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
-{% endif %}
-
-{% if site.gitment_clientId %}
-<!-- gitment 公共JS代码 start -->
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-    id: window.location.href, // 可选。默认为 location.href
-    owner: 'gougoumemeda',
-    repo: 'gougoumemeda.github.io',
-    oauth: {
-        client_id: '{{site.gitment_clientId}}',
-        client_secret: '{{site.gitment_clientSecret}}',
-  },
-})
-gitment.render('gitmentContainer')
-</script>
-<!-- gitment 公共JS代码 end -->
-{% endif %}
 
 

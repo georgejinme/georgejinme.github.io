@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/hux-blog.min.css">
+    <link rel="stylesheet" href="/css/jin-blog.min.css">
 
     <!-- Pygments Github CSS -->
     <link rel="stylesheet" href="/css/syntax.css">
@@ -127,21 +127,20 @@
     }
     $brand.addEventListener('click', function() {
         var password = prompt("Who is her favourite man?");
-        if (password == "Domoto Tsuyoshi") {
-            window.location.href = '/secret/index.html';
+        if (password == "nrghndfhgndfghmdghmtyhdsfhgesrg") {
+            window.location.href = '/afsdfawwedfewgebwvsafgsdfgsdfg/index.html';
         }
     })
 </script>
 
 
     <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/about-bg.jpg')">
+<header class="intro-header full-screen" style="background-image: url('/img/about-bg.jpg')">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="site-heading">
                     <h1>About</h1>
-                    <!--<hr class="small">-->
                     <span class="subheading">Hey, this is George.</span>
                 </div>
             </div>
@@ -149,260 +148,21 @@
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-        
-
-<!-- USE SIDEBAR -->
-    <!-- Post Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-    			<!-- Language Selector -->
-<select onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
-    <option value="0" selected> 中文 Chinese </option>
-    <option value="1"> 英语 English </option>
-</select>
-
 <!-- Chinese Version -->
-<div class="zh post-container">
-    <blockquote>
-        与其感慨路难行，不如马上出发。
-    </blockquote>
-    你在看我。<br><br>上海交通大学计算机科学与技术毕业生。<br><br>目前在日企Works Applications工作，地点月星环球港，50%概率2018年去东京总部。<br><br>喜欢打桌球，自学日语中。我也是个日剧粉，嘎（新垣结衣）癌已经晚期了。<br><br>Dota2是我最喜欢的游戏，Liquid是我最喜欢的战队，Miracle-是我最喜欢的选手。欢迎留下你们的ID，可以一起战斗。
-
+<div class="container about">
+    <div class="zh about-container">
+        <h3>无趣的人</h3>
+        <hr/>
+        <p>Works Applications前端工程师</p>
+        <p class="detail">有点污辱工程师了</p>
+        <p>在东京苟活</p>
+        <p class="detail">想回国</p>
+        <p>重度Dota2、PS4玩家</p>
+        <p class="detail">卡尔王</p>
+    </div>
 </div>
 
-<!-- English Version -->
-<div class="en post-container">
-    <blockquote>
-        Take Action Right Now.
-    </blockquote>
 
-</div>
-
-<!-- Handle Language Change -->
-<script type="text/javascript">
-    var $zh = document.querySelector(".zh");
-    var $en = document.querySelector(".en");
-    function onLanChange(index){
-        if(index == 0){
-            $zh.style.display = "block";
-            $en.style.display = "none";
-        }else{
-            $en.style.display = "block";
-            $zh.style.display = "none";
-        }
-    }
-    onLanChange(0);
-</script>
-
-
-<div id="gitmentContainer"></div>
-
-
-
-
-
-
-
-
-<!-- gitment 公共JS代码 start -->
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-<script>
-var gitment = new Gitment({
-    id: window.location.href, // 可选。默认为 location.href
-    owner: 'gougoumemeda',
-    repo: 'gougoumemeda.github.io',
-    oauth: {
-        client_id: 'e6336e0f06cb96722f36',
-        client_secret: '6d0eed88b21afa52d827adbe6336e61ea4cb8fb8',
-  },
-})
-gitment.render('gitmentContainer')
-</script>
-<!-- gitment 公共JS代码 end -->
-
-
-
-
-    		</div>
-    <!-- Sidebar Container -->
-            <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-                <!-- Featured Tags -->
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                        
-                            
-                                <a href="/tags/#Web" title="Web" rel="7">
-                                    Web
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#技术" title="技术" rel="22">
-                                    技术
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#iOS" title="iOS" rel="9">
-                                    iOS
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#Objective-C" title="Objective-C" rel="6">
-                                    Objective-C
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#Javascript" title="Javascript" rel="4">
-                                    Javascript
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#Python" title="Python" rel="2">
-                                    Python
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#生活" title="生活" rel="2">
-                                    生活
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#腾讯" title="腾讯" rel="4">
-                                    腾讯
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#Unity" title="Unity" rel="3">
-                                    Unity
-                                </a>
-                            
-                        
-                            
-                        
-                            
-                        
-                            
-                                <a href="/tags/#Acemap" title="Acemap" rel="2">
-                                    Acemap
-                                </a>
-                            
-                        
-                            
-                                <a href="/tags/#Works Applications" title="Works Applications" rel="4">
-                                    Works Applications
-                                </a>
-                            
-                        
-                            
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-                        
-                            <img src="/img/avatar-george.jpg" />
-                        
-                        
-                            <p>与其感慨路难行，不如马上出发。</p>
-                        
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="http://weibo.com/u/3033630677">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://www.facebook.com/金嘉骏">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://github.com/gougoumemeda">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </section>
-                <!-- Friends Blog -->
-                
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    
-                        <li><a href="http://qinacme.com">秦鹤</a></li>
-                    
-                </ul>
-                
-    		</div>
-        
-	</div>
-</div>
 
 
     <!-- Footer -->
