@@ -1,0 +1,158 @@
+---
+layout:     post
+title:      "Wap生涯最后的几个小组件"
+subtitle:   "我爱东京，但最适合的还是上海"
+date:       2018-08-26 01:57:00
+author:     "George"
+header-img: "img/post-bg-tokyo.jpg"
+tags:
+    - Web
+    - 技术
+---
+
+## 前言
+
+再见东京。
+
+不得不书我是真的喜欢日本呀，这才是一个成熟的社会所应该有的样子。不过可惜的是，在这里上班是一件非常痛苦的事情，尤其是做it的，得不到重视。其实想想也是正常的，这是一个发达国家，发展的重心可能会在人民百姓的生活质量上，所以像医生，律师这样的社会性职业会更加吃香。
+
+回去咯，拥抱我的大魔都，中华美食万岁。
+
+## 正文
+
+走之前也算是把自己要做的东西全部都做完了。这篇小博客简单说说四个组件好了。其实这四个组件的实现都很简单，只是觉得还挺有意思的，就跟大家分享一下。
+
+- mobile-bottom-panel-page.js
+- mobile-selection-group.js
+- mobile-selection-group-item.js
+- mobile-side-menu.js
+
+其中从名字就可以看出来，group和group-item是要在一起使用的。那么接下来我就一个一个简单介绍一下这些组件把。
+
+### mobile-button-panel-page
+
+具体的实现效果可以参考google map的bottom panel。实现上来看，我主要的思路就是用一个div，将它的层级设置的相对高，然后通过css的动画和drag event来控制上拉和下拉。所以整体的难点都在于对于event和动画的操作。
+
+首先是`TOUCHSTART`和`TOUCHMOVE`这两个event。这两个应该没有什么太大的争议，在前者的回调函数中我们初始化一些变量即可，然后在后者的回调函数中，我们将他的位置跟着鼠标就行。问题出在`TOUCHEND`这个事件中。在这里，我们只允许bottom panel停留在三个位置
+
+- 底部
+- 中间的某个固定的位置
+- 顶部
+
+用户手放掉之后，bottom panel需要自动判断它应该停留的位置，然后使用css动画来过度到那个位置。判断依据，就是用户所move的距离，当小于一个阈值时，bottom panel会回归到他在滑动之前的位置，这也是符合我们实际的用户体验的。现在我们来看看实际的实现代码。
+
+```
+.listen(this.getElement(), goog.events.EventType.TOUCHEND, function(event) {
+    this.setTransition_('top ease-in 0.1s');
+    var movedY = touchStartY - touchEndY;
+    var bottomPanelHeight = this.getBottomPanelHeight_();
+    if (movedY >= Page.CONST_.UP_THRSHOLD) {
+      this.setPanelTop_(0);
+    } else if (movedY <= -1 * bottomPanelHeight / 2) {
+      this.autoScrollToNextDownPosition_();
+    } else {
+      this.autoScrollToCurrentPosition_();
+    }
+});
+```
+
+可以看到，我们计算出手指滑动的距离之后，对他进行了一次判断，如果上划超过一个阈值，就让它位于顶部；如果是往下滑动了一段距离，就自动到下一个位置，否则就不动，回到原来的位置。
+
+如何滑到下一个位置呢？一共有两种情况，如果当前在顶部，就到中间的固定位置；如果是在中间的固定位置，就到底部。
+
+```
+Page.prototype.autoScrollToCurrentPosition_ = function() {
+    var currentTop = goog.style.getPosition(this.getElement()).y;
+    var bottomPanelHeight = this.getBottomPanelHeight_();
+    if (currentTop < bottomPanelHeight / 2) {
+        this.setPanelTop_(0);
+    } else {
+        this.setPanelTop_(window.innerHeight - bottomPanelHeight - Page.CONST_.INDICATOR_HEIGHT - Page.CONST_.NAV_HEIGHT);
+    }
+};
+```
+
+如何保持当前的位置呢？也很简单，因为我们滑动到的位置都是固定的，所以我们只要判断一下当前的位置即可。
+
+```
+Page.prototype.autoScrollToNextDownPosition_ = function() {
+    var currentTop = goog.style.getPosition(this.getElement()).y;
+    var mediumY = window.innerHeight - this.getBottomPanelHeight_() - Page.CONST_.INDICATOR_HEIGHT - Page.CONST_.NAV_HEIGHT;
+    if (currentTop <= mediumY) {
+        this.setPanelTop_(mediumY);
+    } else {
+        this.setPanelTop_(window.innerHeight - Page.CONST_.NAV_HEIGHT);
+    }
+};
+```
+
+这样子基本上一个简单的buttom panel就完成了。剩下的部分都很基础，大家可以自行实现。
+
+### mobile-selection-group和mobile-selection-group-item
+
+这个组件做出来主要是提供一个可以多选的列表。其实公司的组件库里有类似的组件，但是只能够在xml中创建，没有办法动态添加，也没有办法自定义样式，所以就用js纯手撸了一个。
+
+实现的代码很简单，这里就不再过多的介绍了。注意一下`addItem`这个函数就可以了。
+
+```
+Group.prototype.addItems = function(items) {
+    goog.array.forEach(items, function(i) {
+        var item = new Item({
+            'internalId': i['internalId'],
+            'title': i['title'],
+            'selected': i['selected']
+        }, this.getDomHelper());
+        this.addChild(item, false);
+        this.getHandler().listen(item, Item.EventType.CLICK, this.onItemClick_);
+        item.render(this.getContentElement_());
+    }, this);
+};
+```
+
+注意一下在Google Closure下必须addChild才能之后使用forEachChild的方法来取到子元素。
+
+### mobile-side-menu
+
+这个组件其实和bottom panel有一点点像，一个是在y轴方向的滑动，一个是在x轴方向的滑动。不过它的动画全都是由css来控制的，没有event的参与，所以可能在实现上更加简单一些。
+
+在实现的时候，首先我们要确认一下，一共有三个DOM元素。
+
+- 父元素，表示side menu
+- content元素，表示需要显示的内容。该元素一开始在屏幕外
+- overlay元素，用来添加点击收回事件，并且将非相应区的颜色加深。
+
+上述三个元素的位置全部使用绝对定位。我一直觉得绝对定位在组件中，尤其是这样不对称的组件中很有用。
+
+然后就是显示side menu时的动画，对于content，我们需要控制它的left样式，让他慢慢的移入屏幕。
+
+```
+.transition(left ease-in 0.2);
+```
+
+对于overlay元素，我们改变它的display和opacity属性即可。
+
+```
+.transition(opacity ease-in 0.2);
+```
+
+需要注意的是，在隐藏side menu的时候，我们需要在overlay的opacity降为0之后再修改它的display，否则不会产生动画效果，因为已经被隐藏了。
+
+```
+Menu.prototype.hide = function() {
+    new goog.async.Delay(function() {
+         goog.dom.classlist.add(this.getOverlayElement_(), Menu.CssNames.HIDDEN);
+    }.bind(this), Menu.CONST_.ANIMATION_DURATION, this).start();
+    goog.style.setStyle(this.getOverlayElement_(), {
+        'opacity': 0
+    });
+    goog.style.setStyle(this.getContentElement_(), {
+        'left': '100%'
+    });
+    this.shown_ = false;
+};
+```
+
+其他的就很简单了~
+
+
+

@@ -10,9 +10,9 @@
     <meta name="keyword"  content="">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>金嘉骏的博客 | GeorgeJin Blog</title>
+    <title>拼多多前端一面 - 金嘉骏的博客 | GeorgeJin Blog</title>
 
-    <link rel="canonical" href="https://gougoumemeda.github.io/page3/">
+    <link rel="canonical" href="https://gougoumemeda.github.io/2018/06/24/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E5%89%8D%E7%AB%AF%E4%B8%80%E9%9D%A2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -134,368 +134,312 @@
 </script>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="/img/post-bg-acemap.jpg" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/post-bg-acemap.jpg')
+    }
+</style>
+<header class="intro-header" >
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>GeorgeJin</h1>
-                    <!--<hr class="small">-->
-                    <span class="subheading">我们上海见。</span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Web" title="Web">Web</a>
+                        
+                        <a class="tag" href="/tags/#技术" title="技术">技术</a>
+                        
+                    </div>
+                    <h1>拼多多前端一面</h1>
+                    
+                    
+                    <h2 class="subheading">回国路漫漫</h2>
+                    
+                    <span class="meta">Posted by George on June 24, 2018</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-        
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-<!-- USE SIDEBAR -->
     <!-- Post Container -->
-    		<div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-    			
-<div class="post-preview">
-    <a href="/2016/04/02/Objective-C%E4%B8%AD%E6%8E%A5%E5%8F%A3%E5%92%8CAPI%E7%9A%84%E8%AE%BE%E8%AE%A1/">
-        <h2 class="post-title">
-            Objective-C中接口和API的设计
-        </h2>
-        
-        <h3 class="post-subtitle">
-            《Effective Objective-C 2.0》接口与API部分笔记
-        </h3>
-        
-        <div class="post-content-preview">
-            首先有一点需要注意，在OC中是没有命名空间这个概念的。也就是说，我们用以区分不同变量的唯一方法就是变量名。所以我们会看到很多NS开头的对象，这些对象是Foundation库的。UI开头的对象是在UIKit库中。CF开头的对象是在CoreFoundation库中。所以我们自定义的库往往都用一些大写字母来开头，以区分不同的变量名。例如AFNetwork。不过，所有两个字母前缀都被苹果所保留了，我...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by George on April 2, 2016
-    </p>
-</div>
-<hr>
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-<div class="post-preview">
-    <a href="/2016/03/22/Objective-C%E4%B8%AD%E7%9A%84%E6%B6%88%E6%81%AF/">
-        <h2 class="post-title">
-            Objective-C中的消息
-        </h2>
-        
-        <h3 class="post-subtitle">
-            《Effective Objective-C 2.0》Message部分笔记
-        </h3>
-        
-        <div class="post-content-preview">
-            我们先来介绍一下OC中属性的用法。属性就是我们在实际工程中运用的最多的形式，以@property开头。用属性有什么好处呢？简单来说，属性有利于我们对内存的管理，系统会自动生成一套setter和getter来处理对属性的读取和写入操作，同时满足用户指定的strong，week等修饰符。当然，只要在属性头加上@dynamic，系统就不会自动去生成setter和getter。同时，系统会为每一个属...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by George on March 22, 2016
-    </p>
-</div>
-<hr>
+				<h2 id="section">前言</h2>
 
-<div class="post-preview">
-    <a href="/2016/03/08/Objective-C%E8%AF%AD%E8%A8%80%E7%9B%B8%E5%85%B3/">
-        <h2 class="post-title">
-            Objective-C语言相关
-        </h2>
-        
-        <h3 class="post-subtitle">
-            《Effective Objective-C 2.0》OC语言部分笔记
-        </h3>
-        
-        <div class="post-content-preview">
-            最近正好在看《Effective Objective-C 2.0》，简单记录一下每一章节的内容吧，也算是复习了一下。
+<p>最近出了一点事，所以想着赶紧回国。一方面是女朋友在国内，异国恋太容易患得患失了。另一方面家里已经在上海买了房子，继续留在东京也没有什么意义了，所以，找到工作就回去了吧。</p>
 
-那首先我们从语言本身开始说起。Objective-C是使用消息结构而非函数调用的，因此其运行时所执行的代码是由运行的环境来决定，而并非由编译器决定。这样的特性使得Objective-C非常之灵活，因为运行时确定，所以我们可以在写代码的时候展现一些黑科技，比如说运行时的代码替...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by George on March 8, 2016
-    </p>
-</div>
-<hr>
+<h2 id="section-1">正文</h2>
 
-<div class="post-preview">
-    <a href="/2016/03/01/%E5%85%B3%E4%BA%8EGrand-Central-Dispatch%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86/">
-        <h2 class="post-title">
-            关于Grand Central Dispatch的一些知识
-        </h2>
-        
-        <h3 class="post-subtitle">
-            《Objective-C高级编程 iOS与OS X多线程和内存管理》GCD部分笔记
-        </h3>
-        
-        <div class="post-content-preview">
-            GCD是什么，其实就是一堆控制线程的API，高度封装，而且性能优秀。
+<p>面的拼多多。为什么会想去拼多多呢？</p>
 
-为什么要有多线程呢？实际上我们打开一个app之后，主线程也就是我们看到的线程只有一个，但是我们会有很多后台的操作，比如下载图片，计算一个很复杂的公式等，如果在主线程中运行，那么用户就不能执行其他的操作。所以一般而言主线程用来更新UI和响应事件，其他的高负荷运算放在另一个线程中。
-
-GCD有两种queue，一种是seria...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by George on March 1, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2016/02/28/Objective-C%E4%B8%AD%E7%9A%84Block/">
-        <h2 class="post-title">
-            Objective-C中的Block
-        </h2>
-        
-        <h3 class="post-subtitle">
-            《Objective-C高级编程 iOS与OS X多线程和内存管理》Block部分笔记
-        </h3>
-        
-        <div class="post-content-preview">
-            Block是什么呢？
-
-其实就是C++中的Lambda表达式，js中的匿名函数，swift中的闭包等。
-
-Block能截取自动变量值，本质上来说，Block就是一个struct，我们截取到的变量值会存储在这个struct中，这个存储是拷贝存储，也就是说，值是不会随着之后的代码而改变的。更重要的一点是，我们无法对这样捕获到的值进行修改，除非我们增加block修饰符：
-
-__block id t...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by George on February 28, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2016/02/22/%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8EARC%E7%9A%84/">
-        <h2 class="post-title">
-            一些关于ARC的
-        </h2>
-        
-        <h3 class="post-subtitle">
-            《Objective-C高级编程 iOS与OS X多线程和内存管理》ARC部分笔记
-        </h3>
-        
-        <div class="post-content-preview">
-            刚看了《Objective-C高级编程 iOS与OS X多线程和内存管理》的第一章，非常有意思，主要讲的是iOS中新引进的ARC系统。
-
-相信大部分人都很熟悉ARC系统了，其实本质上来说就是增加一个retainCount引用计数，来表示当前有多少变量在使用一个对象。如果计数为0，则销毁这个对象，因此大部分的销毁变量的代码都省去了，因为编译器会自动帮我们搞定这些。这是ARC的思想，c++中sh...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by George on February 22, 2016
-    </p>
-</div>
-<hr>
-
-<div class="post-preview">
-    <a href="/2016/02/15/%E5%85%B3%E4%BA%8E%E6%97%A7%E7%89%88%E4%B8%AA%E4%BA%BA%E4%B8%BB%E9%A1%B5/">
-        <h2 class="post-title">
-            关于旧版个人主页
-        </h2>
-        
-        <h3 class="post-subtitle">
-            一些技术细节，包括pjax，low-poly picture等。
-        </h3>
-        
-        <div class="post-content-preview">
-            
-  “需要说明一下，这只是我之前个人主页的一些说明。现在你看到的是新版，部分博客会直接从旧版网页拷贝到新版。关于新版网页的说明请看后续博文。旧版现已下线，如果想看代码实现，请点击我。背景是旧版博客使用的Low-Poly图像。”
-
-
-前言
-
-跳过废话，直接看技术实现 
-
-春节不上班，闲来无事就在家里写了一个个人网页。
-
-其实本意是想介绍一下自己，算是一份小小的简历，但在是否将博客功能嵌入这个...
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by George on February 15, 2016
-    </p>
-</div>
-<hr>
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/page2">&larr; Newer Posts</a>
-    </li>
-    
-    
+<ul>
+  <li>不想去大厂了，小厂可能有更好的机遇，有更大的空间</li>
+  <li>有同学在里面工作，强烈推荐</li>
+  <li>薪酬也不低</li>
+  <li>地理位置也很完美，离我新家很近</li>
 </ul>
 
+<p>所以，对我来说，拼多多是一个不二的选择，如果能拿到offer的话，应该不会去面其他公司了。</p>
 
-    		</div>
+<p>简单说说问到了什么问题。。。</p>
+
+<h4 id="section-2">为我介绍</h4>
+
+<p>日常吹逼，简单说说自己的学习生涯，然后现在在做什么。满关键的吧，正确的引导面试官问问题是面试成功的key。</p>
+
+<h4 id="section-3">现在在公司做什么</h4>
+
+<p>Mobile相关的内容，主要是hybrid app。</p>
+
+<h4 id="web">能介绍一下Web移动端吗</h4>
+
+<p>很简单的题目，一般说三种。</p>
+
+<ul>
+  <li>Web app</li>
+  <li>Hybrid app</li>
+  <li>Native app</li>
+</ul>
+
+<p>为了显得我知识面比较广，加上一个React-Native，正好这也是我以前实习做过的方面。</p>
+
+<h4 id="react-nativedemo">React-Native做出过demo吗</h4>
+
+<p>做出来过，以前在触宝实习的时候，做了一个触宝电话商城的demo，不过仅仅是View，并没有实现事件。</p>
+
+<h4 id="react-native">React-Native有什么缺点吗</h4>
+
+<p>这个问题其实我还真的没有怎么考虑过。上手比较困难？调试比较困难？但是这些都不是一些硬性的缺陷。后来补充了一下，苹果商城之后明文规定禁止代码热更新，可能是缺陷之一。但是也不知道这一个条例最终实施的情况如何。</p>
+
+<h4 id="reactjs">ReactJS用过吗</h4>
+
+<ul>
+  <li>最近是大学里面写SJTU Lost，失物招领平台，React+Flux</li>
+  <li>WAP面试的时候第一次写React，当时震惊了一部分面试官</li>
+</ul>
+
+<h4 id="reactjs-1">ReactJS最近还有用过吗，有什么最新的特性呢</h4>
+
+<p>其实最近ReactJS的东西看得比较少，主要是在学Redux那一套内容，说是精简版的Flux所以就想了解一下。</p>
+
+<p>最新的特性其实不太清楚，主要的话可能就是套用一下ES6的语法吧。</p>
+
+<h4 id="reactjs-2">ReactJS有什么特性吗</h4>
+
+<ul>
+  <li>虚拟DOM，能够确保性能</li>
+  <li>前端路由，pushState</li>
+</ul>
+
+<h4 id="reactjs-3">ReactJS生命周期说一下</h4>
+
+<p>简单的题目，过</p>
+
+<h4 id="js">回到JS，你知道盒子模型吗</h4>
+
+<p>实际在开发中遇到过盒子模型的坑。主要是为了支持IE老版本，那时候IE有一套单独的盒子模型，会把padding，border和滚动条的宽度计算进去，但是w3c的盒子模型就是已经过滤掉那些有的没的，真正的content的width。</p>
+
+<h4 id="bfc">知道BFC吗</h4>
+
+<p>这个名词比较绕，我举两个例子吧。</p>
+
+<ul>
+  <li>BFC会发生margin坍塌</li>
+  <li>BFC可以用来消除float</li>
+</ul>
+
+<h4 id="js-1">JS继承有什么方式</h4>
+
+<p>了解的比较少，原型继承是我用的比较常见的。顺便扯了一点原型链的东西。</p>
+
+<h4 id="js-2">JS原型继承有什么缺点</h4>
+
+<p>不了解。说了一个对C++与JAVA程序员不友好，在ES6出来之前。<a href="https://segmentfault.com/a/1190000011151188">参考</a></p>
+
+<h4 id="js-3">JS事件委托和代理</h4>
+
+<p>什么鬼，完全没听过，但是搜了一下，好像我平时一直都在用啊。<a href="https://segmentfault.com/a/1190000002613617">参考</a></p>
+
+<p>这么说来，事件委托就是绑定在父节点，用delegate函数？那我真的天天在用啊。</p>
+
+<h4 id="js-4">JS事件冒泡</h4>
+
+<p>这个是一个比较正常的名词了，就是子元素被触发的时候父元素也会被触发。</p>
+
+<h4 id="css">用CSS写一个圆环</h4>
+
+<ul>
+  <li>两个DIV套在一起，肯定没问题的操作</li>
+  <li>一个DIV设置border</li>
+</ul>
+
+<h4 id="section-4">大小99的数组，放了1-100中99个不重复的数，找出那个不在里面的</h4>
+
+<ul>
+  <li>用一个hash table标记一下，需要遍历两次</li>
+  <li>求和，再求1-100的和，然后相减</li>
+</ul>
+
+<h4 id="section-5">有什么想问的吗</h4>
+
+<ul>
+  <li>技术栈：ReactJS</li>
+</ul>
+
+<h4 id="section-6">互联网不太一样</h4>
+
+<p>是的，没问题，我在腾讯游戏也待过，一周六天，很累。</p>
+
+<h4 id="section-7">为什么没有去腾讯</h4>
+
+<ul>
+  <li>钱不多</li>
+  <li>不想在深圳</li>
+  <li>上海的不感兴趣</li>
+  <li>喜欢日本</li>
+</ul>
+
+<h2 id="section-8">后文</h2>
+
+<p>求过。</p>
+
+
+
+                <hr>
+
+                
+
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/05/17/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A8%A1%E6%8B%9FCalendar/" data-toggle="tooltip" data-placement="top" title="移动端模拟Calendar">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+
+                
+
+                
+
+                
+                <div id="gitmentContainer"></div>
+                
+
+            </div>
+
     <!-- Sidebar Container -->
             <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
                 <!-- Featured Tags -->
                 
                 <section>
                     <hr class="hidden-sm hidden-xs">
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        
+        				
                             
-                                <a href="/tags/#Web" title="Web" rel="10">
+                				<a href="/tags/#Web" title="Web" rel="10">
                                     Web
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#技术" title="技术" rel="25">
+                				<a href="/tags/#技术" title="技术" rel="25">
                                     技术
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#iOS" title="iOS" rel="9">
+                				<a href="/tags/#iOS" title="iOS" rel="9">
                                     iOS
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#Objective-C" title="Objective-C" rel="6">
+                				<a href="/tags/#Objective-C" title="Objective-C" rel="6">
                                     Objective-C
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#Javascript" title="Javascript" rel="4">
+                				<a href="/tags/#Javascript" title="Javascript" rel="4">
                                     Javascript
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Python" title="Python" rel="2">
+                				<a href="/tags/#Python" title="Python" rel="2">
                                     Python
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#生活" title="生活" rel="2">
+                				<a href="/tags/#生活" title="生活" rel="2">
                                     生活
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#腾讯" title="腾讯" rel="4">
+                				<a href="/tags/#腾讯" title="腾讯" rel="4">
                                     腾讯
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#Unity" title="Unity" rel="3">
+                				<a href="/tags/#Unity" title="Unity" rel="3">
                                     Unity
                                 </a>
                             
-                        
+        				
                             
-                        
+        				
                             
-                        
+        				
                             
-                                <a href="/tags/#Acemap" title="Acemap" rel="2">
+                				<a href="/tags/#Acemap" title="Acemap" rel="2">
                                     Acemap
                                 </a>
                             
-                        
+        				
                             
-                                <a href="/tags/#Works Applications" title="Works Applications" rel="6">
+                				<a href="/tags/#Works Applications" title="Works Applications" rel="6">
                                     Works Applications
                                 </a>
                             
-                        
-                    </div>
+        				
+        			</div>
                 </section>
                 
 
-                <!-- Short About -->
-                <section class="visible-md visible-lg">
-                    <hr><h5><a href="/about/">ABOUT ME</a></h5>
-                    <div class="short-about">
-                        
-                            <img src="/img/avatar-george.jpg" />
-                        
-                        
-                            <p>与其感慨路难行，不如马上出发。</p>
-                        
-                        <!-- SNS Link -->
-                        <ul class="list-inline">
-                            
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://www.zhihu.com/people/gou-gou-65">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa  fa-stack-1x fa-inverse">知</i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="http://weibo.com/u/3033630677">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://www.facebook.com/金嘉骏">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                            
-                            <li>
-                                <a target="_blank" href="https://github.com/gougoumemeda">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fa fa-circle fa-stack-2x"></i>
-                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </section>
                 <!-- Friends Blog -->
                 
                 <hr>
@@ -506,10 +450,71 @@ __block id t...
                     
                 </ul>
                 
-    		</div>
-        
-	</div>
-</div>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+<!-- gitment 公共JS代码 start -->
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    id: window.location.href, // 可选。默认为 location.href
+    owner: 'gougoumemeda',
+    repo: 'gougoumemeda.github.io',
+    oauth: {
+        client_id: 'e6336e0f06cb96722f36',
+        client_secret: '6d0eed88b21afa52d827adbe6336e61ea4cb8fb8',
+  },
+})
+gitment.render('gitmentContainer')
+</script>
+<!-- gitment 公共JS代码 end -->
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
 
 
     <!-- Footer -->

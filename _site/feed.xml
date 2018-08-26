@@ -5,9 +5,162 @@
     <description>My personal webpage</description>
     <link>https://gougoumemeda.github.io/</link>
     <atom:link href="https://gougoumemeda.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 23 Jun 2018 09:17:53 +0000</pubDate>
-    <lastBuildDate>Sat, 23 Jun 2018 09:17:53 +0000</lastBuildDate>
+    <pubDate>Wed, 27 Jun 2018 11:55:31 +0000</pubDate>
+    <lastBuildDate>Wed, 27 Jun 2018 11:55:31 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>拼多多前端一面</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;前言&lt;/h2&gt;
+
+&lt;p&gt;最近出了一点事，所以想着赶紧回国。一方面是女朋友在国内，异国恋太容易患得患失了。另一方面家里已经在上海买了房子，继续留在东京也没有什么意义了，所以，找到工作就回去了吧。&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
+
+&lt;p&gt;面的拼多多。为什么会想去拼多多呢？&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;不想去大厂了，小厂可能有更好的机遇，有更大的空间&lt;/li&gt;
+  &lt;li&gt;有同学在里面工作，强烈推荐&lt;/li&gt;
+  &lt;li&gt;薪酬也不低&lt;/li&gt;
+  &lt;li&gt;地理位置也很完美，离我新家很近&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;所以，对我来说，拼多多是一个不二的选择，如果能拿到offer的话，应该不会去面其他公司了。&lt;/p&gt;
+
+&lt;p&gt;简单说说问到了什么问题。。。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;为我介绍&lt;/h4&gt;
+
+&lt;p&gt;日常吹逼，简单说说自己的学习生涯，然后现在在做什么。满关键的吧，正确的引导面试官问问题是面试成功的key。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-3&quot;&gt;现在在公司做什么&lt;/h4&gt;
+
+&lt;p&gt;Mobile相关的内容，主要是hybrid app。&lt;/p&gt;
+
+&lt;h4 id=&quot;web&quot;&gt;能介绍一下Web移动端吗&lt;/h4&gt;
+
+&lt;p&gt;很简单的题目，一般说三种。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Web app&lt;/li&gt;
+  &lt;li&gt;Hybrid app&lt;/li&gt;
+  &lt;li&gt;Native app&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;为了显得我知识面比较广，加上一个React-Native，正好这也是我以前实习做过的方面。&lt;/p&gt;
+
+&lt;h4 id=&quot;react-nativedemo&quot;&gt;React-Native做出过demo吗&lt;/h4&gt;
+
+&lt;p&gt;做出来过，以前在触宝实习的时候，做了一个触宝电话商城的demo，不过仅仅是View，并没有实现事件。&lt;/p&gt;
+
+&lt;h4 id=&quot;react-native&quot;&gt;React-Native有什么缺点吗&lt;/h4&gt;
+
+&lt;p&gt;这个问题其实我还真的没有怎么考虑过。上手比较困难？调试比较困难？但是这些都不是一些硬性的缺陷。后来补充了一下，苹果商城之后明文规定禁止代码热更新，可能是缺陷之一。但是也不知道这一个条例最终实施的情况如何。&lt;/p&gt;
+
+&lt;h4 id=&quot;reactjs&quot;&gt;ReactJS用过吗&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;最近是大学里面写SJTU Lost，失物招领平台，React+Flux&lt;/li&gt;
+  &lt;li&gt;WAP面试的时候第一次写React，当时震惊了一部分面试官&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;reactjs-1&quot;&gt;ReactJS最近还有用过吗，有什么最新的特性呢&lt;/h4&gt;
+
+&lt;p&gt;其实最近ReactJS的东西看得比较少，主要是在学Redux那一套内容，说是精简版的Flux所以就想了解一下。&lt;/p&gt;
+
+&lt;p&gt;最新的特性其实不太清楚，主要的话可能就是套用一下ES6的语法吧。&lt;/p&gt;
+
+&lt;h4 id=&quot;reactjs-2&quot;&gt;ReactJS有什么特性吗&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;虚拟DOM，能够确保性能&lt;/li&gt;
+  &lt;li&gt;前端路由，pushState&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;reactjs-3&quot;&gt;ReactJS生命周期说一下&lt;/h4&gt;
+
+&lt;p&gt;简单的题目，过&lt;/p&gt;
+
+&lt;h4 id=&quot;js&quot;&gt;回到JS，你知道盒子模型吗&lt;/h4&gt;
+
+&lt;p&gt;实际在开发中遇到过盒子模型的坑。主要是为了支持IE老版本，那时候IE有一套单独的盒子模型，会把padding，border和滚动条的宽度计算进去，但是w3c的盒子模型就是已经过滤掉那些有的没的，真正的content的width。&lt;/p&gt;
+
+&lt;h4 id=&quot;bfc&quot;&gt;知道BFC吗&lt;/h4&gt;
+
+&lt;p&gt;这个名词比较绕，我举两个例子吧。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BFC会发生margin坍塌&lt;/li&gt;
+  &lt;li&gt;BFC可以用来消除float&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;js-1&quot;&gt;JS继承有什么方式&lt;/h4&gt;
+
+&lt;p&gt;了解的比较少，原型继承是我用的比较常见的。顺便扯了一点原型链的东西。&lt;/p&gt;
+
+&lt;h4 id=&quot;js-2&quot;&gt;JS原型继承有什么缺点&lt;/h4&gt;
+
+&lt;p&gt;不了解。说了一个对C++与JAVA程序员不友好，在ES6出来之前。&lt;a href=&quot;https://segmentfault.com/a/1190000011151188&quot;&gt;参考&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;js-3&quot;&gt;JS事件委托和代理&lt;/h4&gt;
+
+&lt;p&gt;什么鬼，完全没听过，但是搜了一下，好像我平时一直都在用啊。&lt;a href=&quot;https://segmentfault.com/a/1190000002613617&quot;&gt;参考&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这么说来，事件委托就是绑定在父节点，用delegate函数？那我真的天天在用啊。&lt;/p&gt;
+
+&lt;h4 id=&quot;js-4&quot;&gt;JS事件冒泡&lt;/h4&gt;
+
+&lt;p&gt;这个是一个比较正常的名词了，就是子元素被触发的时候父元素也会被触发。&lt;/p&gt;
+
+&lt;h4 id=&quot;css&quot;&gt;用CSS写一个圆环&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;两个DIV套在一起，肯定没问题的操作&lt;/li&gt;
+  &lt;li&gt;一个DIV设置border&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-4&quot;&gt;大小99的数组，放了1-100中99个不重复的数，找出那个不在里面的&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;用一个hash table标记一下，需要遍历两次&lt;/li&gt;
+  &lt;li&gt;求和，再求1-100的和，然后相减&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-5&quot;&gt;有什么想问的吗&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;技术栈：ReactJS&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;section-6&quot;&gt;互联网不太一样&lt;/h4&gt;
+
+&lt;p&gt;是的，没问题，我在腾讯游戏也待过，一周六天，很累。&lt;/p&gt;
+
+&lt;h4 id=&quot;section-7&quot;&gt;为什么没有去腾讯&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;钱不多&lt;/li&gt;
+  &lt;li&gt;不想在深圳&lt;/li&gt;
+  &lt;li&gt;上海的不感兴趣&lt;/li&gt;
+  &lt;li&gt;喜欢日本&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;section-8&quot;&gt;后文&lt;/h2&gt;
+
+&lt;p&gt;求过。&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 24 Jun 2018 18:43:00 +0000</pubDate>
+        <link>https://gougoumemeda.github.io/2018/06/24/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E5%89%8D%E7%AB%AF%E4%B8%80%E9%9D%A2/</link>
+        <guid isPermaLink="true">https://gougoumemeda.github.io/2018/06/24/%E6%8B%BC%E5%A4%9A%E5%A4%9A%E5%89%8D%E7%AB%AF%E4%B8%80%E9%9D%A2/</guid>
+        
+        <category>Web</category>
+        
+        <category>技术</category>
+        
+        
+      </item>
     
       <item>
         <title>移动端模拟Calendar</title>
@@ -1430,369 +1583,6 @@ int[][] topValue = new int[3][3];
         <category>技术</category>
         
         <category>可视化</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>Unity中使用Animation提高Animator的性能</title>
-        <description>&lt;h2 id=&quot;section&quot;&gt;序言&lt;/h2&gt;
-&lt;p&gt;这次我要跟大家分享的是使用Animation来实现Animator的功能。其实效果没有之前Curve那么酷炫，但是工作量比之前的会大上好多。&lt;/p&gt;
-
-&lt;p&gt;为什么要使用Animation来实现Animator呢？很大一部分原因是在于性能。Animator的性能是被人们所诟病的，在模拟之前我也不知道使用Animation能提高多少的性能，只是觉得可能是一种方式，所以就做了这件事。下面我们就进入正题，聊聊具体的方式。&lt;/p&gt;
-
-&lt;h2 id=&quot;section-1&quot;&gt;正文&lt;/h2&gt;
-&lt;p&gt;平台：Unity 4.6&lt;/p&gt;
-
-&lt;h3 id=&quot;section-2&quot;&gt;概念与运作方式&lt;/h3&gt;
-&lt;p&gt;首先我们来明确一下Animator的概念以及运作方式。Animator本质上就是一个组件（Component），可以挂载到任意一个GameObject上，其核心在于AnimatorController。我们平常所看到的AnimatorController的图形化结构是这样的：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Animation/1.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;本质上而言，AnimatorController就是多个状态机的组合，其中的状态就是动画，而状态的转换就是动画的过渡。我们要实现的呢，就是状态机。只不过里面还有很多细节和其他功能比如Layer，BlendTree等。&lt;/p&gt;
-
-&lt;p&gt;我们从宏观到微观的角度来看controller，序号越小表示所包含的东西越多，概念越大：
-1. controller本身，其中主要是paramaters和各个layer的基本信息。
-2. layer，在animator中，我们对每一个layer都需要进行state和transition的更新。
-3. stateMachine，通常来说，一个layer就是一个stateMachine，但是stateMachine也可以包含其他的sub-stateMachine。
-4. state和transition，这些都是包含在stateMachine中的，也是controller中最核心的部分。
-5. animationClip，包含在一个state中，真正动画播放的东西。&lt;/p&gt;
-
-&lt;p&gt;下面我们一个一个具体的介绍上述部件的功能。&lt;/p&gt;
-
-&lt;h4 id=&quot;parameters&quot;&gt;Parameters&lt;/h4&gt;
-&lt;p&gt;“参数”是用来控制Transition的发生的。当参数满足一个Transition触发的所有条件时，这个Transition就会执行。从图形化的角度来看，参数就是以下图来表示的：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Animation/2.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;我们在代码中，可以通过SetInt，SetFloat等方法来修改参数的值。具体使用方法可以参考Unity手册。&lt;/p&gt;
-
-&lt;h4 id=&quot;layer&quot;&gt;Layer&lt;/h4&gt;
-&lt;p&gt;Layer在AnimatorController中，表示如下：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Animation/3.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;他的作用主要是用来控制不同层动画的混合，比如你有一个投掷的动画和一个走路的动画，你想上半身来投掷，下半身 走路的话，就可以通过Layer来实现。在Layer中我们看到有weight，Mask和Blending可以供开发者选择。weight用来控制混合 的权重，0表示不混合（动画不播放），其他数值会以一个融合的比重来播放动画，这里weight的值并不是绝对的，还会根据Blending的选择来更 改，如果Blending为Override，那么最终播放的时候当前层的动画会覆盖更浅层的动画，如果Blending为Additive，那么当前层 的weight会与更浅层的weight相加，再归一化。Mask是用来控制当前Layer的动画使用在身体的哪个部分的。我们可以在Unity中创建一 个Mask Avatar，通过设置它来达到控制身体部位的效果。&lt;/p&gt;
-
-&lt;h4 id=&quot;statemachine&quot;&gt;StateMachine&lt;/h4&gt;
-
-&lt;p&gt;一个StateMachine就是一个状态机，也就是我们最直观的看到的那一块区域：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Animation/4.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;通常来说，一个layer就是一个stateMachine，但是stateMachine也可以包含其他的sub-stateMachine。&lt;/p&gt;
-
-&lt;h4 id=&quot;state&quot;&gt;State&lt;/h4&gt;
-&lt;p&gt;State在AnimatorController中表示为：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Animation/5.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;实际上，一个State就包含了一个动画或者多个动画的融合（BlendTree）。在每一个State中，我们都可以找到AnimationClip，而它就是真正被播放的东西。我们状态机就是在不同的State之间进行转换，也就是在不同的动画中进行过渡与播放。值得一提的是，我们有一个很特殊的State叫AnyState，它可以表示任何一个State，换句话说，从它发出的Transition可以看作是从其他State中发出的。&lt;/p&gt;
-
-&lt;h4 id=&quot;transition&quot;&gt;Transition&lt;/h4&gt;
-&lt;p&gt;Transition就是在AnimatorController中的箭头，表示为：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Animation/6.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;当我们选中一个Transition时，可以在右边看到触发时的条件，这些条件必须全部都满足时才会被触发。Transition是一个动画到另一个动画的过渡，这个过渡是有时间的。当过渡完成之后，动画的状态才会切换。有一类Transition的条件仅仅是Exit Time，表示当动画播放了一段时间后自动会触发这个Transition。&lt;/p&gt;
-
-&lt;p&gt;具体我们模拟Animator的时候，可以这么做（Update函数）：
-1. 遍历每一个layer（可用多线程）
-2. 在一个layer中，遍历当前state发出的所有transition，看看是否有所有conditions都满足的transition
-3. 如果没有，结束
-4. 如果有，则开始这个transition
-5. transition是有时间的，所以当transition结束后，将当前的state设置成transition的dstState&lt;/p&gt;
-
-&lt;h3 id=&quot;section-3&quot;&gt;实现&lt;/h3&gt;
-
-&lt;h4 id=&quot;section-4&quot;&gt;解析&lt;/h4&gt;
-&lt;p&gt;在实现这个Animator的时候，因为我们使用的是Unity 4.6，并没有与AnimatorController相关的API，所以我们需要自己解析controller文件。如果要看到controller文 件的原内容，我们需要设置一下Project Setting - Edtior，将其中的Aseet Serialization设置为Force Text，然后将controller文件使用任意编辑器打开（sublime），就能看到controller中所有的数据结构啦。我们在实际解析这些数据结构的时候，可以在代码中直接创建相应的类和成员变量，以State为例，在controller中他是这么表示的：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gd&quot;&gt;--- !u!1102 &amp;amp;110273390
-&lt;/span&gt;State:
-  m_ObjectHideFlags: 3
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Attack01
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Motions:
-  - {fileID: 7400000, guid: 904f2f79e9c87534f903a673c7adb132, type: 3}
-  m_ParentStateMachine: {fileID: 110728656}
-  m_Position: {x: -94, y: 183, z: 0}
-  m_IKOnFeet: 0
-  m_Mirror: 0
-  m_Tag: 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;我们创建的类如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public class State
-{
-    public int m_id;
-    public string m_Name;
-    public float m_Speed;
-    public float m_CycleOffset;
-    public bool m_IKOnFeet;
-    public bool m_Mirror;
-
-    public List&amp;lt;AnimationClip&amp;gt; m_Motions; // one motion per motion set  
-    public BlendTree m_MotionsWithBlendTree;
-
-    public StateMachine m_ParentStateMachine;
-    public Vector3 m_Position;
-    public string m_Tag;
-
-    public State(int id)
-    {
-        m_id = id;
-        m_Motions = new List&amp;lt;AnimationClip&amp;gt;();
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;其中，id为controller中第一行最后的那一串数字，其他的成员变量名字和controller中的大致都是一样的。因为一个 State可能是一个BlendTree，所以我们添加了一个m_MotionsWithBlendTree来表示这个State对应的 BlendTree（如果有的话）。然后，m_Motions存储的就是要被Animation播放的动画片段。&lt;/p&gt;
-
-&lt;p&gt;这里有一点需要注意，我们需要将原来的动画片段复制一遍，把他的animationType设置成Lagecy，才能被Animation所支持。具体复制和设置的代码如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;string animationPath = &quot;Assets/Character/Animations/&quot; + guid + state.m_id + &quot;.FBX&quot;;
-//AssetDatabase.CopyAsset(AssetDatabase.GUIDToAssetPath(guid), animationPath);
-var animationObject = AssetDatabase.LoadAssetAtPath(animationPath, typeof(AnimationClip)) as AnimationClip;
-if (!animationObject.name.Contains(state.m_id.ToString()))
-      animationObject.name = animationObject.name + state.m_id;
-AnimationUtility.SetAnimationType(animationObject, ModelImporterAnimationType.Legacy);
-state.m_Motions.Add(animationObject);
-state.m_MotionsWithBlendTree = null;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;在上述代码中我们发现，我们对animationClip的名字进行的修改，原因在于，可能在不同Layer的两个State中有相同的AnimationClip，他们完全可以同时进行播放。在controller中，他们也是以不同的guid来表示的，说明他们是两个对象。而在Animation中，我们的Clip是以名字进行标识的，所以这里要给他们换一个名字。&lt;/p&gt;
-
-&lt;p&gt;最后一点需要注意的是，还记不记得我们之前说在Layer中可以添加Mask。我们打开.mask文件后，发现会有一些m_Path，我们把m_Weight为1的所有path当成字符串保存起来，之后在模拟的时候会使用到。&lt;/p&gt;
-
-&lt;h4 id=&quot;section-5&quot;&gt;模拟&lt;/h4&gt;
-
-&lt;p&gt;解析完controller文件后，就可以模拟Animator的行为了。&lt;/p&gt;
-
-&lt;p&gt;首先我们要将所有的动画添加到Animation中去，在添加的时候，可以设置AnimationState.layer来实现不同layer的混合效果， 然后我们要实现mask的效果，可以使用函数AddMixingTransform，他接受两个参数，一个是transform，这里我们就可以使用解析 得到的m_Path了，使用transform.find(m_Path)就能得到我们真正需要的子transform（也就是mask），另一个参数表 示是否递归，这里根据.mask的文件结构来看，我们选择false即可。&lt;/p&gt;
-
-&lt;p&gt;另外需要注意的是，Animation没有直观的数据结构可以表示BlendTree，我们要根据parameter的值以及各个动画片段的threshold来计算出他们的权重。这里以1D为例，计算权重的函数如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void UpdateWeightsAndSpeedsInBlendTree1D(AnimatorCompiler.BlendTree blendTree)
-{
-      float para = floatConditions[blendTree.m_BlendParameter.m_Name];
-      AnimatorCompiler.BlendTree.Child left = null;
-      AnimatorCompiler.BlendTree.Child right = null;
-      for (int i = 0; i &amp;lt; blendTree.m_Childs.Count; ++i)
-      {
-            AnimatorCompiler.BlendTree.Child child = blendTree.m_Childs[i];
-            if (para &amp;gt;= child.m_Threshold &amp;amp;&amp;amp; child.m_Threshold &amp;lt; blendTree.m_MaxThreshold)
-            {
-                  if (left == null || child.m_Threshold &amp;gt; left.m_Threshold)
-                  {
-                        left = child;
-                  }
-            }
-            else if (para &amp;lt;= child.m_Threshold)
-            {
-                  if (right == null || child.m_Threshold &amp;lt; right.m_Threshold)
-                  {
-                        right = child;
-                  }
-            }
-            weightInBlendTrees[blendTree][child] = 0.0f;
-            speedInBlendTrees[blendTree][child] = 0.0f;
-      }
-      if (left != null &amp;amp;&amp;amp; right != null)
-      {
-            float lp = 1 - (para - left.m_Threshold) / (right.m_Threshold - left.m_Threshold);
-            float rp = 1 - lp;
-            weightInBlendTrees[blendTree][left] = lp;
-            weightInBlendTrees[blendTree][right] = rp;
-            float leftTime = left.m_Motion.length / left.m_TimeScale;
-            float rightTime = right.m_Motion.length / right.m_TimeScale;
-            speedInBlendTrees[blendTree][left] = left.m_Motion.length / (leftTime * lp + rightTime * rp);
-            speedInBlendTrees[blendTree][right] = right.m_Motion.length / (leftTime * lp + rightTime * rp);
-      }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;1D还是比较简单的，找到与parameter的值相邻的两个threshold，然后对这两个threshold所表示的AnimationClip的weight进行插值即可。2D的weight计算可以参考&lt;a href=&quot;http://runevision.com/thesis/rune_skovbo_johansen_thesis.pdf&quot;&gt;这篇文章&lt;/a&gt;的6.3节。&lt;/p&gt;
-
-&lt;p&gt;大部分的更新Transition的逻辑都在Update函数中完成，那么我们要怎么来模拟这个Transition的过程呢？一种比较显然的方法是使用CrossFade，我们来看看CrossFade的函数原型。&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;public void CrossFade(string animation, float fadeLength = 0.3F, PlayMode mode = PlayMode.StopSameLayer);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;animation为我们的目标动画，fadeLength就是过渡的时间，也就是transition的时间。我们解析得到的m_TransitionDuration是一个百分比，需要乘上原动画的时间。 CrossFade的原理是，将animation的weight设置成1，enable设置成true，然后在fadeLength的时间内将原动画的 weight降为0，再把他的enable设置成false。这样就有一个问题，在blendTree中的动画不一定weight就为1，而且在高层的 Layer中的weight也不一定为1，所以我们不能直接使用CrossFade，而是自己将它实现一遍再进行一些修改，大致的代码如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;foreach (var item in parser.animation.m_State)
-{
-      AnimatorCompiler.State state = item.Value;
-      if (state.m_id == 0)
-            continue;
-      if (state.m_ParentStateMachine.m_Index == layer.m_Index)
-      {
-            if (state.m_id != transition.m_DstState.m_id)
-            {
-                  if (state.m_MotionsWithBlendTree == null)
-                  {
-                        gameObject.animation.Blend(state.m_Motions[0].name, 0, currentTransitionInLayers[layer].m_TransitionDuration * animationLength);
-                  }
-                  else
-                  {
-                        for (int j = 0; j &amp;lt; state.m_MotionsWithBlendTree.m_Childs.Count; ++j)
-                        {
-                              AnimatorCompiler.BlendTree.Child child = state.m_MotionsWithBlendTree.m_Childs[j];
-                              gameObject.animation.Blend(child.m_Motion.name, 0, currentTransitionInLayers[layer].m_TransitionDuration * animationLength);
-                        }
-                  }
-            }
-      }
-}
-if (currentTransitionInLayers[layer].m_DstState.m_MotionsWithBlendTree == null)
-{
-      gameObject.animation.Stop(transition.m_DstState.m_Motions[0].name);
-      gameObject.animation[transition.m_DstState.m_Motions[0].name].enabled = true;
-      gameObject.animation[transition.m_DstState.m_Motions[0].name].weight = ((layer.m_Index == 0) ? 1 : layer.m_DefaultWeight);
-}
-else
-{
-      for (int i = 0; i &amp;lt; currentTransitionInLayers[layer].m_DstState.m_MotionsWithBlendTree.m_Childs.Count; ++i)
-      {
-            AnimatorCompiler.BlendTree.Child child = currentTransitionInLayers[layer].m_DstState.m_MotionsWithBlendTree.m_Childs[i];
-            gameObject.animation.Stop(child.m_Motion.name);
-            gameObject.animation[child.m_Motion.name].enabled = true;
-            gameObject.animation[child.m_Motion.name].weight = weightInBlendTrees[currentTransitionInLayers[layer].m_DstState.m_MotionsWithBlendTree][child];
-      }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;剩下的部分只要细心耐心的按照animator模拟的步骤慢慢实现即可，没有什么太多的坑。&lt;/p&gt;
-
-&lt;h3 id=&quot;section-6&quot;&gt;改进&lt;/h3&gt;
-
-&lt;p&gt;好了，如果你按照上述的步骤写完了，然后想打包一下跃跃欲试，你会发现你失败了。原因是我们在复制AnimationClip的时候，使用了AssetDatabase，他是属于UnityEditor的一个类，而UnityEditor无法打包。因此我们需要把解析的过程放在Editor中完成，然后将解析的结果都串行化，保存起来。&lt;/p&gt;
-
-&lt;p&gt;你可以小心翼翼的在每个类上面加上[System.Serializable]，但是这么做依然是不行的，因为我们在类中表示其他的对象时，使用都是其他对象的指针，所以很容易就产生循环引用，在Editor中无法被串行化，例如，state类中有一个parentStateMachine指向一个StateMachine，而在一个StateMachine中又保存了他所有state的指针。&lt;/p&gt;
-
-&lt;p&gt;因此，我们需要修改整个解析得到的类的数据结构，将指针替换为对象的id（int类型）。以State为例，我们可以与之前的代码进行对比：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[System.Serializable]
-public class State
-{
-      public int m_id;
-      public string m_Name;
-      public float m_Speed;
-      public float m_CycleOffset;
-      public bool m_IKOnFeet;
-      public bool m_Mirror;
-
-      public List&amp;lt;AnimationClip&amp;gt; m_Motions; // one motion per motion set    
-      public int m_MotionsWithBlendTree;
-
-      public int m_ParentStateMachine;
-      public Vector3 m_Position;
-      public string m_Tag;
-
-      public State(int id)
-      {
-            m_id = id;
-            m_Motions = new List&amp;lt;AnimationClip&amp;gt;();
-            m_MotionsWithBlendTree = -1;
-      }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;由于我们把解析的过程放在了Editor中完成，因此运行的速度也会更快一些。&lt;/p&gt;
-
-&lt;p&gt;那么我们还有什么办法可以提高性能吗？&lt;/p&gt;
-
-&lt;p&gt;答案肯定是有的，这里就采用了“生成代码”的办法。我们真正运行时的逻辑代码，是在Editor中生成的，而不是提前写好的。可能听起来有点绕，我把我的工程的文件结构给大家看一下：&lt;/p&gt;
-
-&lt;p&gt;Editor：
-- AnimatorCodeGenerator.cs：生成模拟Animator的代码
-- AnimatorParser：解析controller文件&lt;/p&gt;
-
-&lt;p&gt;Scripts：
-- AnimationByAnimator：模拟Animator
-- AnimationController：控制gameObject
-- AnimatorCompiler：controller文件的数据结构
-- AnimatorData：用来存储解析controller文件后的结果
-- CodeUtil：生成代码时使用的工具&lt;/p&gt;
-
-&lt;p&gt;这样应该清晰了很多，那么这么做有什么好处呢？&lt;/p&gt;
-
-&lt;p&gt;如果我们平常来写的话，必然会使用到大量的字典，比如parentStateMachineInStates，我们在解析的数据结构 中，parentStateMachine保存的是StateMachine的Id，只有id是没有办法直接在模拟代码中使用的，我们要把这个id换转成 真正的StateMachine的对象，因此他在模拟代码中的类型应该是Dictionary&amp;lt;State, StateMachine&amp;gt;。由于使用字典会产生大量的cache miss，因此性能并不出色。而生成代码最大的优势是能循环展开并且避免使用字典，其原理就在于能够“通过不同的字符串来运用变量”。&lt;/p&gt;
-
-&lt;p&gt;我们来看一个例子，在codeGenerator中，有这样的一段代码：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for (int i = 0; i &amp;lt; animation.m_Transition.Count; ++i)
-{
-      AnimatorCompiler.Transition transition = animation.m_Transition[i];
-      code.Variable(&quot;&quot;, &quot;AnimatorCompiler.State&quot;, code.Normalize(&quot;srcStateInTransitions_&quot; + transition.m_id));
-      code.Variable(&quot;&quot;, &quot;AnimatorCompiler.State&quot;, code.Normalize(&quot;dstStateInTransitions_&quot; + transition.m_id));
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Variable函数就是创建响应的变量名。运行这段代码，生成的代码如下：&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;AnimatorCompiler.State srcStateInTransitions_110100396;
-AnimatorCompiler.State dstStateInTransitions_110100396;
-AnimatorCompiler.State srcStateInTransitions_110128666;
-AnimatorCompiler.State dstStateInTransitions_110128666;
-AnimatorCompiler.State srcStateInTransitions_110144588;
-AnimatorCompiler.State dstStateInTransitions_110144588;
-AnimatorCompiler.State srcStateInTransitions_110150974;
-AnimatorCompiler.State dstStateInTransitions_110150974;
-AnimatorCompiler.State srcStateInTransitions_110152432;
-AnimatorCompiler.State dstStateInTransitions_110152432;
-AnimatorCompiler.State srcStateInTransitions_110183908;
-AnimatorCompiler.State dstStateInTransitions_110183908;
-AnimatorCompiler.State srcStateInTransitions_110193682;
-AnimatorCompiler.State dstStateInTransitions_110193682;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;可以看到，原先的Dictionary被展开成了不同的变量，而且我们把循环函数放在了Editor中完成，因此运行时的效率会更高一些。而这些就是生成代码所给我们带来的好处。&lt;/p&gt;
-
-&lt;p&gt;不过，生成代码非常非常容易出错，大家在写的时候一定要仔细！&lt;/p&gt;
-
-&lt;h2 id=&quot;section-7&quot;&gt;性能&lt;/h2&gt;
-
-&lt;p&gt;测试时，我们重点关注Update函数消耗的时间，无论是Animator还是我们写的这个系统，Update函数始终都是核心，也是最最耗时的一部分。&lt;/p&gt;
-
-&lt;p&gt;这次我们依然在安卓机上测试，创建300个物体，先挂上Animator，得到的图如下：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Animation/7.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;可以看到，所有Update函数的时间和为40.74+19.41=60.15ms。&lt;/p&gt;
-
-&lt;p&gt;现在我们来看看用我们的系统：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/in-post/Animation/8.png&quot; alt=&quot;img&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;总的Update函数时间为17.82+10.95+5.85=34.62ms。&lt;/p&gt;
-
-&lt;p&gt;我们可以看到，在平均情况下，Animation实现的系统已经比Animator快了接近一倍，而在实现中可以优化的地方依旧有很多，代码也不是最美观，如果你有什么好的建议，欢迎联系我！&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 09 Sep 2016 13:00:00 +0000</pubDate>
-        <link>https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/</link>
-        <guid isPermaLink="true">https://gougoumemeda.github.io/2016/09/09/Unity%E4%B8%AD%E4%BD%BF%E7%94%A8Animation%E6%8F%90%E9%AB%98Animator%E7%9A%84%E6%80%A7%E8%83%BD/</guid>
-        
-        <category>Unity</category>
-        
-        <category>技术</category>
-        
-        <category>腾讯</category>
         
         
       </item>
